@@ -25,15 +25,15 @@ a {
         @apply text-base text-ourBlack;
     }
     h1 {
-        @apply text-6xl;
+        @apply text-3xl sm:text-6xl font-extrabold;
     }
     h2 {
-        @apply text-5xl;
+        @apply text-2xl sm:text-5xl font-bold;
     }
     h3 {
-        @apply text-4xl;
+        @apply text-xl sm:text-4xl font-bold;
     }
     button {
-        @apply text-2xl;
+        @apply text-2xl font-medium;
     }
 }
