@@ -12,7 +12,7 @@ function Header() {
                         console.log('Show menu bar');
                     }}
                 />
-                <button className="font-bold font-impact text-xl md:text-2xl ">KU HACKATHON</button>
+                <button className="font-bold font-impact text-2xl ">KU HACKATHON</button>
                 <ul className="hidden space-x-4 md:flex md:space-x-6 lg:space-x-8">
                     <li>ABOUT</li>
                     <li>PROJECT</li>
@@ -21,7 +21,7 @@ function Header() {
                 </ul>
             </div>
 
-            <div className="flex items-center text-lg font-light mt-4 mr-4 cursor-pointer">
+            <div className="flex items-center text-xl font-light mt-4 mr-4 cursor-pointer">
                 <BsPerson />
             </div>
         </header>
