@@ -6,7 +6,11 @@ module.exports = {
             ourBlack: '#1D1D1D',
             ourWhite: '#F8F8F8',
         },
-        extend: {},
+        extend: {
+            fontFamily: {
+                impact: ['impact'],
+            },
+        },
     },
     plugins: [],
 };
