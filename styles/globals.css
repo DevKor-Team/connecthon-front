@@ -34,6 +34,22 @@
     }
 }
 
+@layer components {
+    .title {
+        @apply leading-tight text-6xl font-impact z-0;
+    }
+    /* .text-animation {
+        animation: textAnimation 8s infinite;
+    } */
+    .fade-in {
+        transition: opacity 1s ease;
+    }
+    .fade-out {
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+}
+
 @font-face {
     font-family: 'impact';
     src: local('impact'), format('ttf');

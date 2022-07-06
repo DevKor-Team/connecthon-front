@@ -10,6 +10,19 @@ module.exports = {
             fontFamily: {
                 impact: ['impact'],
             },
+            keyframes: {
+                textanimation: {
+                    '0%, 100%': {
+                        opacity: 1,
+                    },
+                    '50%': {
+                        opacity: 0,
+                    },
+                },
+            },
+            animation: {
+                textAnimation: 'textAnimation 1s ease-in-out infinite',
+            },
         },
     },
     plugins: [],
