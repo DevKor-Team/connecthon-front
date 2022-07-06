@@ -33,7 +33,4 @@ a {
     h3 {
         @apply text-xl sm:text-4xl font-bold;
     }
-    button {
-        @apply text-2xl font-medium;
-    }
 }
