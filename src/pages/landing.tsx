@@ -38,16 +38,16 @@ function Landing() {
                         <MyAnime />
                     </div>
                 </div>
-                {/* <div>
+                <div>
                     <img className="w-[90%] mx-auto my-10" src="/company.svg" alt="company" />
                 </div>
                 <Button size="sm" className="block px-3 mt-[4rem] mx-auto">
                     Get Started
-                </Button> */}
+                </Button>
             </main>
         </div>
     );
 }
 
-Landing.Layout = Layout;
+// Landing.Layout = Layout;
 export default Landing;
