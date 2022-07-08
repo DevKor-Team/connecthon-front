@@ -8,7 +8,7 @@ module.exports = {
             },
             colors: {
                 ourBlack: '#1D1D1D',
-                ourWhite: '#F8F8F8',
+                outWhite: '#F8F8F8',
             },
         },
     },
