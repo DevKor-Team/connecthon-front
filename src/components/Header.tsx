@@ -2,14 +2,25 @@ import React from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
-import { useState } from 'react';
 
-function SideMenu({ setMenuOpened }: { setMenuOpened: React.Dispatch<React.SetStateAction<boolean>> }) {
+function SideMenu() {
+    function closeMenu() {
+        if (typeof window !== 'undefined') {
+            const sidebg = document.getElementById('sidebg');
+            const wrapper = document.getElementById('wrapper');
+            const sidebar = document.getElementById('sidebar');
+            wrapper?.classList.remove('z-50');
+            sidebg?.classList.replace('visible', 'invisible');
+            sidebg?.classList.remove('backdrop-blur-sm');
+            sidebg?.classList.replace('bg-black/20', 'bg-black/0');
+            sidebar?.classList.replace('left-0', '-left-[100vw]');
+        }
+    }
     return (
-        <div className="fixed z-50 inset-0 md:hidden">
-            <div className="fixed inset-0 bg-black/20 backdrop-blur-sm">
-                <div className="fixed w-[315px] h-full bg-white font-bold px-4 pt-6 shadow-lg">
-                    <MdOutlineClose className="absolute top-9 right-4" size={20} onClick={() => setMenuOpened(false)} />
+        <div className="fixed inset-0 w-[100vw] invisible md:hidden" id="wrapper">
+            <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg">
+                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white font-bold px-4 pt-6 shadow-lg" id="sidebar">
+                    <MdOutlineClose className="absolute top-9 right-4" size={20} onClick={closeMenu} />
                     <div className="border-b border-slate-200 py-2 mb-7">MENU</div>
                     <ul className="space-y-8">
                         <li>ABOUT</li>
@@ -24,20 +35,23 @@ function SideMenu({ setMenuOpened }: { setMenuOpened: React.Dispatch<React.SetSt
 }
 
 function Header() {
-    const [menuOpened, setMenuOpened] = useState(false);
+    function openMenu() {
+        if (typeof window !== 'undefined') {
+            const sidebg = document.getElementById('sidebg');
+            const wrapper = document.getElementById('wrapper');
+            const sidebar = document.getElementById('sidebar');
+            wrapper?.classList.add('z-50');
+            sidebg?.classList.replace('invisible', 'visible');
+            sidebg?.classList.add('backdrop-blur-sm');
+            sidebg?.classList.replace('bg-black/0', 'bg-black/20');
+            sidebar?.classList.replace('-left-[100vw]', 'left-0');
+        }
+    }
 
     return (
         <header>
-            {menuOpened && <SideMenu setMenuOpened={setMenuOpened} />}
-            <div className="mt-5 ml-1 flex items-center space-x-6 md:space-x-16">
-                <FiMenu
-                    size={24}
-                    className="text-lg font-light md:hidden cursor-pointer"
-                    onClick={() => {
-                        console.log('Show menu bar');
-                        setMenuOpened(true);
-                    }}
-                />
+            <div className="mt-5 ml-1 flex z-70 items-center space-x-6 md:space-x-16">
+                <FiMenu size={24} className="text-lg font-light md:hidden cursor-pointer" onClick={openMenu} />
                 <button className="font-bold font-impact text-xl md:text-2xl md:mr-6">KU HACKATHON</button>
                 <ul className="hidden space-x-4 md:flex md:space-x-6 lg:space-x-8 font-semibold">
                     <li>ABOUT</li>
@@ -50,6 +64,8 @@ function Header() {
             <div className="flex items-center font-light mt-4 mr-4 cursor-pointer md:mr-12">
                 <BsPerson size={22} />
             </div>
+
+            <SideMenu />
         </header>
     );
 }
