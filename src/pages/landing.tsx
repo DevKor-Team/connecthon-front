@@ -30,17 +30,9 @@ function Landing() {
             </Head>
             <Header />
             <main>
-                <div className="flex ml-[1rem] mt-20 pl-5 pt-8">
-                    <div className="mt-8">
-                        <h1 className="title">2022</h1>
-                        <h1 className="title">KU</h1>
-                        <h1 className="title">HACKATHON</h1>
-                    </div>
-
-                    <div>
-                        <img className="m-0 z-[100] absolute top-0 right-[1rem] h-[12rem]" src="/devkor.svg" alt="devkor" />
-                        <img className="m-0 z-[95] absolute top-2 right-[5rem] h-[14rem]" src="/designer.svg" alt="designer" />
-                        <img className="m-0 z-[90] absolute top-7 right-[10rem] h-[14rem]" src="/business.svg" alt="business" />
+                <div className="mt-[14rem]">
+                    <div className="flex justify-center">
+                        <img className="" src="/title.svg" alt="title" />
                     </div>
                 </div>
 
@@ -51,12 +43,12 @@ function Landing() {
                         <MyAnime />
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <img className="w-[90%] mx-auto my-10" src="/company.svg" alt="company" />
                 </div>
                 <Button size="sm" className="block px-3 mt-[4rem] mx-auto">
                     Get Started
-                </Button>
+                </Button> */}
             </main>
         </div>
     );
