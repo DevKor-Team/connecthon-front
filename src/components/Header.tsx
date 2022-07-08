@@ -2,6 +2,7 @@ import React from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
+import Link from 'next/link';
 
 function SideMenu() {
     function closeMenu() {
@@ -19,14 +20,22 @@ function SideMenu() {
     return (
         <div className="fixed inset-0 w-[100vw] invisible md:hidden" id="wrapper">
             <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg">
-                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white font-bold px-4 pt-6 shadow-lg" id="sidebar">
+                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white px-4 pt-6 shadow-lg" id="sidebar">
                     <MdOutlineClose className="absolute top-9 right-4" size={20} onClick={closeMenu} />
-                    <div className="border-b border-slate-200 py-2 mb-7">MENU</div>
-                    <ul className="space-y-8">
-                        <li>ABOUT</li>
-                        <li>PROJECT</li>
-                        <li>PARTICIPANTS</li>
-                        <li>CHAT</li>
+                    <div className="font-impact border-b border-slate-200 py-2 mb-7 text-xl">KU HACKATHON</div>
+                    <ul className="font-bold space-y-8">
+                        <li>
+                            <Link href="/about">ABOUT</Link>
+                        </li>
+                        <li>
+                            <Link href="/project">PROJECT</Link>
+                        </li>
+                        <li>
+                            <Link href="/participants">PARTICIPANTS</Link>
+                        </li>
+                        <li>
+                            <Link href="/chat">CHAT</Link>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -52,17 +61,29 @@ function Header() {
         <header>
             <div className="mt-5 ml-1 flex z-70 items-center space-x-6 md:space-x-16">
                 <FiMenu size={24} className="text-lg font-light md:hidden cursor-pointer" onClick={openMenu} />
-                <button className="font-bold font-impact text-xl md:text-2xl md:mr-6">KU HACKATHON</button>
+                <Link href="/">
+                    <button className="font-normal font-impact text-xl md:text-2xl md:mr-6">KU HACKATHON</button>
+                </Link>
                 <ul className="hidden space-x-4 md:flex md:space-x-6 lg:space-x-8 font-semibold">
-                    <li>ABOUT</li>
-                    <li>PROJECT</li>
-                    <li>PARTICIPANTS</li>
-                    <li>CHAT</li>
+                    <li>
+                        <Link href="/about">ABOUT</Link>
+                    </li>
+                    <li>
+                        <Link href="/project">PROJECT</Link>
+                    </li>
+                    <li>
+                        <Link href="/participants">PARTICIPANTS</Link>
+                    </li>
+                    <li>
+                        <Link href="/chat">CHAT</Link>
+                    </li>
                 </ul>
             </div>
 
             <div className="flex items-center font-light mt-4 mr-4 cursor-pointer md:mr-12">
-                <BsPerson size={22} />
+                <Link href="/mypage">
+                    <BsPerson size={22} />
+                </Link>
             </div>
 
             <SideMenu />
