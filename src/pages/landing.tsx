@@ -1,7 +1,6 @@
-import Head from 'next/head';
-import Header from '../components/Header';
 import Button from '../components/Button';
 import MovingComponent from 'react-moving-text';
+import Layout from '../layouts/Layout';
 
 const MyAnime = () => {
     const str = '청춘들의 여름 항해가 시작됩니다';
@@ -25,10 +24,6 @@ const MyAnime = () => {
 function Landing() {
     return (
         <div className="relative h-screen">
-            <Head>
-                <title>KU HACKATHON</title>
-            </Head>
-            <Header />
             <main>
                 <div className="mt-[14rem]">
                     <div className="flex justify-center">
@@ -54,4 +49,5 @@ function Landing() {
     );
 }
 
+Landing.Layout = Layout;
 export default Landing;
