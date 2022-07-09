@@ -4,7 +4,6 @@ import { BsChevronDown } from 'react-icons/bs';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useSpring, animated } from 'react-spring';
 import Fade from 'react-reveal/Fade';
-// import { useScrollBlock } from '../../hooks/useScrollBlock';
 
 const SecondLanding = () => {
     return (
@@ -59,7 +58,7 @@ const FirstLanding = () => {
             <main>
                 <div className="mt-[14rem]">
                     <div className="flex justify-center">
-                        <img className="" src="/title.svg" alt="title" />
+                        <img className="w-[20rem]" src="/title.svg" alt="title" />
                     </div>
                 </div>
 
@@ -83,41 +82,8 @@ const FirstLanding = () => {
                         </div>
                     </div>
                 )}
-                {/*
-                 */}
 
-                {/* <div>
-                    {clicked ? (
-                        <div className="flex justify-center mt-[9.7rem]">
-                            <BsChevronDown
-                                className="cursor-pointer"
-                                onClick={() => {
-                                    setClicked(true);
-                                }}
-                            />
-                        </div>
-                    ) : (
-                        <animated.div style={{ ...btnAnimation }} className="flex justify-center mt-[9.7rem]">
-                            <BsChevronDown
-                                className="cursor-pointer"
-                                onClick={() => {
-                                    setClicked(true);
-                                }}
-                            />
-                        </animated.div>
-                    )}
-                </div> */}
-
-                {/* 
-                <div>
-                    <img className="w-[90%] mx-auto my-10" src="/company.svg" alt="company" />
-                </div>
-                <Button size="sm" className="block px-3 mt-[4rem] mx-auto">
-                    Get Started
-                </Button> */}
-                {/* {clicked ? <StartPage /> : null} */}
-
-                <div className="mt-[25rem]">
+                <div className="mt-[27rem]">
                     <Fade bottom>
                         <div className="my-[10rem]">
                             <h3 className="text-center mb-7">후원</h3>
@@ -125,7 +91,7 @@ const FirstLanding = () => {
                         </div>
                     </Fade>
                     <Fade bottom>
-                        <Button size="sm" className="block px-3 mt-[10rem] mb-[8rem] mx-auto border-2 border-black hover:text-white">
+                        <Button size="sm" className="block px-3 mt-[8rem] mb-[5rem] mx-auto border-2 border-black hover:text-white">
                             Get Started
                         </Button>
                     </Fade>
