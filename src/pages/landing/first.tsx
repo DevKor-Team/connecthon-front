@@ -52,19 +52,14 @@ const FirstLanding = ({ isFirst }: Props) => {
         return (
             <div className="relative h-full">
                 <main className="my-0">
-                    <div className="mt-[10.5rem]">
+                    <div className="mt-[11rem]">
                         <div className="flex justify-center">
                             <img className="w-[20rem]" src="/title.svg" alt="title" />
                         </div>
                     </div>
 
                     <div>
-                        {isFirst === false ? (
-                            <div className="flex justify-center">
-                                <h4 className="absolute top-[18.2rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
-                                <p className="absolute top-[19.5rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
-                            </div>
-                        ) : (
+                        {isFirst ? (
                             <div>
                                 <div className="flex justify-center">
                                     <animated.h4 style={{ ...textAnimation }} className="absolute top-[18.2rem] text-center text-ourBlack font-bold">
@@ -77,6 +72,11 @@ const FirstLanding = ({ isFirst }: Props) => {
                                 <div className="flex justify-center text-center">
                                     <animated.img className="absolute top-[18rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
                                 </div>
+                            </div>
+                        ) : (
+                            <div className="flex justify-center">
+                                <h4 className="absolute top-[18.2rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
+                                <p className="absolute top-[19.5rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
                             </div>
                         )}
                     </div>
@@ -94,10 +94,10 @@ const FirstLanding = ({ isFirst }: Props) => {
         return (
             <animated.div className="relative h-screen" style={{ ...componentAnimation }}>
                 <main className="my-0">
-                    <div className="mt-[10.5rem]">
-                        <div className="flex justify-center">
+                    <div className="mt-[11rem]">
+                        <animated.div className="flex justify-center" style={{ ...componentAnimation }}>
                             <img className="w-[20rem]" src="/title.svg" alt="title" />
-                        </div>
+                        </animated.div>
                     </div>
 
                     <div>
