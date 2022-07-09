@@ -1,7 +1,7 @@
 import Layout from '../../layouts/Layout';
 import { useEffect, useState } from 'react';
-import FirstLanding from './first';
-import SecondLanding from './second';
+import FirstLanding from './_first';
+import SecondLanding from './_second';
 
 const Landing = () => {
     const [scrollDirection, setScrollDirection] = useState(false);
