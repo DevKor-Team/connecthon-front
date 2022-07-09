@@ -5,9 +5,9 @@ const SecondLanding = () => {
     const componentAnimation = useSpring({
         loop: false,
         from: { opacity: 0 },
-        to: [{ opacity: 1 }, { opacity: 0 }],
+        to: [{ opacity: 1 }],
         config: {
-            duration: 1000,
+            duration: 700,
         },
     });
     return (
