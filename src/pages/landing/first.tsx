@@ -1,7 +1,11 @@
 import { BsChevronDown } from 'react-icons/bs';
 import { useSpring, animated } from 'react-spring';
 
-const FirstLanding = ({ isFirst }) => {
+interface Props {
+    isFirst: boolean;
+}
+
+const FirstLanding = ({ isFirst }: Props) => {
     const btnAnimation = useSpring({
         loop: true,
         from: { y: 0 },
