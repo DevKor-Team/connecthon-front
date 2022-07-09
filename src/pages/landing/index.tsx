@@ -1,10 +1,12 @@
 import Button from '../../components/Button';
 import Layout from '../../layouts/Layout';
 import { BsChevronDown } from 'react-icons/bs';
-import { useState } from 'react';
-import { useSpring, animated, useSpringRef, useTransition, useChain, Transition } from 'react-spring';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { useSpring, animated } from 'react-spring';
+import Fade from 'react-reveal/Fade';
+// import { useScrollBlock } from '../../hooks/useScrollBlock';
 
-const secondLanding = () => {
+const SecondLanding = () => {
     return (
         <div>
             <div>
@@ -17,9 +19,8 @@ const secondLanding = () => {
     );
 };
 
-function Landing() {
-    const [scrolled, setScrolled] = useState<boolean>(false); // scroll detection 해서 아래 페이지로 넘어감
-
+const FirstLanding = () => {
+    const [scrolled, setScrolled] = useState(false);
     const btnAnimation = useSpring({
         loop: true,
         from: { y: 0 },
@@ -75,20 +76,15 @@ function Landing() {
                         <animated.img className="absolute top-[18rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
                     </div>
                 </div>
-
                 {scrolled ? null : (
-                    <div className="flex justify-center items-center mt-[22rem] ">
-                        <animated.img
-                            src="/expand-more.svg"
-                            alt="expand-icon"
-                            className="cursor-pointer"
-                            style={{ ...btnAnimation }}
-                            onClick={() => {
-                                setScrolled(true);
-                            }}
-                        />
+                    <div>
+                        <div className="flex justify-center items-center mt-[22rem] ">
+                            <animated.img src="/expand-more.svg" alt="expand-icon" className="cursor-pointer" style={{ ...btnAnimation }} onClick={() => setScrolled(true)} />
+                        </div>
                     </div>
                 )}
+                {/*
+                 */}
 
                 {/* <div>
                     {clicked ? (
@@ -120,19 +116,33 @@ function Landing() {
                     Get Started
                 </Button> */}
                 {/* {clicked ? <StartPage /> : null} */}
-                {scrolled ? (
-                    <div>
-                        <div>
-                            <img className="w-[90%] mx-auto my-10" src="/company.svg" alt="company" />
+
+                <div className="mt-[25rem]">
+                    <Fade top>
+                        <div className="my-[10rem]">
+                            <h3 className="text-center mb-7">후원</h3>
+                            <img className="w-[90%] mx-auto" src="/mobile-company.svg" alt="company" />
                         </div>
-                        <Button size="sm" className="block px-3 mt-[4rem] mx-auto">
+                    </Fade>
+                    <Fade top>
+                        <Button size="sm" className="block px-3 mt-[10rem] mb-[10rem] mx-auto border-2 border-black hover:text-white">
                             Get Started
                         </Button>
-                    </div>
-                ) : null}
+                    </Fade>
+                </div>
+                <div className="mt-10 h-[10rem]"></div>
             </main>
         </div>
     );
-}
+};
+
+const Landing = () => {
+    return (
+        <div>
+            <FirstLanding />
+        </div>
+    );
+};
+
 Landing.Layout = Layout;
 export default Landing;
