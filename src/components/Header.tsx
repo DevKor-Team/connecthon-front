@@ -58,7 +58,7 @@ function Header() {
     }
 
     return (
-        <header>
+        <header className="z-[100] bg-white">
             <div className="mt-5 ml-1 flex z-70 items-center space-x-6 md:space-x-16">
                 <FiMenu size={24} className="text-lg font-light md:hidden cursor-pointer" onClick={openMenu} />
                 <Link href="/">
