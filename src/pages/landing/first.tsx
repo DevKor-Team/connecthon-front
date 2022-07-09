@@ -1,7 +1,7 @@
 import { BsChevronDown } from 'react-icons/bs';
 import { useSpring, animated } from 'react-spring';
 
-const FirstLanding = () => {
+const FirstLanding = ({ isFirst }) => {
     const btnAnimation = useSpring({
         loop: true,
         from: { y: 0 },
@@ -45,17 +45,26 @@ const FirstLanding = () => {
                 </div>
 
                 <div>
-                    <div className="flex justify-center">
-                        <animated.h4 style={{ ...textAnimation }} className="absolute top-[18.2rem] text-center text-ourBlack font-bold">
-                            KU HACKATHON
-                        </animated.h4>
-                        <animated.p style={{ ...textAnimation }} className="absolute top-[19.5rem] text-center text-ourBlack font-bold">
-                            청춘들의 여름 항해가 시작됩니다
-                        </animated.p>
-                    </div>
-                    <div className="flex justify-center text-center">
-                        <animated.img className="absolute top-[18rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
-                    </div>
+                    {isFirst ? (
+                        <div>
+                            <div className="flex justify-center">
+                                <animated.h4 style={{ ...textAnimation }} className="absolute top-[18.2rem] text-center text-ourBlack font-bold">
+                                    KU HACKATHON
+                                </animated.h4>
+                                <animated.p style={{ ...textAnimation }} className="absolute top-[19.5rem] text-center text-ourBlack font-bold">
+                                    청춘들의 여름 항해가 시작됩니다
+                                </animated.p>
+                            </div>
+                            <div className="flex justify-center text-center">
+                                <animated.img className="absolute top-[18rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex justify-center">
+                            <h4 className="absolute top-[18.2rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
+                            <p className="absolute top-[19.5rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
+                        </div>
+                    )}
                 </div>
                 <div>
                     <div className="flex justify-center items-center mt-[22rem] mb-0">

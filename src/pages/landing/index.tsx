@@ -5,6 +5,7 @@ import SecondLanding from './second';
 
 const Landing = () => {
     const [scrollDirection, setScrollDirection] = useState(false);
+    const [isFirst, setIsFirst] = useState(true);
 
     useEffect(() => {
         const threshold = 0;
@@ -19,6 +20,7 @@ const Landing = () => {
                 return;
             }
             setScrollDirection(scrollY > lastScrollY ? true : false);
+            setIsFirst(scrollDirection ? true : false);
             lastScrollY = scrollY > 0 ? scrollY : 0;
             ticking = false;
         };
@@ -35,7 +37,8 @@ const Landing = () => {
         return () => window.removeEventListener('scroll', onScroll);
     }, [scrollDirection]);
 
-    return <div>{scrollDirection ? <SecondLanding /> : <FirstLanding />}</div>;
+    // return <div>{scrollDirection ? <SecondLanding /> : <FirstLanding />}</div>
+    return <div>{scrollDirection ? <SecondLanding /> : <FirstLanding isFirst={isFirst} />}</div>;
 };
 
 Landing.Layout = Layout;
