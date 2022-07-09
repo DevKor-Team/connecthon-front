@@ -1,7 +1,7 @@
 const sizes = {
-    sm: 'w-[170px] h-[40px] text-lg',
-    md: 'w-[210px] h-[49px] text-xl',
-    lg: 'w-[251px] h-[59px] text-2xl',
+    sm: 'w-44 h-10 text-lg',
+    md: 'w-52 h-12 text-xl',
+    lg: 'w-64 h-[3.75rem] text-2xl',
 };
 
 export default function Button({ size, className, children }: { size: 'sm' | 'md' | 'lg'; className: string; children: string }) {
