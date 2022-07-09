@@ -118,14 +118,14 @@ const FirstLanding = () => {
                 {/* {clicked ? <StartPage /> : null} */}
 
                 <div className="mt-[25rem]">
-                    <Fade top>
+                    <Fade bottom>
                         <div className="my-[10rem]">
                             <h3 className="text-center mb-7">후원</h3>
                             <img className="w-[90%] mx-auto" src="/mobile-company.svg" alt="company" />
                         </div>
                     </Fade>
-                    <Fade top>
-                        <Button size="sm" className="block px-3 mt-[10rem] mb-[10rem] mx-auto border-2 border-black hover:text-white">
+                    <Fade bottom>
+                        <Button size="sm" className="block px-3 mt-[10rem] mb-[8rem] mx-auto border-2 border-black hover:text-white">
                             Get Started
                         </Button>
                     </Fade>
