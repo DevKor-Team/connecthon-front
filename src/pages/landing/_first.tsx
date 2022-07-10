@@ -11,7 +11,7 @@ const FirstLanding = ({ isFirst }: Props) => {
         from: { y: 0 },
         to: [{ y: 12 }, { y: 0 }],
         config: {
-            duration: 200,
+            duration: 300,
             bounce: 1,
         },
     });
@@ -62,26 +62,26 @@ const FirstLanding = ({ isFirst }: Props) => {
                         {isFirst ? (
                             <div>
                                 <div className="flex justify-center">
-                                    <animated.h4 style={{ ...textAnimation }} className="absolute top-[18.2rem] text-center text-ourBlack font-bold">
+                                    <animated.h4 style={{ ...textAnimation }} className="absolute top-[25.5rem] text-center text-ourBlack font-bold">
                                         KU HACKATHON
                                     </animated.h4>
-                                    <animated.p style={{ ...textAnimation }} className="absolute top-[19.5rem] text-center text-ourBlack font-bold">
+                                    <animated.p style={{ ...textAnimation }} className="absolute top-[26.8rem] text-center text-ourBlack font-bold">
                                         청춘들의 여름 항해가 시작됩니다
                                     </animated.p>
                                 </div>
                                 <div className="flex justify-center text-center">
-                                    <animated.img className="absolute top-[18rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
+                                    <animated.img className="absolute top-[25.5rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
                                 </div>
                             </div>
                         ) : (
                             <div className="flex justify-center">
-                                <h4 className="absolute top-[18.2rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
-                                <p className="absolute top-[19.5rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
+                                <h4 className="absolute top-[25.6rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
+                                <p className="absolute top-[26.8rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
                             </div>
                         )}
                     </div>
                     <div>
-                        <div className="flex justify-center items-center mt-[22rem] mb-0">
+                        <div className="flex justify-center items-center mt-[25rem] mb-0">
                             <animated.img src="/expand-more.svg" alt="expand-icon" className="cursor-s-resize" style={{ ...btnAnimation }} />
                         </div>
                     </div>
@@ -104,21 +104,21 @@ const FirstLanding = ({ isFirst }: Props) => {
                         {isFirst ? (
                             <div>
                                 <div className="flex justify-center">
-                                    <animated.h4 style={{ ...textAnimation }} className="absolute top-[18.2rem] text-center text-ourBlack font-bold">
+                                    <animated.h4 style={{ ...textAnimation }} className="absolute top-[25.5rem] text-center text-ourBlack font-bold">
                                         KU HACKATHON
                                     </animated.h4>
-                                    <animated.p style={{ ...textAnimation }} className="absolute top-[19.5rem] text-center text-ourBlack font-bold">
+                                    <animated.p style={{ ...textAnimation }} className="absolute top-[26.8rem] text-center text-ourBlack font-bold">
                                         청춘들의 여름 항해가 시작됩니다
                                     </animated.p>
                                 </div>
                                 <div className="flex justify-center text-center">
-                                    <animated.img className="absolute top-[18rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
+                                    <animated.img className="absolute top-[25.5rem]" src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '3rem', ...symbolRotation }} />
                                 </div>
                             </div>
                         ) : (
                             <div className="flex justify-center">
-                                <h4 className="absolute top-[18.2rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
-                                <p className="absolute top-[19.5rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
+                                <h4 className="absolute top-[25.5rem] text-center text-ourBlack font-bold">KU HACKATHON</h4>
+                                <p className="absolute top-[26.8rem] text-center text-ourBlack font-bold">청춘들의 여름 항해가 시작됩니다</p>
                             </div>
                         )}
                     </div>
