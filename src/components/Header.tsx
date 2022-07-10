@@ -10,7 +10,7 @@ function SideMenu() {
             const sidebg = document.getElementById('sidebg');
             const wrapper = document.getElementById('wrapper');
             const sidebar = document.getElementById('sidebar');
-            wrapper?.classList.remove('z-50');
+            //wrapper?.classList.remove('z-[110]');
             sidebg?.classList.replace('visible', 'invisible');
             sidebg?.classList.remove('backdrop-blur-sm');
             sidebg?.classList.replace('bg-black/20', 'bg-black/0');
@@ -18,7 +18,7 @@ function SideMenu() {
         }
     }
     return (
-        <div className="fixed inset-0 w-[100vw] invisible md:hidden" id="wrapper">
+        <div className="fixed inset-0 z-[110] w-[100vw] invisible md:hidden" id="wrapper">
             <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg">
                 <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white px-4 pt-6 shadow-lg" id="sidebar">
                     <MdOutlineClose className="absolute top-9 right-4" size={20} onClick={closeMenu} />
@@ -49,7 +49,7 @@ function Header() {
             const sidebg = document.getElementById('sidebg');
             const wrapper = document.getElementById('wrapper');
             const sidebar = document.getElementById('sidebar');
-            wrapper?.classList.add('z-50');
+            //wrapper?.classList.add('z-[110]');
             sidebg?.classList.replace('invisible', 'visible');
             sidebg?.classList.add('backdrop-blur-sm');
             sidebg?.classList.replace('bg-black/0', 'bg-black/20');
@@ -58,36 +58,37 @@ function Header() {
     }
 
     return (
-        <header className="z-[100] bg-white">
-            <div className="mt-5 ml-1 flex z-70 items-center space-x-6 md:space-x-16">
-                <FiMenu size={24} className="text-lg font-light md:hidden cursor-pointer" onClick={openMenu} />
-                <Link href="/">
-                    <button className="font-normal font-impact text-xl md:text-2xl md:mr-6">KU HACKATHON</button>
-                </Link>
-                <ul className="hidden space-x-4 md:flex md:space-x-6 lg:space-x-8 font-semibold">
-                    <li>
-                        <Link href="/about">ABOUT</Link>
-                    </li>
-                    <li>
-                        <Link href="/project">PROJECT</Link>
-                    </li>
-                    <li>
-                        <Link href="/participants">PARTICIPANTS</Link>
-                    </li>
-                    <li>
-                        <Link href="/chat">CHAT</Link>
-                    </li>
-                </ul>
-            </div>
-
-            <div className="flex items-center font-light mt-4 mr-4 cursor-pointer md:mr-12">
-                <Link href="/mypage">
-                    <BsPerson size={22} />
-                </Link>
-            </div>
-
+        <>
             <SideMenu />
-        </header>
+            <header className="z-[100]">
+                <div className="mt-5 ml-1 flex z-70 items-center space-x-6 md:space-x-16">
+                    <FiMenu size={24} className="text-lg font-light md:hidden cursor-pointer" onClick={openMenu} />
+                    <Link href="/">
+                        <button className="font-normal font-impact text-xl md:text-2xl md:mr-6">KU HACKATHON</button>
+                    </Link>
+                    <ul className="hidden space-x-4 md:flex md:space-x-6 lg:space-x-8 font-semibold">
+                        <li>
+                            <Link href="/about">ABOUT</Link>
+                        </li>
+                        <li>
+                            <Link href="/project">PROJECT</Link>
+                        </li>
+                        <li>
+                            <Link href="/participants">PARTICIPANTS</Link>
+                        </li>
+                        <li>
+                            <Link href="/chat">CHAT</Link>
+                        </li>
+                    </ul>
+                </div>
+
+                <div className="flex items-center font-light mt-4 mr-4 cursor-pointer md:mr-12">
+                    <Link href="/mypage">
+                        <BsPerson size={22} />
+                    </Link>
+                </div>
+            </header>
+        </>
     );
 }
 
