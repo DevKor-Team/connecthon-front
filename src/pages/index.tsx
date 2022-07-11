@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Head from 'next/head';
 import Layout from '../layouts/Layout';
 import { CustomNextPage } from '../types/types';
+import Landing from './landing';
 
 const Home: CustomNextPage = () => {
     return (
@@ -12,6 +13,7 @@ const Home: CustomNextPage = () => {
                 <link rel="icon" href="/symbol.ico" />
             </Head>
             <Header />
+            <Landing />
         </div>
     );
 };
