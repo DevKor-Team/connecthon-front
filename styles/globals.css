@@ -44,7 +44,7 @@
 
 @layer components {
     .title {
-        @apply leading-tight text-6xl font-impact z-0;
+        @apply leading-tight text-[8rem] font-impact z-0 text-ourBlack opacity-30;
     }
 }
 
