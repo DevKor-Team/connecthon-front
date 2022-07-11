@@ -6,6 +6,7 @@ import SecondLanding from './_second';
 const Landing = () => {
     const [scrollDirection, setScrollDirection] = useState(false);
     const [isFirst, setIsFirst] = useState(true);
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
         const threshold = 0;
@@ -20,7 +21,13 @@ const Landing = () => {
                 return;
             }
             setScrollDirection(scrollY > lastScrollY ? true : false);
-            setIsFirst(scrollDirection ? true : false);
+            if (count == 0) {
+                if (scrollDirection) {
+                    setIsFirst(false);
+                    setCount(prev => prev + 1);
+                }
+            }
+            //setIsFirst(scrollDirection ? true : false);
             lastScrollY = scrollY > 0 ? scrollY : 0;
             ticking = false;
         };
