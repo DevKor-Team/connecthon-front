@@ -43,7 +43,7 @@ function SideMenu() {
     );
 }
 
-function Header() {
+function Header({ theme }: { theme?: 'dark' | 'light' }) {
     function openMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
@@ -60,11 +60,11 @@ function Header() {
     return (
         <>
             <SideMenu />
-            <header className="z-[100]">
+            <header className={`z-[100] ${theme == 'dark' ? 'bg-ourBlack' : ''}`}>
                 <div className="mt-5 ml-1 flex z-70 items-center space-x-6 md:space-x-16">
                     <FiMenu size={24} className="text-lg font-light md:hidden cursor-pointer" onClick={openMenu} />
                     <Link href="/">
-                        <button className="font-normal font-impact text-xl md:text-2xl md:mr-6">KU HACKATHON</button>
+                        <button className={`${theme == 'dark' ? 'text-ourWhite' : ''} font-normal font-impact text-xl md:text-2xl md:mr-6`}>KU HACKATHON</button>
                     </Link>
                     <ul className="hidden space-x-4 md:flex md:space-x-6 lg:space-x-8 font-semibold">
                         <li>
