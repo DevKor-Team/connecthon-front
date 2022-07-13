@@ -12,7 +12,6 @@ const Home: CustomNextPage = () => {
                 <title>KU HACKATHON</title>
                 <link rel="icon" href="/symbol.ico" />
             </Head>
-            <Header />
             <Landing />
         </div>
     );

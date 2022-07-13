@@ -103,7 +103,7 @@ function Merit() {
                 {/* 타임라인 섹션 */}
                 <section className="relative w-full pr-6 pl-2">
                     {/* 첫번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-8 md:before:h-16 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-8 md:before:h-16 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20 before:rounded-full">
                         <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white animate-pulse">
                             <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
                         </div>
