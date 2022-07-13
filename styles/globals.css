@@ -24,15 +24,6 @@
     ::-webkit-scrollbar {
         display: none;
     }
-    h1 {
-        @apply text-3xl sm:text-6xl font-extrabold;
-    }
-    h2 {
-        @apply text-2xl sm:text-5xl font-bold;
-    }
-    h3 {
-        @apply text-xl sm:text-4xl font-bold;
-    }
     header {
         @apply fixed top-0 w-full flex items-center justify-between z-50 px-4 py-4 transition-all lg:px-[9.375rem] lg:py-6;
     }
