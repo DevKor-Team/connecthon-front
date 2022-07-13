@@ -63,8 +63,8 @@ function Information() {
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">직접 만들어 보고 싶나요?</h1>
                 </section>
                 <section className="flex flex-col justify-center items-start mb-24 md:mb-16">
-                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">여러 대학생들이 모여 새로운 관점으로 현실 문제를 해결하고</p>
-                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">다양한 기술을 접목시켜 서비스를 개발하는 경험을 제공합니다.</p>
+                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">여러 대학생들이 모여 새로운 관점으로 현실 문제를 해결하고</p>
+                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">다양한 기술을 접목시켜 하나의 서비스를 개발하는 경험을 제공합니다.</p>
                 </section>
                 <section className="grid grid-rows-5 w-full">
                     {schedule.map(item => (
@@ -85,15 +85,58 @@ function Information() {
 
 function Merit() {
     return (
-        <div className="w-full h-[calc(100vh-4rem)] mt-16 px-16 flex items-center justify-start w-full">
+        <div className="w-full mt-24 md:mt-16 md:px-16 flex items-center justify-start w-full">
             <main className="flex flex-col justify-center items-start w-full">
-                <section className="flex flex-col justify-center items-start mb-8">
-                    <h1 className="text-[2.125rem] font-extrabold mb-6">새로운 사람과 새로운 도전을 통해</h1>
-                    <h1 className="text-[2.125rem] font-extrabold">자신이 성장하는 경험을 해보세요</h1>
+                <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
+                    <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">새로운 사람과 새로운 도전을 통해</h1>
+                    <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">자신이 성장하는 경험을 해보세요</h1>
                 </section>
-                <section className="flex flex-col justify-center items-start mb-8">
+                <section className="flex flex-col justify-center items-start mb-32 hidden md:block" id="pc-ver">
                     <p className="text-[0.938rem] text-ourGrey font-medium">자신의 아이디어를 구현하는 기회뿐만이 아니라, 나아가 함께 성장할 수 있는 기회를</p>
                     <p className="text-[0.938rem] text-ourGrey font-medium">본 해커톤을 통해 제공하고자 합니다.</p>
+                </section>
+                <section className="flex flex-col justify-center items-start mb-24 md:hidden" id="mobile-ver">
+                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">자신의 아이디어를 구현하는 기회뿐만이 아니라,</p>
+                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">나아가 함께 성장할 수 있는 기회를 본 해커톤을 통해 제공하고자 합니다.</p>
+                </section>
+
+                {/* 타임라인 섹션 */}
+                <section className="relative w-full pr-6 pl-2">
+                    {/* 첫번째 블록 */}
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-8 md:before:h-16 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
+                        <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white animate-pulse">
+                            <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
+                        </div>
+                        <div className="flex flex-col justify-start items-start">
+                            <h2 className="text-xl leading-5 font-extrabold mb-3">협업 경험의 기회 제공</h2>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">열정있는 개발자, 기획자, 디자이너 간의 협업을 통해 완성도</p>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">높은 서비스를 직접 개발하는 특별한 경험을 제공합니다.</p>
+                        </div>
+                    </div>
+                    {/* 두번째 블록 */}
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
+                        <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                            <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
+                        </div>
+                        <div className="flex flex-col justify-start items-start">
+                            <h2 className="text-xl leading-5 font-extrabold mb-3">약 20개의 데모 서비스</h2>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">본 해커톤이 종료된 이후에도 자신이 개발한 서비스를</p>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">발전시켜 실제 서비스로 탄생시킬 수 있도록 데모 서비스를</p>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">제공합니다.</p>
+                        </div>
+                    </div>
+                    {/* 세번째 블록 */}
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
+                        <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                            <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
+                        </div>
+                        <div className="flex flex-col justify-start items-start">
+                            <h2 className="text-xl leading-5 font-extrabold mb-3">다양한 직군과의 지속적 네트워킹</h2>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">서비스 개발 이후에도 세 직군이 지속적으로 네트워크하며</p>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">동반성장하세요. 성장을 경험하고 나누고자 하는 사람들이</p>
+                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">모여 성장해나갑니다.</p>
+                        </div>
+                    </div>
                 </section>
             </main>
         </div>
