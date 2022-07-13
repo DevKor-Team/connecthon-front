@@ -2,7 +2,6 @@ import Layout from '../../layouts/Layout';
 import { Parallax } from 'react-scroll-parallax';
 import Button from '../../components/Button';
 import Link from 'next/link';
-import { useState } from 'react';
 
 interface Location {
     xLocation: number;
@@ -11,11 +10,6 @@ interface Location {
 }
 
 const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
-    console.log('======================================');
-    console.log(xLocation);
-    console.log(yLocation);
-    console.log('======================================');
-
     return (
         <div>
             <div className="w-[95%] h-[45rem] mx-auto mt-[6rem]">
@@ -62,7 +56,7 @@ const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
             </Parallax>
 
             <div className="flex justify-center text-center">
-                <Parallax opacity={[1, 0.1]} translateY={[`${symbolLocation}`, `${symbolLocation}`]} startScroll={550} endScroll={800}>
+                <Parallax opacity={[1, 0]} translateY={[`${symbolLocation}`, `${symbolLocation}`]} startScroll={550} endScroll={800}>
                     <img src="/symbol-2d.svg" alt="symbol-2d" className="w-[5rem] xl:w-[7rem]" />
                 </Parallax>
             </div>
