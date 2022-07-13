@@ -60,7 +60,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
     return (
         <>
             <SideMenu theme={theme} />
-            <header className={`z-[100] ${theme == 'dark' ? 'bg-ourBlack' : ''}`}>
+            <header className={`z-[100] ${theme == 'dark' ? 'bg-ourBlack' : 'bg-white'}`}>
                 <div className="flex z-70 items-center space-x-6 md:space-x-16">
                     <FiMenu size={24} stroke={`${theme == 'dark' ? 'white' : 'black'}`} className={`text-lg font-light md:hidden cursor-pointer`} onClick={openMenu} />
                     <Link href="/homepage">
