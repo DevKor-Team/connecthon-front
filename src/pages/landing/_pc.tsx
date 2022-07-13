@@ -7,9 +7,10 @@ import { useState } from 'react';
 interface Location {
     xLocation: number;
     yLocation: number;
+    symbolLocation: number;
 }
 
-const PCLanding = ({ xLocation, yLocation }: Location) => {
+const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
     console.log('======================================');
     console.log(xLocation);
     console.log(yLocation);
@@ -55,14 +56,14 @@ const PCLanding = ({ xLocation, yLocation }: Location) => {
 
             <Parallax opacity={[0, 1]} translateY={[-770, -770]} startScroll={550} endScroll={800}>
                 <div className="flex justify-center flex-col z-10">
-                    <h3 className="tracking-wider text-center font-bold text-3xl">KU HACKATHON</h3>
-                    <p className="tracking-wider text-center text-ourBlack font-bold text-2xl">청춘들의 여름 항해가 시작됩니다</p>
+                    <h3 className="tracking-wider text-center font-bold text-xl xl:text-3xl ">KU HACKATHON</h3>
+                    <p className="tracking-wider text-center text-ourBlack font-bold text-xl xl:text-2xl">청춘들의 여름 항해가 시작됩니다</p>
                 </div>
             </Parallax>
 
             <div className="flex justify-center text-center">
-                <Parallax opacity={[1, 0.1]} translateY={[-550, -550]} startScroll={550} endScroll={800}>
-                    <img src="/symbol-2d.svg" alt="symbol-2d" style={{ width: '7rem' }} />
+                <Parallax opacity={[1, 0.1]} translateY={[`${symbolLocation}`, `${symbolLocation}`]} startScroll={550} endScroll={800}>
+                    <img src="/symbol-2d.svg" alt="symbol-2d" className="w-[5rem] xl:w-[7rem]" />
                 </Parallax>
             </div>
 
