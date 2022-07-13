@@ -31,7 +31,7 @@ const PCLanding = () => {
                         </div>
                     </Parallax>
 
-                    <Parallax speed={-10} translateY={[0, 28]} translateX={[15, -63]} startScroll={0} endScroll={60}>
+                    <Parallax speed={-10} translateY={[0, 28]} translateX={[20, -63]} startScroll={0} endScroll={60}>
                         <div className="self-start">
                             <img src="/devkor.svg" alt="devkor" />
                         </div>
@@ -39,10 +39,10 @@ const PCLanding = () => {
                 </div>
             </div>
             <Parallax speed={-10} opacity={[0, 1]} translateY={[-75, -75]} translateX={[8, 8]} startScroll={60} endScroll={80}>
-                <img src="/spreads.svg" alt="spreads" width={`95%`} />
+                <img src="/spreads.svg" alt="spreads" width={`100%`} />
             </Parallax>
 
-            <Parallax opacity={[0.1, 1]} translateY={[-770, -770]} startScroll={550} endScroll={800}>
+            <Parallax opacity={[0, 1]} translateY={[-770, -770]} startScroll={550} endScroll={800}>
                 <div className="flex justify-center flex-col z-10">
                     <h3 className="tracking-wider text-center font-bold text-3xl">KU HACKATHON</h3>
                     <p className="tracking-wider text-center text-ourBlack font-bold text-2xl">청춘들의 여름 항해가 시작됩니다</p>
