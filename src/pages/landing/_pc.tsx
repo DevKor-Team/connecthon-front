@@ -2,43 +2,54 @@ import Layout from '../../layouts/Layout';
 import { Parallax } from 'react-scroll-parallax';
 import Button from '../../components/Button';
 import Link from 'next/link';
+import { useState } from 'react';
 
-const PCLanding = () => {
+interface Location {
+    xLocation: number;
+    yLocation: number;
+}
+
+const PCLanding = ({ xLocation, yLocation }: Location) => {
+    console.log('======================================');
+    console.log(xLocation);
+    console.log(yLocation);
+    console.log('======================================');
+
     return (
         <div>
             <div className="w-[95%] h-[45rem] mx-auto mt-[6rem]">
                 <div className="absolute top-[11rem] left-[7rem] ">
-                    <Parallax opacity={[0.3, 1]} startScroll={2} endScroll={60} className={'leading-tight text-[8rem] font-impact text-ourBlack'}>
+                    <Parallax opacity={[0.3, 1]} startScroll={2} endScroll={60} className={'leading-tight text-[6rem] font-impact text-ourBlack xl:text-[8rem]'}>
                         2022
                     </Parallax>
-                    <Parallax opacity={[0.3, 1]} startScroll={2} endScroll={60} className={'leading-tight text-[8rem] font-impact text-ourBlack'}>
+                    <Parallax opacity={[0.3, 1]} startScroll={2} endScroll={60} className={'leading-tight text-[6rem] font-impact text-ourBlack xl:text-[8rem]'}>
                         KU
                     </Parallax>
-                    <Parallax opacity={[0.3, 1]} startScroll={2} endScroll={60} className={'leading-tight text-[8rem] font-impact text-ourBlack'}>
+                    <Parallax opacity={[0.3, 1]} startScroll={2} endScroll={60} className={'leading-tight text-[6rem] font-impact text-ourBlack xl:text-[8rem]'}>
                         HACKATHON
                     </Parallax>
                 </div>
 
                 <div className="flex justify-evenly h-[100%]">
-                    <Parallax speed={-10} translateY={[25, 40]} translateX={[0, 70]} startScroll={0} endScroll={60}>
-                        <div className="self-end">
+                    <Parallax speed={-10} translateY={[25, 35]} translateX={[0, 70]} startScroll={0} endScroll={60}>
+                        <div className="self-end w-[20rem] xl:w-[28rem]">
                             <img src="/business.svg" alt="business" />
                         </div>
                     </Parallax>
                     <Parallax speed={-10} translateY={[10, 30]} startScroll={0} endScroll={60}>
-                        <div className="self-center">
+                        <div className="self-center w-[20rem] xl:w-[28rem]">
                             <img src="/designer.svg" alt="designer" />
                         </div>
                     </Parallax>
 
                     <Parallax speed={-10} translateY={[0, 28]} translateX={[20, -63]} startScroll={0} endScroll={60}>
-                        <div className="self-start">
+                        <div className="self-start w-[14rem] xl:w-[23rem]">
                             <img src="/devkor.svg" alt="devkor" />
                         </div>
                     </Parallax>
                 </div>
             </div>
-            <Parallax speed={-10} opacity={[0, 1]} translateY={[-75, -75]} translateX={[8, 8]} startScroll={60} endScroll={80}>
+            <Parallax speed={-10} opacity={[0, 1]} translateY={[`${yLocation}`, `${yLocation}`]} translateX={[`${xLocation}`, `${xLocation}`]} startScroll={60} endScroll={80}>
                 <img src="/spreads.svg" alt="spreads" width={`100%`} />
             </Parallax>
 
