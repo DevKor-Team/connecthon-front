@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 const Layout: React.FC = ({ children }) => {
@@ -10,6 +11,7 @@ const Layout: React.FC = ({ children }) => {
             </Head>
             <Header />
             <div>{children}</div>
+            <Footer />
         </div>
     );
 };
