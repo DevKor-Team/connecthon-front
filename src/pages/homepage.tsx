@@ -1,6 +1,7 @@
 import { CustomNextPage } from '../types/types';
 import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
+import { Main } from 'next/document';
 
 const schedule = [
     {
@@ -84,6 +85,8 @@ function Information() {
 }
 
 function Merit() {
+    const shadowStyle = 'shadow-[0px_0px_10px_2px_rgba(32,135,255,0.4)] md:shadow-[0px_0px_16px_6px_rgba(32,135,255,0.4)]';
+
     return (
         <div className="w-full mt-24 md:mt-16 md:px-16 flex items-center justify-start w-full">
             <main className="flex flex-col justify-center items-start w-full">
@@ -103,9 +106,9 @@ function Merit() {
                 {/* 타임라인 섹션 */}
                 <section className="relative w-full pr-6 pl-2">
                     {/* 첫번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-8 md:before:h-16 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
-                        <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white animate-pulse">
-                            <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:rounded-full before:h-8 md:before:h-16 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
+                        <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-[0px_0px_10px_2px_rgba(32,135,255,0.4)] md:shadow-[0px_0px_16px_6px_rgba(32,135,255,0.4)]">
+                            <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                         </div>
                         <div className="flex flex-col justify-start items-start">
                             <h2 className="text-xl leading-5 font-extrabold mb-3">협업 경험의 기회 제공</h2>
@@ -114,9 +117,9 @@ function Merit() {
                         </div>
                     </div>
                     {/* 두번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
-                        <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
-                            <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
+                        <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                            <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                         </div>
                         <div className="flex flex-col justify-start items-start">
                             <h2 className="text-xl leading-5 font-extrabold mb-3">약 20개의 데모 서비스</h2>
@@ -126,15 +129,58 @@ function Merit() {
                         </div>
                     </div>
                     {/* 세번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 before:absolute before:bottom-16 before:left-[0.563rem] before:bg-ourBlue before:bg-opacity-20">
-                        <div className="w-5 h-5 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
-                            <div className="w-3 h-3 rounded-full bg-ourBlue"></div>
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
+                        <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                            <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                         </div>
                         <div className="flex flex-col justify-start items-start">
                             <h2 className="text-xl leading-5 font-extrabold mb-3">다양한 직군과의 지속적 네트워킹</h2>
                             <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">서비스 개발 이후에도 세 직군이 지속적으로 네트워크하며</p>
                             <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">동반성장하세요. 성장을 경험하고 나누고자 하는 사람들이</p>
                             <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">모여 성장해나갑니다.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+    );
+}
+
+function MainProject() {
+    return (
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-24 md:mt-16 md:px-16 flex items-center justify-start w-full">
+            <main className="flex flex-col justify-center items-start w-full">
+                {/* 섹션 제목, 부제목 영역 */}
+                <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
+                    <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">상상했던 프로젝트를 현실으로,</h1>
+                    <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">당신도 도전해 보세요</h1>
+                </section>
+                <section className="flex flex-col justify-center items-start mb-16">
+                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">우수한 프로젝트들입니다. 당신도 기획자, 개발자, 디자이너의 역할로</p>
+                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">해커톤에 참여하여 멋진 프로젝트를 만들어보세요.</p>
+                </section>
+
+                {/* 프로젝트 리스트 영역 */}
+                <section className="w-full flex flex-col sm:flex-row items-center space-y-8 sm:space-y-0 sm:space-x-6 xl:space-x-14 mb-10">
+                    <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
+                        <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
+                        <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
+                            <h1 className="font-bold text-lg sm:text-base lg:text-lg">KU Project - Hackathon</h1>
+                            <h2 className="font-semibold text-base sm:text-sm lg:text-base">Team : KU HACKATHON</h2>
+                        </div>
+                    </div>
+                    <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
+                        <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
+                        <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
+                            <h1 className="font-bold text-lg sm:text-base lg:text-lg">KU Project - Hackathon</h1>
+                            <h2 className="font-semibold text-base sm:text-sm lg:text-base">Team : KU HACKATHON</h2>
+                        </div>
+                    </div>
+                    <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
+                        <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
+                        <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
+                            <h1 className="font-bold text-lg sm:text-base lg:text-lg">KU Project - Hackathon</h1>
+                            <h2 className="font-semibold text-base sm:text-sm lg:text-base">Team : KU HACKATHON</h2>
                         </div>
                     </div>
                 </section>
@@ -163,6 +209,7 @@ const Homepage: CustomNextPage = () => {
                 <HomeTitle firstScroll={firstScroll} />
                 <Information />
                 <Merit />
+                <MainProject />
             </main>
         </div>
     );
