@@ -1,4 +1,3 @@
-import { BsChevronDown } from 'react-icons/bs';
 import { useSpring, animated } from 'react-spring';
 
 interface Props {
@@ -131,7 +130,6 @@ const FirstLanding = ({ isFirst }: Props) => {
             </animated.div>
         );
     };
-    // return <FirstRenderPage />;
     return <div>{isFirst ? <FirstRenderPage /> : <ReRenderPage />}</div>;
 };
 

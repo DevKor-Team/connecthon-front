@@ -19,11 +19,13 @@
         "react-dom": "18.2.0",
         "react-icons": "^4.4.0",
         "react-moving-text": "^0.0.7",
+        "react-parallax": "^3.5.1",
         "react-scroll": "^1.8.7",
         "react-scroll-parallax": "^3.2.0",
         "react-spring": "^9.4.5",
         "react-transition-group": "^4.4.2",
-        "react-use-scroll-direction": "^0.1.0"
+        "react-use-scroll-direction": "^0.1.0",
+        "sass": "^1.53.0"
     },
     "devDependencies": {
         "@types/node": "18.0.0",

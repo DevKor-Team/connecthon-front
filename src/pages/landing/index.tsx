@@ -1,51 +1,32 @@
 import Layout from '../../layouts/Layout';
+import useWindowSize from '../../hooks/useWindowSize';
+import MobileLanding from './_mobile';
+import PCLanding from './_pc';
 import { useEffect, useState } from 'react';
-import FirstLanding from './_first';
-import SecondLanding from './_second';
 
 const Landing = () => {
-    const [scrollDirection, setScrollDirection] = useState(false);
-    const [isFirst, setIsFirst] = useState(true);
-    const [count, setCount] = useState(0);
+    const size = useWindowSize();
+    const [xLocation, setXLocation] = useState<number>(5);
+    const [yLocation, setYLocation] = useState<number>(-73);
+    const [symbolLocation, setSymbolLocation] = useState<number>(-550);
 
     useEffect(() => {
-        const threshold = 0;
-        let lastScrollY = window.pageYOffset;
-        let ticking = false;
+        if (size.width && size.width < 1280 && size.width >= 1024) {
+            setXLocation(7);
+            setYLocation(-85);
+            setSymbolLocation(-620);
+        } else if (size.width && size.width < 1024 && size.width >= 900) {
+            setXLocation(7);
+            setYLocation(-100);
+            setSymbolLocation(-625);
+        } else if (size.width && size.width < 900) {
+            setXLocation(7);
+            setYLocation(-110);
+            setSymbolLocation(-630);
+        }
+    }, [size]);
 
-        const updateScrollDirection = () => {
-            const scrollY = window.pageYOffset;
-
-            if (Math.abs(scrollY - lastScrollY) < threshold) {
-                ticking = false;
-                return;
-            }
-            setScrollDirection(scrollY > lastScrollY ? true : false);
-            if (count == 0) {
-                if (scrollDirection) {
-                    setIsFirst(false);
-                    setCount(prev => prev + 1);
-                }
-            }
-            //setIsFirst(scrollDirection ? true : false);
-            lastScrollY = scrollY > 0 ? scrollY : 0;
-            ticking = false;
-        };
-
-        const onScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(updateScrollDirection);
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', onScroll);
-
-        return () => window.removeEventListener('scroll', onScroll);
-    }, [scrollDirection]);
-
-    // return <div>{scrollDirection ? <SecondLanding /> : <FirstLanding />}</div>
-    return <div>{scrollDirection ? <SecondLanding /> : <FirstLanding isFirst={isFirst} />}</div>;
+    return <div>{size.width && size.width > 640 ? <PCLanding xLocation={xLocation} yLocation={yLocation} symbolLocation={symbolLocation} /> : <MobileLanding />}</div>;
 };
 
 Landing.Layout = Layout;
