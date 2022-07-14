@@ -31,6 +31,36 @@ const schedule = [
     },
 ];
 
+const projects = [
+    {
+        id: 1,
+        title: 'KU Project - Hackathon',
+        team: 'Team : KU HACKATHON',
+    },
+    {
+        id: 2,
+        title: 'KU Project - Hackathon',
+        team: 'Team : KU HACKATHON',
+    },
+    {
+        id: 3,
+        title: 'KU Project - Hackathon',
+        team: 'Team : KU HACKATHON',
+    },
+];
+
+function ProjectCard({ imgurl, title, team }: { imgurl?: string; title: string; team: string }) {
+    return (
+        <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
+            <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
+            <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
+                <h1 className="font-bold text-lg sm:text-base lg:text-lg">{title}</h1>
+                <h2 className="font-semibold text-base sm:text-sm lg:text-base">{team}</h2>
+            </div>
+        </div>
+    );
+}
+
 function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
     return (
         <div
@@ -162,27 +192,9 @@ function MainProject() {
 
                 {/* 프로젝트 리스트 영역 */}
                 <section className="w-full flex flex-col sm:flex-row items-center space-y-8 sm:space-y-0 sm:space-x-6 xl:space-x-14 mb-10">
-                    <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
-                        <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
-                        <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
-                            <h1 className="font-bold text-lg sm:text-base lg:text-lg">KU Project - Hackathon</h1>
-                            <h2 className="font-semibold text-base sm:text-sm lg:text-base">Team : KU HACKATHON</h2>
-                        </div>
-                    </div>
-                    <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
-                        <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
-                        <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
-                            <h1 className="font-bold text-lg sm:text-base lg:text-lg">KU Project - Hackathon</h1>
-                            <h2 className="font-semibold text-base sm:text-sm lg:text-base">Team : KU HACKATHON</h2>
-                        </div>
-                    </div>
-                    <div className="w-full md:w-1/3 rounded-xl shadow-[1px_1px_3px_2px_rgba(232,237,237,1)]">
-                        <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl">프로젝트대표사진</div>
-                        <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around">
-                            <h1 className="font-bold text-lg sm:text-base lg:text-lg">KU Project - Hackathon</h1>
-                            <h2 className="font-semibold text-base sm:text-sm lg:text-base">Team : KU HACKATHON</h2>
-                        </div>
-                    </div>
+                    {projects.map(prj => (
+                        <ProjectCard key={prj.id} title={prj.title} team={prj.team} />
+                    ))}
                 </section>
             </main>
         </div>
