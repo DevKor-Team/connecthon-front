@@ -2,6 +2,7 @@ import { CustomNextPage } from '../types/types';
 import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
+import HomeButton from '../components/HomeButton';
 
 const schedule = [
     {
@@ -189,6 +190,36 @@ function MainProject() {
     );
 }
 
+function BottomBanner() {
+    return (
+        <>
+            {/* 모바일 배너 */}
+            <div className="w-full mt-24 mb-16 rounded-xl p-5 h-44 flex justify-center items-center bg-[url('/home-banner-mobile.svg')] bg-cover sm:hidden">
+                <div className="flex flex-col items-center">
+                    <section className="mb-5 flex flex-col items-center space-y-3">
+                        <h1 className="text-ourWhite font-impact text-[1.688rem]">2022</h1>
+                        <h1 className="text-ourWhite font-impact text-[1.688rem]">KU HACKATHON</h1>
+                    </section>
+                    <HomeButton className="w-40 h-9 text-sm">주관 소개 바로가기</HomeButton>
+                </div>
+            </div>
+
+            {/* PC 배너 */}
+            <div className="w-full md:px-16 hidden sm:block">
+                <div className="w-full mt-40 mb-36 rounded-xl p-5 h-72 flex justify-center items-center bg-[url('/home-banner-pc.svg')] bg-cover">
+                    <div className="flex flex-col items-center">
+                        <section className="mb-10 flex flex-col items-center space-y-2">
+                            <h1 className="text-ourWhite font-impact text-6xl">2022</h1>
+                            <h1 className="text-ourWhite font-impact text-6xl">KU HACKATHON</h1>
+                        </section>
+                        <HomeButton className="w-60 h-12 text-base rounded-xl">주관 소개 바로가기</HomeButton>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
+}
+
 const Homepage: CustomNextPage = () => {
     const [firstScroll, setFirstScroll] = useState(false);
 
@@ -210,6 +241,7 @@ const Homepage: CustomNextPage = () => {
                 <Information />
                 <Merit />
                 <MainProject />
+                <BottomBanner />
             </main>
         </div>
     );
