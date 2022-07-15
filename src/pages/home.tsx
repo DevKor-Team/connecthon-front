@@ -163,7 +163,11 @@ function Merit({ startpoint, secondpoint }: { startpoint: number; secondpoint: n
                 <section className="relative w-full pr-6 pl-2">
                     {/* 첫번째 블록 */}
                     <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:rounded-full before:h-16 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                        <div className={`w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${firstShadow ? shadowStyle : ''}`}>
+                        <div
+                            className={`transition-all w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${
+                                firstShadow ? shadowStyle : ''
+                            }`}
+                        >
                             <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                         </div>
                         <div className="flex flex-col justify-start items-start">
