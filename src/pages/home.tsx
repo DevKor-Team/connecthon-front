@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
 import HomeButton from '../components/HomeButton';
+import { Parallax } from 'react-scroll-parallax';
 
 const schedule = [
     {
@@ -104,6 +105,15 @@ function Information() {
 }
 
 function Merit() {
+    let viewheight;
+    let viewwidth;
+    if (typeof window !== 'undefined') {
+        viewheight = window.innerHeight;
+        viewwidth = window.innerWidth;
+    }
+
+    let timeline_2_animation_height = viewwidth >= 768 ? 1.65 * viewheight : 0.7 * viewheight;
+    const timeline_3_animation_height = viewwidth >= 768 ? 2 * viewheight : 1 * viewheight;
     const shadowStyle = 'shadow-[0px_0px_10px_2px_rgba(32,135,255,0.4)] md:shadow-[0px_0px_16px_6px_rgba(32,135,255,0.4)]';
 
     return (
@@ -126,7 +136,7 @@ function Merit() {
                 <section className="relative w-full pr-6 pl-2">
                     {/* 첫번째 블록 */}
                     <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:rounded-full before:h-8 md:before:h-16 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                        <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-[0px_0px_10px_2px_rgba(32,135,255,0.4)] md:shadow-[0px_0px_16px_6px_rgba(32,135,255,0.4)]">
+                        <div className={`w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${shadowStyle}`}>
                             <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                         </div>
                         <div className="flex flex-col justify-start items-start">
@@ -136,29 +146,33 @@ function Merit() {
                         </div>
                     </div>
                     {/* 두번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                        <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
-                            <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
+                    <Parallax opacity={[0, 1]} startScroll={timeline_2_animation_height} endScroll={timeline_2_animation_height + 70}>
+                        <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
+                            <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                                <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
+                            </div>
+                            <div className="flex flex-col justify-start items-start">
+                                <h2 className="text-xl leading-5 font-extrabold mb-3">약 20개의 데모 서비스</h2>
+                                <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">본 해커톤이 종료된 이후에도 자신이 개발한 서비스를</p>
+                                <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">발전시켜 실제 서비스로 탄생시킬 수 있도록 데모 서비스를</p>
+                                <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">제공합니다.</p>
+                            </div>
                         </div>
-                        <div className="flex flex-col justify-start items-start">
-                            <h2 className="text-xl leading-5 font-extrabold mb-3">약 20개의 데모 서비스</h2>
-                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">본 해커톤이 종료된 이후에도 자신이 개발한 서비스를</p>
-                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">발전시켜 실제 서비스로 탄생시킬 수 있도록 데모 서비스를</p>
-                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">제공합니다.</p>
-                        </div>
-                    </div>
+                    </Parallax>
                     {/* 세번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                        <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
-                            <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
+                    <Parallax opacity={[0, 1]} startScroll={timeline_3_animation_height} endScroll={timeline_3_animation_height + 70}>
+                        <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
+                            <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                                <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
+                            </div>
+                            <div className="flex flex-col justify-start items-start">
+                                <h2 className="text-xl leading-5 font-extrabold mb-3">다양한 직군과의 지속적 네트워킹</h2>
+                                <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">서비스 개발 이후에도 세 직군이 지속적으로 네트워크하며</p>
+                                <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">동반성장하세요. 성장을 경험하고 나누고자 하는 사람들이</p>
+                                <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">모여 성장해나갑니다.</p>
+                            </div>
                         </div>
-                        <div className="flex flex-col justify-start items-start">
-                            <h2 className="text-xl leading-5 font-extrabold mb-3">다양한 직군과의 지속적 네트워킹</h2>
-                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">서비스 개발 이후에도 세 직군이 지속적으로 네트워크하며</p>
-                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">동반성장하세요. 성장을 경험하고 나누고자 하는 사람들이</p>
-                            <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">모여 성장해나갑니다.</p>
-                        </div>
-                    </div>
+                    </Parallax>
                 </section>
             </main>
         </div>
