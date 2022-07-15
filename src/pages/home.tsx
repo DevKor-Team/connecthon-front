@@ -57,13 +57,14 @@ function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
             className={`w-full h-64 md:h-[calc(100vh-4rem)] transition-all ease-linear ${
                 firstScroll ? 'mt-24' : 'mt-32'
             } md:mt-16 bg-center bg-contain lg:bg-[length:90%_90%] bg-no-repeat bg-[url('/home-background.svg')] flex items-center justify-center`}
+            id="hometitle"
         >
             <div className="w-full flex flex-col items-start md:items-center justify-center md:p-4">
                 <div className="flex flex-col justify-between items-start md:items-center tracking-widest mb-4 mt-4 md:mt-0 md:mb-10">
-                    <h1 className={`font-impact transition-all ease-linear ${firstScroll ? 'text-5xl' : 'text-6xl'} tracking-tighter lg:tracking-normal lg:text-[5rem] mb-2 sm:mb-4`}>2022</h1>
-                    <h1 className={`font-impact transition-all ease-linear ${firstScroll ? 'text-5xl' : 'text-6xl'} tracking-tighter lg:tracking-normal lg:text-[5rem]`}>KU HACKATHON</h1>
+                    <h1 className={`font-impact transition-all ease-linear ${firstScroll ? 'text-5xl' : 'text-6xl'} tracking-tighter lg:tracking-normal md:text-[5rem] mb-2 sm:mb-4`}>2022</h1>
+                    <h1 className={`font-impact transition-all ease-linear ${firstScroll ? 'text-5xl' : 'text-6xl'} tracking-tighter lg:tracking-normal md:text-[5rem]`}>KU HACKATHON</h1>
                 </div>
-                <h2 className={`transition-all ease-linear ${firstScroll ? 'text-2xl' : 'text-[1.75rem]'} lg:text-[2.125rem] font-extrabold mb-5 md:mb-6`}>청춘들의 여름 항해</h2>
+                <h2 className={`transition-all ease-linear ${firstScroll ? 'text-2xl' : 'text-[1.75rem]'} md:text-[2.125rem] font-extrabold mb-5 md:mb-6`}>청춘들의 여름 항해</h2>
                 <div className="flex flex-col justify-between items-start md:items-center font-medium">
                     <p className={`transition-all ease-linear ${firstScroll ? 'text-xs' : 'text-sm'} md:text-[1.313rem] tracking-tight md:leading-7`}>개발자, 기획자, 디자이너 간의 협업을 통해</p>
                     <p className={`transition-all ease-linear ${firstScroll ? 'text-xs' : 'text-sm'} md:text-[1.313rem] tracking-tight md:leading-7`}>
@@ -77,7 +78,7 @@ function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
 
 function Information() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-24 md:mt-16 md:px-16 flex items-center justify-start w-full">
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-40 md:mt-16 md:px-16 flex items-center justify-start w-full" id="information">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">내가 원하는, 상상한 프로젝트를</h1>
@@ -104,20 +105,46 @@ function Information() {
     );
 }
 
-function Merit() {
-    let viewheight;
-    let viewwidth;
-    if (typeof window !== 'undefined') {
-        viewheight = window.innerHeight;
-        viewwidth = window.innerWidth;
-    }
+function Merit({ startpoint, secondpoint }: { startpoint: number; secondpoint: number }) {
+    // let viewheight;
+    // let viewwidth;
+    // if (typeof window !== 'undefined') {
+    //     viewheight = window.innerHeight;
+    //     viewwidth = window.innerWidth;
+    // }
 
-    let timeline_2_animation_height = viewwidth >= 768 ? 1.65 * viewheight : 0.7 * viewheight;
-    const timeline_3_animation_height = viewwidth >= 768 ? 2 * viewheight : 1 * viewheight;
+    // let timeline_2_animation_height = viewwidth >= 768 ? 1.65 * viewheight : 0.7 * viewheight;
+    // const timeline_3_animation_height = viewwidth >= 768 ? 2 * viewheight : 1 * viewheight;
     const shadowStyle = 'shadow-[0px_0px_10px_2px_rgba(32,135,255,0.4)] md:shadow-[0px_0px_16px_6px_rgba(32,135,255,0.4)]';
 
+    const [firstShadow, setFirstShadow] = useState(true);
+    const [secondShadow, setSecondShadow] = useState(false);
+    const [thirdShadow, setThirdShadow] = useState(false);
+
+    useEffect(() => {
+        function updateOffset() {
+            if (typeof window !== 'undefined') {
+                if (window.pageYOffset < startpoint) {
+                    setFirstShadow(true);
+                    setSecondShadow(false);
+                    setThirdShadow(false);
+                } else if (window.pageYOffset >= startpoint && window.pageYOffset < secondpoint) {
+                    setFirstShadow(false);
+                    setSecondShadow(true);
+                    setThirdShadow(false);
+                } else {
+                    setFirstShadow(false);
+                    setSecondShadow(false);
+                    setThirdShadow(true);
+                }
+            }
+        }
+
+        window.addEventListener('scroll', updateOffset);
+    }, [firstShadow, secondShadow, thirdShadow]);
+
     return (
-        <div className="w-full mt-24 md:mt-16 md:px-16 flex items-center justify-start w-full">
+        <div className="w-full mt-40 md:mt-16 md:px-16 flex items-center justify-start w-full">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">새로운 사람과 새로운 도전을 통해</h1>
@@ -135,8 +162,8 @@ function Merit() {
                 {/* 타임라인 섹션 */}
                 <section className="relative w-full pr-6 pl-2">
                     {/* 첫번째 블록 */}
-                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:rounded-full before:h-8 md:before:h-16 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                        <div className={`w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${shadowStyle}`}>
+                    <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:rounded-full before:h-16 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
+                        <div className={`w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${firstShadow ? shadowStyle : ''}`}>
                             <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                         </div>
                         <div className="flex flex-col justify-start items-start">
@@ -146,9 +173,13 @@ function Merit() {
                         </div>
                     </div>
                     {/* 두번째 블록 */}
-                    <Parallax opacity={[0, 1]} startScroll={timeline_2_animation_height} endScroll={timeline_2_animation_height + 70}>
-                        <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                            <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                    <Parallax opacity={[0, 1]} startScroll={startpoint} endScroll={startpoint + 30}>
+                        <div
+                            className={`relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 md:mb-44 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20`}
+                        >
+                            <div
+                                className={`w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${secondShadow ? shadowStyle : ''}`}
+                            >
                                 <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                             </div>
                             <div className="flex flex-col justify-start items-start">
@@ -160,9 +191,9 @@ function Merit() {
                         </div>
                     </Parallax>
                     {/* 세번째 블록 */}
-                    <Parallax opacity={[0, 1]} startScroll={timeline_3_animation_height} endScroll={timeline_3_animation_height + 70}>
+                    <Parallax opacity={[0, 1]} startScroll={secondpoint} endScroll={secondpoint + 30}>
                         <div className="relative flex justify-start items-start space-x-4 md:space-x-8 h-16 mb-20 before:content-[' '] before:h-36 md:before:h-60 before:w-0.5 md:before:w-1 before:absolute before:bottom-16 before:left-[0.563rem] md:before:left-3 before:bg-ourBlue before:bg-opacity-20">
-                            <div className="w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white shadow-2xl">
+                            <div className={`w-5 h-5 md:w-7 md:h-7 flex justify-center items-center rounded-full border-2 border-ourBlue border-opacity-30 bg-white ${thirdShadow ? shadowStyle : ''}`}>
                                 <div className="w-3 h-3 md:w-5 md:h-5 rounded-full bg-ourBlue"></div>
                             </div>
                             <div className="flex flex-col justify-start items-start">
@@ -181,7 +212,7 @@ function Merit() {
 
 function MainProject() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-24 md:mt-16 md:px-16 flex items-center justify-start w-full">
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 md:px-16 flex items-center justify-start w-full">
             <main className="flex flex-col justify-center items-start w-full">
                 {/* 섹션 제목, 부제목 영역 */}
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
@@ -248,12 +279,36 @@ const Homepage: CustomNextPage = () => {
         window.addEventListener('scroll', titleScroll);
     }, [firstScroll]);
 
+    let hometitle_height: number, information_height: number, startpoint: number, secondpoint: number;
+    startpoint = 0;
+    secondpoint = 0;
+
+    function getHeights() {
+        if (typeof window !== 'undefined') {
+            const hometitle = document.getElementById('hometitle') as HTMLDivElement;
+
+            hometitle_height = hometitle?.offsetHeight;
+            hometitle_height += parseInt(window.getComputedStyle(hometitle).marginTop);
+
+            const information = document.getElementById('information') as HTMLDivElement;
+            information_height = information?.offsetHeight;
+            information_height += parseInt(window.getComputedStyle(information).marginTop);
+
+            startpoint = hometitle_height + information_height * 0.8;
+            secondpoint = hometitle_height + information_height * 1.1;
+        }
+
+        return startpoint;
+    }
+
+    getHeights();
+
     return (
         <div className="relative h-full">
             <main className="px-4 lg:px-[9.375rem]">
                 <HomeTitle firstScroll={firstScroll} />
                 <Information />
-                <Merit />
+                <Merit startpoint={startpoint} secondpoint={secondpoint} />
                 <MainProject />
                 <BottomBanner />
             </main>
