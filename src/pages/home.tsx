@@ -105,17 +105,33 @@ function Information() {
     );
 }
 
-function Merit({ startpoint, secondpoint }: { startpoint: number; secondpoint: number }) {
-    // let viewheight;
-    // let viewwidth;
-    // if (typeof window !== 'undefined') {
-    //     viewheight = window.innerHeight;
-    //     viewwidth = window.innerWidth;
-    // }
-
-    // let timeline_2_animation_height = viewwidth >= 768 ? 1.65 * viewheight : 0.7 * viewheight;
-    // const timeline_3_animation_height = viewwidth >= 768 ? 2 * viewheight : 1 * viewheight;
+function Merit() {
     const shadowStyle = 'shadow-[0px_0px_10px_2px_rgba(32,135,255,0.4)] md:shadow-[0px_0px_16px_6px_rgba(32,135,255,0.4)]';
+
+    let hometitle_height: number, information_height: number, startpoint: number, secondpoint: number;
+    startpoint = 0;
+    secondpoint = 0;
+
+    function getHeights() {
+        if (typeof window !== 'undefined') {
+            const hometitle = document.getElementById('hometitle') as HTMLDivElement;
+            if (hometitle === null) return;
+
+            hometitle_height = hometitle?.offsetHeight;
+            hometitle_height += parseInt(window.getComputedStyle(hometitle).marginTop);
+
+            const information = document.getElementById('information') as HTMLDivElement;
+            information_height = information?.offsetHeight;
+            information_height += parseInt(window.getComputedStyle(information).marginTop);
+
+            startpoint = hometitle_height + information_height * 0.8;
+            secondpoint = hometitle_height + information_height * 1.1;
+        }
+
+        return startpoint;
+    }
+
+    getHeights();
 
     const [firstShadow, setFirstShadow] = useState(true);
     const [secondShadow, setSecondShadow] = useState(false);
@@ -283,36 +299,12 @@ const Homepage: CustomNextPage = () => {
         window.addEventListener('scroll', titleScroll);
     }, [firstScroll]);
 
-    let hometitle_height: number, information_height: number, startpoint: number, secondpoint: number;
-    startpoint = 0;
-    secondpoint = 0;
-
-    function getHeights() {
-        if (typeof window !== 'undefined') {
-            const hometitle = document.getElementById('hometitle') as HTMLDivElement;
-
-            hometitle_height = hometitle?.offsetHeight;
-            hometitle_height += parseInt(window.getComputedStyle(hometitle).marginTop);
-
-            const information = document.getElementById('information') as HTMLDivElement;
-            information_height = information?.offsetHeight;
-            information_height += parseInt(window.getComputedStyle(information).marginTop);
-
-            startpoint = hometitle_height + information_height * 0.8;
-            secondpoint = hometitle_height + information_height * 1.1;
-        }
-
-        return startpoint;
-    }
-
-    getHeights();
-
     return (
         <div className="relative h-full">
             <main className="px-4 lg:px-[9.375rem]">
                 <HomeTitle firstScroll={firstScroll} />
                 <Information />
-                <Merit startpoint={startpoint} secondpoint={secondpoint} />
+                <Merit />
                 <MainProject />
                 <BottomBanner />
             </main>
