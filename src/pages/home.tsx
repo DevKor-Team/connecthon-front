@@ -91,10 +91,10 @@ function Information() {
                 <section className="grid grid-rows-5 w-full">
                     {schedule.map(item => (
                         <div className="grid grid-cols-10 mb-4 pb-4 md:mb-6 md:pb-6 border-b border-gray-200" key={item.order}>
-                            <div className="text-sm md:text-[1.125rem] col-span-6 lg:col-span-2 text-ourBlue font-bold" key={item.title + item.order}>
+                            <div className="text-sm md:text-[1.125rem] col-span-6 xl:col-span-3 text-ourBlue font-bold" key={item.title + item.order}>
                                 {item.title}
                             </div>
-                            <div className="text-sm md:text-[1.125rem] col-span-4 lg:col-span-8 text-right md:text-left text-ourBlack font-bold" key={item.content + item.order}>
+                            <div className="text-sm md:text-[1.125rem] col-span-4 xl:col-span-7 text-right md:text-left text-ourBlack font-bold" key={item.content + item.order}>
                                 {item.content}
                             </div>
                         </div>
