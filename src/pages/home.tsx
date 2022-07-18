@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
 import ProjectCard from '../components/ProjectCard';
 import HomeButton from '../components/HomeButton';
-import { Parallax } from 'react-scroll-parallax';
 
 const schedule = [
     {
@@ -59,7 +58,7 @@ function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
             } md:mt-16 bg-center bg-contain lg:bg-[length:90%_90%] bg-no-repeat bg-[url('/home-background.svg')] flex items-center justify-center`}
             id="hometitle"
         >
-            <div className="w-full flex flex-col items-start md:items-center justify-center md:p-4">
+            <div className="w-full flex flex-col items-start md:items-center justify-center">
                 <div className="flex flex-col justify-between items-start md:items-center tracking-widest mb-4 mt-4 md:mt-0 md:mb-10">
                     <h1 className={`font-impact transition-all ease-linear ${firstScroll ? 'text-5xl' : 'text-6xl'} tracking-tighter lg:tracking-normal md:text-[5rem] mb-2 sm:mb-4`}>2022</h1>
                     <h1 className={`font-impact transition-all ease-linear ${firstScroll ? 'text-5xl' : 'text-6xl'} tracking-tighter lg:tracking-normal md:text-[5rem]`}>KU HACKATHON</h1>
@@ -78,7 +77,7 @@ function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
 
 function Information() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-40 md:mt-16 md:px-16 flex items-center justify-start w-full" id="information">
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-40 md:mt-16 flex items-center justify-start w-full" id="information">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">내가 원하는, 상상한 프로젝트를</h1>
@@ -177,7 +176,7 @@ function Merit() {
     }, [firstShadow, secondShadow, thirdShadow]);
 
     return (
-        <div className="w-full mt-40 md:mt-16 md:px-16 flex items-center justify-start w-full">
+        <div className="w-full mt-40 md:mt-16 flex items-center justify-start w-full">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">새로운 사람과 새로운 도전을 통해</h1>
@@ -266,7 +265,7 @@ function Merit() {
 
 function MainProject() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 md:px-16 flex items-center justify-start w-full">
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 flex items-center justify-start w-full">
             <main className="flex flex-col justify-center items-start w-full">
                 {/* 섹션 제목, 부제목 영역 */}
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
@@ -304,7 +303,7 @@ function BottomBanner() {
             </div>
 
             {/* PC 배너 */}
-            <div className="w-full md:px-16 hidden sm:block">
+            <div className="w-full hidden sm:block">
                 <div className="w-full mt-40 mb-36 rounded-xl p-5 h-72 flex justify-center items-center bg-[url('/home-banner-pc.svg')] bg-cover">
                     <div className="flex flex-col items-center">
                         <section className="mb-10 flex flex-col items-center space-y-2">
@@ -335,7 +334,7 @@ const Homepage: CustomNextPage = () => {
 
     return (
         <div className="relative h-full">
-            <main className="px-4 lg:px-[9.375rem]">
+            <main>
                 <HomeTitle firstScroll={firstScroll} />
                 <Information />
                 <Merit />

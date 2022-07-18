@@ -82,7 +82,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                     </ul>
                 </div>
 
-                <div className="flex items-center font-light cursor-pointer mr-6 md:mr-12 lg:mr-16">
+                <div className="flex items-center font-light cursor-pointer md:mr-12 lg:mr-16">
                     <Link href="/mypage">
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>

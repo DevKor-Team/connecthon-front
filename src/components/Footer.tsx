@@ -4,16 +4,16 @@ import { SiNotion } from 'react-icons/si';
 
 function Footer({ theme }: { theme?: 'dark' | 'light' }) {
     return (
-        <footer className={`w-screen md:px-20 lg:px-[9.375rem] pt-10 pb-5 lg:py-8 ${theme == 'dark' ? 'bg-ourBlack' : 'bg-ourWhite'} border-t border-ourWhite`}>
-            <div className="mx-4 lg:pb-0 lg:mx-16 lg:h-36 lg:grid lg:grid-cols-8">
+        <footer className={`w-screen px-4 md:px-16 lg:px-20 xl:px-[13.375rem] pt-10 pb-5 lg:py-8 ${theme == 'dark' ? 'bg-ourBlack' : 'bg-ourWhite'} border-t border-ourWhite`}>
+            <div className="lg:pb-0 lg:h-36 lg:grid lg:grid-cols-9">
                 {/* 문의 영역 */}
                 <section
-                    className={`relative lg:col-span-5 flex flex-col h-full after:bottom-0 after:content-[' '] after:h-0.5 after:mt-4 lg:after:mt-6 after:w-full ${
+                    className={`relative lg:col-span-6 flex flex-col h-full after:bottom-0 after:content-[' '] after:h-0.5 after:mt-4 lg:after:mt-6 after:w-full ${
                         theme == 'dark' ? 'after:bg-ourWhite' : 'after:bg-ourGrey after:bg-opacity-25'
                     } after:rounded-full`}
                 >
                     <h1 className={`font-impact ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} mb-5 xl:mb-11 text-xl`}>KU HACKATHON</h1>
-                    <h3 className={`font-bold text-sm xl:text-lg mb-5 xl:mb-3 ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'}`}>문의</h3>
+                    <h3 className={`font-bold text-sm lg:text-lg mb-5 xl:mb-3 ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'}`}>문의</h3>
                     <nav className="flex space-x-6">
                         <FiPhoneCall size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
                         <FiMail size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
@@ -23,8 +23,8 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                 </section>
 
                 {/* 네비게이션 링크 영역 */}
-                <section className="lg:col-span-3 lg:ml-12 h-full">
-                    <div className="lg:flex lg:h-full lg:space-x-10">
+                <section className="lg:col-span-3 lg:ml-12 2xl:ml-24 h-full">
+                    <div className="lg:flex lg:h-full lg:justify-between">
                         <nav className="space-y-3 lg:space-y-0 mt-4 lg:mt-0 mb-6 lg:mb-0 flex flex-col justify-between items-start">
                             <Link href="/about">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>ABOUT</span>
@@ -56,7 +56,9 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                     </div>
                 </section>
             </div>
-            <div className="text-xs lg:text-base box-border text-center lg:text-left lg:px-0 lg:mx-16 mt-4 lg:mt-8 text-ourGrey w-full">Copyright ⓒ 2022 KU SUMMER HACKATHON. All Rights Reserved.</div>
+            <div className="text-[0.625rem] md:text-sm lg:text-base box-border text-center lg:text-left lg:px-0 mt-4 lg:mt-6 xl:mt-9 text-ourGrey w-full">
+                Copyright ⓒ 2022 KU SUMMER HACKATHON. All Rights Reserved.
+            </div>
         </footer>
     );
 }
