@@ -61,7 +61,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
         <>
             <SideMenu theme={theme} />
             <header className={`z-[100] ${theme == 'dark' ? 'bg-ourBlack' : 'bg-white'}`}>
-                <div className="flex z-70 items-center space-x-6 md:space-x-16">
+                <div className="flex z-70 items-center space-x-6 md:space-x-12 lg:space-x-16">
                     <FiMenu size={24} stroke={`${theme == 'dark' ? 'white' : 'black'}`} className={`text-lg font-light md:hidden cursor-pointer`} onClick={openMenu} />
                     <Link href="/home">
                         <button className={`${theme == 'dark' ? 'text-ourWhite' : ''} font-normal font-impact text-xl md:text-2xl md:mr-6`}>KU HACKATHON</button>
@@ -82,7 +82,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                     </ul>
                 </div>
 
-                <div className="flex items-center font-light cursor-pointer md:mr-12">
+                <div className="flex items-center font-light cursor-pointer mr-6 md:mr-12 lg:mr-16">
                     <Link href="/mypage">
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
