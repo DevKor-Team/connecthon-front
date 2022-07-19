@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
 import { useEffect } from 'react';
+import PersonCard from '../components/PersonCard';
 
 function Participants() {
     let initialLength: number, initialLeft: number;
@@ -75,8 +76,8 @@ function Participants() {
                 </div>
             </section>
 
-            {/* 참가자 리스트 영역 */}
-            <section className="relative w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] mt-14">
+            {/* 참가자 카테고리 선택 영역 */}
+            <section className="relative w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] mt-14 mb-8 lg:mb-24">
                 <ul className="relative w-full flex items-center justify-evenly md:justify-center md:space-x-6 xl:space-x-8 2xl:space-x-10">
                     <li className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all text-black cursor-pointer" onClick={e => onSelectCategory(e)} id="all">
                         All
@@ -93,6 +94,16 @@ function Participants() {
                 </ul>
                 <div className={`absolute bottom-0 h-[2px] bg-black transition-all`} id="underline" />
             </section>
+
+            {/* 참가자 리스트 영역 */}
+            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap justify-between">
+                <PersonCard position="designer" />
+                <PersonCard position="developer" />
+                <PersonCard position="planner" />
+                <PersonCard position="designer" />
+                <PersonCard position="developer" />
+                <PersonCard position="planner" />
+            </div>
             <Footer />
         </>
     );
