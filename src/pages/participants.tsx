@@ -1,20 +1,54 @@
+import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
+import { useEffect } from 'react';
 
 function Participants() {
-    function onSelectCategory(e) {
-        const target = e.target;
-        const removeTarget = document.querySelector('.border-black');
-        removeTarget?.classList.remove('border-black');
-        removeTarget?.classList.add('border-transparent', 'text-[rgba(0,0,0,0.1)]');
+    let initialLength: number, initialLeft: number;
 
-        target.classList.remove('border-transparent', 'text-[rgba(0,0,0,0.1)]');
-        target.classList.add('border-black');
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const all = document.querySelector('#all') as HTMLElement;
+            const underline = document.querySelector('#underline') as HTMLDivElement;
+            if (all == null) return;
+            if (underline == null) return;
+
+            initialLength = all?.offsetWidth;
+            initialLeft = all?.getBoundingClientRect().left;
+
+            underline.style.width = `${initialLength}px`;
+            underline.style.left = `${initialLeft}px`;
+        }
+    });
+
+    function onSelectCategory(e) {
+        let newLength, newLeft;
+
+        const target = e.target;
+        const removeTarget = document.querySelector('.text-black');
+        const underline = document.querySelector('#underline') as HTMLElement;
+
+        removeTarget?.classList.replace('text-black', 'text-[rgba(0,0,0,0.1)]');
+
+        target.classList.replace('text-[rgba(0,0,0,0.1)]', 'text-black');
+
+        newLength = target.offsetWidth;
+        newLeft = target.getBoundingClientRect().left;
+
+        underline.style.width = `${newLength}px`;
+        underline.style.left = `${newLeft}px`;
+
+        console.log(newLength);
+        console.log(newLeft);
     }
 
     return (
         <>
+            <Head>
+                <title>KU HACKATHON</title>
+                <link rel="icon" href="/symbol-2d.svg" />
+            </Head>
             <Header />
             {/* 페이지 메인 / 검색창까지 영역 */}
             <section className="relative w-full h-72 bg-center bg-cover bg-no-repeat bg-[url('/participants_temp.svg')] mt-16 md:mt-20 flex flex-col justify-center items-center">
@@ -42,30 +76,22 @@ function Participants() {
             </section>
 
             {/* 참가자 리스트 영역 */}
-            <section className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] mt-14">
+            <section className="relative w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] mt-14">
                 <ul className="relative w-full flex items-center justify-evenly md:justify-center md:space-x-6 xl:space-x-8 2xl:space-x-10">
-                    <li className="text-center font-bold flex justify-center items-center px-4 pb-1 border-b-2 transition-all border-black" onClick={e => onSelectCategory(e)}>
+                    <li className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all text-black cursor-pointer" onClick={e => onSelectCategory(e)} id="all">
                         All
                     </li>
-                    <li
-                        className="text-center font-bold flex justify-center items-center px-4 pb-1 border-b-2 transition-all border-transparent text-[rgba(0,0,0,0.1)]"
-                        onClick={e => onSelectCategory(e)}
-                    >
+                    <li className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all text-[rgba(0,0,0,0.1)] cursor-pointer" onClick={e => onSelectCategory(e)}>
                         Planner
                     </li>
-                    <li
-                        className="text-center font-bold flex justify-center items-center px-4 pb-1 border-b-2 transition-all border-transparent text-[rgba(0,0,0,0.1)]"
-                        onClick={e => onSelectCategory(e)}
-                    >
+                    <li className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all text-[rgba(0,0,0,0.1)] cursor-pointer" onClick={e => onSelectCategory(e)}>
                         Developer
                     </li>
-                    <li
-                        className="text-center font-bold flex justify-center items-center px-4 pb-1 border-b-2 transition-all border-transparent text-[rgba(0,0,0,0.1)]"
-                        onClick={e => onSelectCategory(e)}
-                    >
+                    <li className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all text-[rgba(0,0,0,0.1)] cursor-pointer" onClick={e => onSelectCategory(e)}>
                         Designer
                     </li>
                 </ul>
+                <div className={`absolute bottom-0 h-[2px] bg-black transition-all`} id="underline" />
             </section>
             <Footer />
         </>
