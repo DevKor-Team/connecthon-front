@@ -39,7 +39,7 @@ function PersonCard({ position }: PositionType) {
                 </div>
             </div>
             <div className="flex justify-center">
-                <div className="rounded-3xl bg-ourBlack text-white py-2 lg:py-2.5 px-5 md:px-8 text-xs lg:text-sm font-medium text-center mb-1.5">CONTACT</div>
+                <div className="rounded-3xl bg-ourBlack text-white py-2 lg:py-2.5 px-5 md:px-8 text-xs lg:text-sm font-medium text-center mb-1.5 cursor-pointer">CONTACT</div>
             </div>
         </div>
     );
