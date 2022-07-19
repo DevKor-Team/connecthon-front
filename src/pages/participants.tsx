@@ -2,13 +2,39 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PersonCard from '../components/PersonCard';
 import axios from 'axios';
 
 function Participants() {
     let initialLength: number, initialLeft: number;
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
 
+    //유저 정보 가져오기
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                //요청이 시작될 때는 error와 users를 초기화
+                setUsers([]);
+                setError(null);
+                //로딩상태는 true로 변경시킨다.
+                setLoading(true);
+
+                await axios.get('/users').then(response => setUsers(response.data));
+            } catch (e: any) {
+                setError(e);
+                console.log(error);
+            }
+
+            setLoading(false);
+        };
+
+        fetchUsers();
+    }, []);
+
+    //슬라이딩 메뉴 애니메이션을 위해서 초기 width, left값 세팅
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const all = document.querySelector('#all') as HTMLElement;
@@ -117,6 +143,10 @@ function Participants() {
                 <PersonCard position="designer" />
                 <PersonCard position="developer" />
                 <PersonCard position="planner" />
+
+                {/* {users.map(user => {
+                    <PersonCard position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} />
+                })} */}
             </div>
             <Footer />
         </>
