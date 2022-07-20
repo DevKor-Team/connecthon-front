@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
-import { useEffect, useState } from 'react';
+import React, { ReactText, useEffect, useState } from 'react';
 import PersonCard from '../components/PersonCard';
 import axios from 'axios';
 
@@ -185,6 +185,8 @@ function Participants() {
     const [planners, setPlanners] = useState<UserType[]>([]);
     const [designers, setDesigners] = useState<UserType[]>([]);
     const [currentCategory, setCurrentCategory] = useState('users');
+    const [searchResult, setSearchResult] = useState<UserType[]>([]);
+    const [enterPressed, setEnterPressed] = useState(false);
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -256,31 +258,46 @@ function Participants() {
     function onSelectCategory(e) {
         let newLength, newLeft;
 
+        //다시 카테고리 선택을 하면 이전의 검색결과는 사라져야 함.
+        setEnterPressed(false);
+
         const target = e.target;
         const removeTarget = document.querySelector('.text-black');
         const underline = document.querySelector('#underline') as HTMLElement;
 
+        //검정색이었던 카테고리를 다시 옅은회색으로 바꾸고, 새롭게 선택된 카테고리에 검정색을 입힌다.
         removeTarget?.classList.replace('text-black', 'text-[rgba(0,0,0,0.1)]');
-
         target.classList.replace('text-[rgba(0,0,0,0.1)]', 'text-black');
 
+        //새롭게 선택된 카테고리의 left값, width값에 맞춰서 underline이 이동하도록 한다.
         newLength = target.offsetWidth;
         newLeft = target.getBoundingClientRect().left;
 
         underline.style.width = `${newLength}px`;
         underline.style.left = `${newLeft}px`;
 
-        console.log(newLength);
-        console.log(newLeft);
-
+        //선택한 카테고리의 이름으로 id를 바꿔서 해당 카테고리의 카드들만 나타나게 한다.
         setCurrentCategory(target.id);
-        console.log(currentCategory);
     }
 
-    function searchUser(e: React.ChangeEvent<HTMLInputElement>) {
+    function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const currentValue = e.target.value;
         setInput(currentValue);
-        console.log(input);
+    }
+
+    function searchUser(e: React.KeyboardEvent<HTMLInputElement>) {
+        const keyword = input;
+        const firstname = input.slice(0, 1);
+        const lastname = input.slice(1);
+
+        if (e.key == 'Enter') {
+            setEnterPressed(true);
+            setSearchResult(tempUsers.filter(user => user.team == keyword || (user.name.first == firstname && user.name.last == lastname)));
+            setInput('');
+            console.log(searchResult);
+        } else {
+            setEnterPressed(false);
+        }
     }
 
     return (
@@ -315,7 +332,8 @@ function Participants() {
                         className="w-full h-14 rounded-xl pl-16 md:pl-18 focus:outline-none shadow-[0px_1px_12px_1px_rgba(0,0,0,0.1)]"
                         placeholder="이름, 팀명을 입력하세요."
                         value={input}
-                        onChange={e => searchUser(e)}
+                        onChange={e => onInputChange(e)}
+                        onKeyDown={e => searchUser(e)}
                     />
                 </div>
             </section>
@@ -357,9 +375,11 @@ function Participants() {
 
             {/* 참가자 리스트 영역 */}
             <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]">
-                {(currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(user => (
-                    <PersonCard position={user.profile.position} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
-                ))}
+                {(enterPressed ? searchResult : currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(
+                    user => (
+                        <PersonCard position={user.profile.position} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
+                    ),
+                )}
 
                 {/* {users.map(user => {
                     <PersonCard position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
