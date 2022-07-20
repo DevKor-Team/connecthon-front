@@ -6,38 +6,241 @@ import { useEffect, useState } from 'react';
 import PersonCard from '../components/PersonCard';
 import axios from 'axios';
 
+const tempUsers: UserType[] = [
+    {
+        id: '62c17f43fa7b4dd475343b8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '정',
+            last: '호진',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'developer',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+    {
+        id: '62c17f43fa7b4dd4753sdf8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '이',
+            last: '승우',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'designer',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+    {
+        id: '62c17f43faasddd475343b8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '안',
+            last: '수진',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'planner',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+    {
+        id: '62c17f43asdfedd475343b8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '노',
+            last: '정훈',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'developer',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+    {
+        id: '62c17f43dd7b4dd475343b8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '장',
+            last: '태웅',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'designer',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+    {
+        id: '62c17f43fa7b4ww475343b8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '백',
+            last: '승윤',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'planner',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+    {
+        id: '11c17f43fa7b4dd475343b8b',
+        email: 'froggagul@gmail.com',
+        name: {
+            first: '강',
+            last: '슬기',
+        },
+        team: 'TEAM ABC',
+        profile: {
+            link: {
+                github: 'https://github.com/froggagul',
+                blog: 'https://www.hojins.life',
+            },
+            position: 'developer',
+            img: 'https://picsum.photos/200',
+            career: 'hello im hojin',
+            _id: '62c182186667b242ad1f878c',
+        },
+        provider: 'GOOGLE',
+        isAdmin: false,
+    },
+];
+
+interface UserType {
+    id: string;
+    email: string;
+    name: {
+        first: string;
+        last: string;
+    };
+    team: string;
+    profile: {
+        link: {
+            github: string;
+            blog: string;
+        };
+        position: 'developer' | 'designer' | 'planner';
+        img: string;
+        career: string;
+        _id: string;
+    };
+    provider: string;
+    isAdmin: boolean;
+}
+
 function Participants() {
     let initialLength: number, initialLeft: number;
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<UserType[]>([]);
+    const [developers, setDevelopers] = useState<UserType[]>([]);
+    const [planners, setPlanners] = useState<UserType[]>([]);
+    const [designers, setDesigners] = useState<UserType[]>([]);
+    const [currentCategory, setCurrentCategory] = useState('users');
+
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    //유저 정보 가져오기
+    const [input, setInput] = useState('');
+
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                //요청이 시작될 때는 error와 users를 초기화
-                setUsers([]);
-                setError(null);
-                //로딩상태는 true로 변경시킨다.
-                setLoading(true);
-
-                await axios.get('/users').then(response => setUsers(response.data));
-            } catch (e: any) {
-                setError(e);
-                console.log(error);
+        tempUsers.forEach(user => {
+            if (user.profile.position == 'developer') {
+                setDevelopers(prev => prev.concat(user));
+                console.log(`${user.name.last}를 developers에 추가`);
+            } else if (user.profile.position == 'designer') {
+                setDesigners(prev => prev.concat(user));
+                console.log(`${user.name.last}를 designers에 추가`);
+            } else {
+                setPlanners(prev => prev.concat(user));
+                console.log(`${user.name.last}를 planners에 추가`);
             }
-
-            setLoading(false);
-        };
-
-        fetchUsers();
+        });
     }, []);
+
+    // 유저 정보 가져오기
+    // useEffect(() => {
+    //     const fetchUsers = async () => {
+    //         try {
+    //             //요청이 시작될 때는 error와 users를 초기화
+    //             setUsers([]);
+    //             setError(null);
+    //             //로딩상태는 true로 변경시킨다.
+    //             setLoading(true);
+
+    //             await axios.get('/users').then(response => setUsers(response.data));
+    //             users.forEach(user => {
+    //                 if (user.profile.position == 'developer') {
+    //                     setDevelopers(developers.concat(user));
+    //                 } else if (user.profile.position == 'designer') {
+    //                     setDesigners(designers.concat(user));
+    //                 } else {
+    //                     setPlanners(planners.concat(user));
+    //                 }
+    //             });
+    //         } catch (e: any) {
+    //             setError(e);
+    //             console.log(error);
+    //         }
+
+    //         setLoading(false);
+    //     };
+
+    //     fetchUsers();
+    // }, []);
 
     //슬라이딩 메뉴 애니메이션을 위해서 초기 width, left값 세팅
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const all = document.querySelector('#all') as HTMLElement;
+            const all = document.querySelector('#users') as HTMLElement;
             const underline = document.querySelector('#underline') as HTMLDivElement;
             if (all == null) return;
             if (underline == null) return;
@@ -48,7 +251,7 @@ function Participants() {
             underline.style.width = `${initialLength}px`;
             underline.style.left = `${initialLeft}px`;
         }
-    });
+    }, []);
 
     function onSelectCategory(e) {
         let newLength, newLeft;
@@ -69,6 +272,15 @@ function Participants() {
 
         console.log(newLength);
         console.log(newLeft);
+
+        setCurrentCategory(target.id);
+        console.log(currentCategory);
+    }
+
+    function searchUser(e: React.ChangeEvent<HTMLInputElement>) {
+        const currentValue = e.target.value;
+        setInput(currentValue);
+        console.log(input);
     }
 
     return (
@@ -99,7 +311,12 @@ function Participants() {
                 {/* 검색창 */}
                 <div className="absolute w-full -bottom-8 px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex">
                     <FiSearch size={24} className="absolute left-10 md:left-[5.5rem] lg:left-[6.5rem] xl:left-60 top-4" />
-                    <input className="w-full h-14 rounded-xl pl-16 md:pl-18 focus:outline-none shadow-[0px_1px_12px_1px_rgba(0,0,0,0.1)]" placeholder="이름, 팀명을 입력하세요." />
+                    <input
+                        className="w-full h-14 rounded-xl pl-16 md:pl-18 focus:outline-none shadow-[0px_1px_12px_1px_rgba(0,0,0,0.1)]"
+                        placeholder="이름, 팀명을 입력하세요."
+                        value={input}
+                        onChange={e => searchUser(e)}
+                    />
                 </div>
             </section>
 
@@ -109,25 +326,28 @@ function Participants() {
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-600 text-black cursor-pointer"
                         onClick={e => onSelectCategory(e)}
-                        id="all"
+                        id="users"
                     >
                         All
                     </li>
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-300 text-[rgba(0,0,0,0.1)] cursor-pointer"
                         onClick={e => onSelectCategory(e)}
+                        id="planners"
                     >
                         Planner
                     </li>
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-300 text-[rgba(0,0,0,0.1)] cursor-pointer"
                         onClick={e => onSelectCategory(e)}
+                        id="developers"
                     >
                         Developer
                     </li>
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-300 text-[rgba(0,0,0,0.1)] cursor-pointer"
                         onClick={e => onSelectCategory(e)}
+                        id="designers"
                     >
                         Designer
                     </li>
@@ -137,15 +357,12 @@ function Participants() {
 
             {/* 참가자 리스트 영역 */}
             <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap justify-between">
-                <PersonCard position="designer" />
-                <PersonCard position="developer" />
-                <PersonCard position="planner" />
-                <PersonCard position="designer" />
-                <PersonCard position="developer" />
-                <PersonCard position="planner" />
+                {(currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(user => (
+                    <PersonCard position={user.profile.position} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
+                ))}
 
                 {/* {users.map(user => {
-                    <PersonCard position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} />
+                    <PersonCard position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
                 })} */}
             </div>
             <Footer />
