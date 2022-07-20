@@ -356,7 +356,7 @@ function Participants() {
             </section>
 
             {/* 참가자 리스트 영역 */}
-            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap justify-between">
+            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]">
                 {(currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(user => (
                     <PersonCard position={user.profile.position} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
                 ))}
