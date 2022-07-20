@@ -289,15 +289,14 @@ function Participants() {
         const keyword = input;
         const firstname = input.slice(0, 1);
         const lastname = input.slice(1);
+        const searchinput = document.querySelector('#searchinput') as HTMLInputElement;
 
         if (e.key == 'Enter') {
             setEnterPressed(true);
             setSearchResult(tempUsers.filter(user => user.team == keyword || (user.name.first == firstname && user.name.last == lastname)));
             setInput('');
-            console.log(searchResult);
-        } else {
-            setEnterPressed(false);
-        }
+            searchinput.blur();
+        } else return;
     }
 
     return (
@@ -334,6 +333,7 @@ function Participants() {
                         value={input}
                         onChange={e => onInputChange(e)}
                         onKeyDown={e => searchUser(e)}
+                        id="searchinput"
                     />
                 </div>
             </section>
