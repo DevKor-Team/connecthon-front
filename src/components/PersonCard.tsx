@@ -40,8 +40,8 @@ function PersonCard({ position, imgurl, firstname, lastname, team }: PersonType)
             <div className="w-full flex flex-col items-center space-y-3 mb-3 lg:mb-8">
                 <div className="rounded-full w-[4.5rem] h-[4.5rem] lg:w-[8.125rem] lg:h-[8.125rem] bg-red-900 cursor-pointer"></div>
                 <div className="w-full flex flex-col items-center">
-                    <h3 className="font-bold text-lg lg:text-xl mb-0.5 leading-5 cursor-pointer">이현서</h3>
-                    <h4 className="font-medium text-sm text-ourGrey leading-5">TEAM ABC</h4>
+                    <h3 className="font-bold text-lg lg:text-xl mb-0.5 leading-5 cursor-pointer">{`${firstname}${lastname}`}</h3>
+                    <h4 className="font-medium text-sm text-ourGrey leading-5">{`${team}`}</h4>
                 </div>
             </div>
             <div className="flex justify-center">
