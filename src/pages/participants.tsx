@@ -293,7 +293,7 @@ function Participants() {
 
         if (e.key == 'Enter') {
             setEnterPressed(true);
-            setSearchResult(tempUsers.filter(user => user.team == keyword || (user.name.first == firstname && user.name.last == lastname)));
+            setSearchResult(tempUsers.filter(user => user.team.includes(keyword) || user.name.last.includes(keyword) || (user.name.first == firstname && user.name.last.includes(lastname))));
             setInput('');
             searchinput.blur();
         } else return;
