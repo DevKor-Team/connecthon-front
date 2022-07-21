@@ -4,20 +4,20 @@ const DevKor = () => {
     const [members, showMembers] = useState<boolean>(false);
 
     return (
-        <div className="mx-3 mt-[5rem] mb-[8rem] w-[70%] text-right justify-end">
-            <div className="absolute right-[45%] z-0 ">
-                <img src="devkor-reverse2.svg" alt="business-reverse" className="opacity-30 " />
+        <div className="mx-3 mt-[5rem] mb-[8rem] w-[70%] md:mx-[8rem] text-right justify-end">
+            <div className="absolute right-[45%] z-0 md:right-[1rem]">
+                <img src="devkor-reverse2.svg" alt="business-reverse" className="opacity-20 " />
             </div>
-            <h1 className="text-[2.5rem] font-bold text-[#F6CC00]">2</h1>
-            <h2 className="text-[1.25rem] font-semibold text-[#F6CC00] mt-4 tracking-wide">DEVELOPER</h2>
-            <h3 className="text-[1rem] font-light text-[#F6CC00] mt-3 tracking-normal">고려대학교 소프트웨어 개발 / 연구 학회 DevKor</h3>
-            <p className="text-[0.625rem] text-ourWhite mt-1 leading-[1rem]">
+            <h1 className="text-[2.5rem] font-bold text-[#F6CC00] md:text-[3.5rem]">2</h1>
+            <h2 className="text-[1.25rem] font-semibold text-[#F6CC00] mt-4 tracking-wide md:text-[1.8rem] md:mt-7 ">DEVELOPER</h2>
+            <h3 className="text-[1rem] font-light text-[#F6CC00] mt-3 tracking-normal md:text-[1.25rem]">고려대학교 소프트웨어 개발 / 연구 학회 DevKor</h3>
+            <p className="text-[0.625rem] text-ourWhite mt-1 leading-[1rem] md:w-[24rem] md:text-[0.825rem] md:leading-[1.25rem] md:ml-auto md:mr-0">
                 DevKor는 현실의 문제를 다양한 관점에서 바라보고 이를 소프트웨어로 해결하고자 하는 사람들이 모인 고려대학교 소프트웨어 개발 / 연구 학회입니다. 1년 간의 체계적인 커리큘럼을 바탕으로,
                 단순히 개발 실력을 갖추는 것에서 더 나아가, 현실의 문제를 명확히 인지하고, 문제를 관통하는 서비스를 직접 제작해보는 경험을 하게 됩니다. 이 과정에서 구성원 모두가 문제를 더 깊고, 넓게
                 바라볼 수 있는 인사이트를 기르게 되며, 다양한 소프트웨어 기술을 도구로써 적절히 활용하는 능력을 갖추게 됩니다.
             </p>
-            <div className="flex mt-2">
-                <p className="text-ourWhite text-sm">멤버 소개</p>
+            <div className="flex mt-2 md:mt-4">
+                <p className="text-ourWhite text-sm md:ml-auto md:mr-0">멤버 소개</p>
                 <img
                     src="/expand-more.svg"
                     alt="expand-more"
