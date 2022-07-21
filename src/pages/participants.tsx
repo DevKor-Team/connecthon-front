@@ -240,7 +240,7 @@ function Participants() {
     //     fetchUsers();
     // }, []);
 
-    //슬라이딩 메뉴 애니메이션을 위해서 초기 width, left값 세팅
+    /* ------- 슬라이딩 메뉴 애니메이션을 위해서 초기 width, left값 세팅 ------- */
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const all = document.querySelector('#users') as HTMLElement;
@@ -255,7 +255,9 @@ function Participants() {
             underline.style.left = `${initialLeft}px`;
         }
     }, []);
+    /* --------------------------------------------------------------- */
 
+    /* ------- All, Developers, Designers, Planners 포지션 카테고리 선택 시 관련 애니메이션 구현 ------- */
     function onSelectCategory(e) {
         let newLength, newLeft;
 
@@ -280,12 +282,16 @@ function Participants() {
         //선택한 카테고리의 이름으로 id를 바꿔서 해당 카테고리의 카드들만 나타나게 한다.
         setCurrentCategory(target.id);
     }
+    /* -------------------------------------------------------------------------------- */
 
+    /* ------------ 검색창에 input 입력시 검색어 업데이트 함수 -------------- */
     function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const currentValue = e.target.value;
         setInput(currentValue);
     }
+    /* ------------------------------------------------------------- */
 
+    /* ------- 사용자가 Enter 눌렀을 시 입력한 검색어에 대해 검색해주는 함수 ------- */
     function searchUser(e: React.KeyboardEvent<HTMLInputElement>) {
         const keyword = input;
         const firstname = input.slice(0, 1);
@@ -299,6 +305,7 @@ function Participants() {
             searchinput.blur();
         } else return;
     }
+    /* ---------------------------------------------------------------- */
 
     return (
         <>
@@ -375,7 +382,7 @@ function Participants() {
             </section>
 
             {/* 참가자 리스트 영역 */}
-            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]">
+            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]" id="wrapper">
                 {(enterPressed ? searchResult : currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(
                     user => (
                         <PersonCard position={user.profile.position} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
