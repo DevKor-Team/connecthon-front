@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
-import React, { ReactText, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PersonCard from '../components/PersonCard';
 import axios from 'axios';
 
