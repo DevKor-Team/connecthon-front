@@ -35,7 +35,7 @@ const tempUsers: UserType[] = [
             first: '이',
             last: '승우',
         },
-        team: 'TEAM ABC',
+        team: 'TEAM DEF',
         profile: {
             link: {
                 github: 'https://github.com/froggagul',
@@ -77,7 +77,7 @@ const tempUsers: UserType[] = [
             first: '노',
             last: '정훈',
         },
-        team: 'TEAM ABC',
+        team: 'TEAM DEF',
         profile: {
             link: {
                 github: 'https://github.com/froggagul',
@@ -119,7 +119,7 @@ const tempUsers: UserType[] = [
             first: '백',
             last: '승윤',
         },
-        team: 'TEAM ABC',
+        team: 'TEAM GEH',
         profile: {
             link: {
                 github: 'https://github.com/froggagul',
