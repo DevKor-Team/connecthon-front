@@ -184,6 +184,7 @@ function Participants() {
     const [developers, setDevelopers] = useState<UserType[]>([]);
     const [planners, setPlanners] = useState<UserType[]>([]);
     const [designers, setDesigners] = useState<UserType[]>([]);
+
     const [currentCategory, setCurrentCategory] = useState('users');
     const [searchResult, setSearchResult] = useState<UserType[]>([]);
     const [enterPressed, setEnterPressed] = useState(false);
