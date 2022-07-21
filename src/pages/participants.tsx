@@ -258,6 +258,27 @@ function Participants() {
     }, []);
     /* --------------------------------------------------------------- */
 
+    var delay = 300;
+    var resizeEvent;
+
+    if (typeof window !== 'undefined') {
+        window?.addEventListener('resize', function () {
+            this.clearTimeout(resizeEvent);
+            resizeEvent = setTimeout(function () {
+                const cur = document.querySelector(`#${currentCategory}`) as HTMLElement;
+                const underline = document.querySelector('#underline') as HTMLDivElement;
+                if (cur == null) return;
+                if (underline == null) return;
+
+                initialLength = cur?.offsetWidth;
+                initialLeft = cur?.getBoundingClientRect().left;
+
+                underline.style.width = `${initialLength}px`;
+                underline.style.left = `${initialLeft}px`;
+            }, delay);
+        });
+    }
+
     /* ------- All, Developers, Designers, Planners 포지션 카테고리 선택 시 관련 애니메이션 구현 ------- */
     function onSelectCategory(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
         let newLength, newLeft;
