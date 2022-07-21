@@ -268,6 +268,9 @@ function Participants() {
         const removeTarget = document.querySelector('.text-black');
         const underline = document.querySelector('#underline') as HTMLElement;
 
+        const cardWrapper = document.getElementById('card-wrapper') as HTMLDivElement;
+        cardWrapper.classList.replace('opacity-100', 'opacity-80');
+
         //검정색이었던 카테고리를 다시 옅은회색으로 바꾸고, 새롭게 선택된 카테고리에 검정색을 입힌다.
         removeTarget?.classList.replace('text-black', 'text-[rgba(0,0,0,0.1)]');
         target.classList.replace('text-[rgba(0,0,0,0.1)]', 'text-black');
@@ -279,8 +282,14 @@ function Participants() {
         underline.style.width = `${newLength}px`;
         underline.style.left = `${newLeft}px`;
 
-        //선택한 카테고리의 이름으로 id를 바꿔서 해당 카테고리의 카드들만 나타나게 한다.
-        setCurrentCategory(target.id);
+        //선택한 카테고리의 이름으로 id를 바꿔서 해당 카테고리의 카드들만 나타나게 한다.'
+        setTimeout(() => {
+            setCurrentCategory(target.id);
+        }, 150);
+
+        setTimeout(() => {
+            cardWrapper.classList.replace('opacity-80', 'opacity-100');
+        }, 200);
     }
     /* -------------------------------------------------------------------------------- */
 
@@ -382,7 +391,7 @@ function Participants() {
             </section>
 
             {/* 참가자 리스트 영역 */}
-            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]" id="wrapper">
+            <div className="transition-all opacity-100 duration-200 w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]" id="card-wrapper">
                 {(enterPressed ? searchResult : currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(
                     user => (
                         <PersonCard position={user.profile.position} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
