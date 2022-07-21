@@ -2,9 +2,10 @@ import Head from 'next/head';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
-import React, { ReactText, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PersonCard from '../components/PersonCard';
 import axios from 'axios';
+import { axiosInstance } from '../hooks/queries';
 
 const tempUsers: UserType[] = [
     {
@@ -219,7 +220,7 @@ function Participants() {
     //             //로딩상태는 true로 변경시킨다.
     //             setLoading(true);
 
-    //             await axios.get('/users').then(response => setUsers(response.data));
+    //             await axiosInstance.get('/users').then(response => setUsers(response.data));
     //             users.forEach(user => {
     //                 if (user.profile.position == 'developer') {
     //                     setDevelopers(developers.concat(user));
@@ -258,13 +259,13 @@ function Participants() {
     /* --------------------------------------------------------------- */
 
     /* ------- All, Developers, Designers, Planners 포지션 카테고리 선택 시 관련 애니메이션 구현 ------- */
-    function onSelectCategory(e) {
+    function onSelectCategory(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
         let newLength, newLeft;
 
         //다시 카테고리 선택을 하면 이전의 검색결과는 사라져야 함.
         setEnterPressed(false);
 
-        const target = e.target;
+        const target = e.target as HTMLLIElement;
         const removeTarget = document.querySelector('.text-black');
         const underline = document.querySelector('#underline') as HTMLElement;
 
