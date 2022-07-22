@@ -27,10 +27,10 @@ function Planner() {
 
 type PersonType = {
     position: 'developer' | 'designer' | 'planner';
-    imgurl?: string;
-    firstname?: string;
-    lastname?: string;
-    team?: string;
+    imgurl: string;
+    firstname: string;
+    lastname: string;
+    team: string;
 };
 
 function PersonCard({ position, imgurl, firstname, lastname, team }: PersonType) {
@@ -38,7 +38,7 @@ function PersonCard({ position, imgurl, firstname, lastname, team }: PersonType)
         <div className="box-border w-[48%] md:w-[31%] 2xl:w-[24%] h-56 lg:h-[22.5rem] rounded-xl border-2 px-2 lg:px-4 border-slate-200 flex flex-col justify-center mb-3.5 sm:mb-6 lg:mb-8">
             {position == 'developer' ? <Developer /> : position == 'designer' ? <Designer /> : <Planner />}
             <div className="w-full flex flex-col items-center space-y-3 mb-4 lg:mb-8">
-                <div className="rounded-full w-[4.5rem] h-[4.5rem] lg:w-[8.125rem] lg:h-[8.125rem] bg-red-900 cursor-pointer"></div>
+                <div className={`rounded-full w-[4.5rem] h-[4.5rem] lg:w-[8.125rem] lg:h-[8.125rem] cursor-pointer`} style={{ background: `url(${imgurl})` }}></div>
                 <div className="w-full flex flex-col items-center">
                     <h3 className="font-bold text-lg lg:text-xl mb-0.5 leading-5 cursor-pointer">{`${firstname}${lastname}`}</h3>
                     <h4 className="font-medium text-sm text-ourGrey leading-5">{`${team}`}</h4>
