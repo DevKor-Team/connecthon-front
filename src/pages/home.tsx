@@ -1,7 +1,7 @@
 import { CustomNextPage } from '../types/types';
 import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
-import ProjectCard from '../components/ProjectCard';
+import MainProjectCard from '../components/MainProjectCard';
 import HomeButton from '../components/HomeButton';
 
 const schedule = [
@@ -280,7 +280,7 @@ function MainProject() {
                 {/* 프로젝트 리스트 영역 */}
                 <section className="w-full flex flex-col sm:flex-row items-center space-y-8 sm:space-y-0 sm:space-x-6 xl:space-x-14 mb-10">
                     {projects.map(prj => (
-                        <ProjectCard key={prj.id} title={prj.title} team={prj.team} />
+                        <MainProjectCard key={prj.id} title={prj.title} team={prj.team} />
                     ))}
                 </section>
             </main>
