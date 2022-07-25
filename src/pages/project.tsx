@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { FiSearch } from 'react-icons/fi';
 import React, { useEffect, useState } from 'react';
+import ProjectCard from '../components/ProjectCard';
 
 type ProjectType = { team: string; prjname: string; img: string };
 
@@ -49,7 +50,7 @@ function ProjectList() {
             </Head>
             <Header />
             {/* 페이지 메인 / 검색창까지 영역 */}
-            <section className="relative w-full h-72 bg-center bg-cover bg-no-repeat bg-[url('/participants_temp.svg')] mt-16 md:mt-20 flex flex-col justify-center items-center">
+            <section className="relative w-full h-72 bg-center bg-cover bg-no-repeat bg-[url('/participants_temp.svg')] mt-16 md:mt-20 flex flex-col justify-center items-center mb-8">
                 <h1 className="text-white text-3xl lg:text-[2.5rem] lg:leading-tight font-bold mb-4">2022 해커톤 프로젝트</h1>
 
                 {/* Mobile Subtitle */}
@@ -80,8 +81,11 @@ function ProjectList() {
             </section>
 
             {/* 프로젝트 리스트 영역 */}
-            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap md:gap-[4%]" id="card-wrapper">
-                프로젝트리스트 영역
+            <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap sm:gap-[4%] mt-20 md:mt-24" id="card-wrapper">
+                <ProjectCard />
+                <ProjectCard />
+                <ProjectCard />
+                <ProjectCard />
                 {/* {users.map(user => {
                     <PersonCard position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
                 })} */}
