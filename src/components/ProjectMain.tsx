@@ -1,6 +1,7 @@
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BiShareAlt } from 'react-icons/bi';
 import { useState } from 'react';
+import { BsChatLeft } from 'react-icons/bs';
 
 export const ProjectMain = () => {
     const [onLikedHover, setOnLikedHover] = useState<boolean>(false);
@@ -9,6 +10,7 @@ export const ProjectMain = () => {
     // const [onSharedClick, setOnSharedClick] = useState<boolean>(false);
     return (
         <article>
+            <BsChatLeft className="absolute right-[2rem] top-0" />
             <div className="absolute left-[20%] top-0 bg-ourWhite drop-shadow-lg rounded-lg h-[80vh] w-[70vw] z-0 p-[2rem] bg-[url('/project-ex.svg')] overflow-hidden">
                 <div className="flex flex-col items-end z-10">
                     <p className="text-lg">Team DEVKOR</p>
@@ -51,7 +53,6 @@ export const ProjectMain = () => {
                     </div>
                 </div>
             </div>
-
             <div className="my-[30rem]"></div>
         </article>
     );
