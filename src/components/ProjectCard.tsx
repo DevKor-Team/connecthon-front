@@ -1,79 +1,20 @@
-import { MouseEvent } from 'react';
+import { FiHeart } from 'react-icons/fi';
 
-function attachScaling(e: MouseEvent<HTMLDivElement>) {
-    //for collecting siblings
-    const siblings: HTMLElement[] = [];
-
-    let target;
-    if (e.target instanceof HTMLDivElement) target = e.target;
-
-    if (typeof target == 'undefined') return;
-
-    //if no parent, return
-    if (!target.parentElement) {
-        return;
-    }
-
-    console.log('mouse over');
-
-    //first child of the parent element
-    let currentChild = target.parentElement.firstChild;
-
-    //collecting siblings
-    if (currentChild instanceof HTMLDivElement) {
-        while (currentChild) {
-            if (currentChild.nodeType === 1 && currentChild !== target) {
-                siblings.push(currentChild);
-            }
-
-            currentChild = currentChild.nextSibling;
-        }
-    }
-    target.classList.add('sm:scale-110', 'sm:shadow-[7px_7px_18px_2px_rgba(0,0,0,0.1)]');
-    siblings.forEach(sib => sib.classList.add('sm:scale-75'));
-}
-
-function detachScaling(e: MouseEvent<HTMLDivElement>) {
-    //for collecting siblings
-    const siblings: HTMLElement[] = [];
-
-    let target;
-    if (e.target instanceof HTMLDivElement) target = e.target;
-
-    if (typeof target == 'undefined') return;
-
-    //if no parent, return
-    if (!target.parentElement) {
-        return;
-    }
-
-    //first child of the parent element
-    let currentChild = target.parentElement.firstChild;
-
-    //collecting siblings
-    if (currentChild instanceof HTMLDivElement) {
-        while (currentChild) {
-            if (currentChild.nodeType === 1 && currentChild !== target) {
-                siblings.push(currentChild as HTMLElement);
-            }
-
-            currentChild = currentChild.nextSibling;
-        }
-    }
-
-    target.classList.remove('sm:scale-110', 'sm:shadow-[7px_7px_18px_2px_rgba(0,0,0,0.1)]');
-    siblings.forEach(sib => sib.classList.remove('sm:scale-75'));
-    console.log('mouse leave');
-}
-
-export default function ProjectCard({ imgurl, title, team }: { imgurl?: string; title: string; team: string }) {
+function ProjectCard() {
     return (
-        <div className="transition-all ease-out duration-300 w-full md:w-1/3 rounded-xl" onMouseOver={e => attachScaling(e)} onMouseLeave={e => detachScaling(e)}>
-            <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl pointer-events-none">프로젝트대표사진</div>
-            <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around pointer-events-none">
-                <h1 className="font-bold text-lg sm:text-base lg:text-lg">{title}</h1>
-                <h2 className="font-semibold text-base sm:text-sm lg:text-base">{team}</h2>
+        <div className="relative w-full sm:w-[48%] h-48 md:h-64 rounded-xl bg-yellow-300 mb-6 md:mb-10">
+            <div className="transition-opacity duration-300 opacity-0 hover:opacity-100 absolute inset-0 flex flex-col justify-end p-5 lg:p-8 rounded-xl bg-gradient-to-t from-black via-[rgba(0,0,0,0.45)] to-[rgba(0,0,0,0)]">
+                <h1 className="text-white text-lg lg:text-2xl font-semibold">KU Project - Hackathon</h1>
+                <div className="flex justify-between items-center">
+                    <h2 className="text-white text-sm lg:text-base">Team : KU HACKCATHON</h2>
+                    <div className="flex space-x-2 items-center">
+                        <FiHeart stroke="white" size={20} />
+                        <p className="text-white text-base lg:text-[1.25rem]">117</p>
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
+
+export default ProjectCard;
