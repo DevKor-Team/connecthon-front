@@ -10,7 +10,6 @@ export const ProjectMain = () => {
     // const [onSharedClick, setOnSharedClick] = useState<boolean>(false);
     return (
         <article>
-            <BsChatLeft className="absolute right-[2rem] top-0" />
             <div className="absolute left-[20%] top-0 bg-ourWhite drop-shadow-lg rounded-lg h-[80vh] w-[70vw] z-0 p-[2rem] bg-[url('/project-ex.svg')] overflow-hidden">
                 <div className="flex flex-col items-end z-10">
                     <p className="text-lg">Team DEVKOR</p>
