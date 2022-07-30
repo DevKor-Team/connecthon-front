@@ -12,10 +12,10 @@ const Edit = () => {
     const [userImage, setUserImage] = useState([]);
     const [projectImage, setProjectImage] = useState<string>();
 
-    const onUserImageDrop = useCallback(acceptedFile => {
+    const onDrop = useCallback(acceptedFile => {
         setUserImage(acceptedFile.map(file => URL.createObjectURL(file)));
     }, setUserImage);
-    const { getRootProps, getInputProps } = useDropzone({ onUserImageDrop });
+    const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
     return (
         <div className="bg-ourWhite">
