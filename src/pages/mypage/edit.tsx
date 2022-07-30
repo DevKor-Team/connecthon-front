@@ -32,7 +32,7 @@ const Edit = () => {
 
     return (
         <div className="bg-ourWhite">
-            <div>
+            <div className="mt-[10rem]">
                 <form className="flex" action="" method="post">
                     <div className="flex justify-center items-center flex-col bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%]">
                         {userImage ? <img src={userImage} alt="userImage" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
