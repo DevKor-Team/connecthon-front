@@ -1,48 +1,33 @@
 import Layout from '../../layouts/Layout';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FiMail, FiInstagram, FiGithub } from 'react-icons/fi';
 import Link from 'next/link';
+import { useDropzone } from 'react-dropzone';
 
 interface PhotoParams {
     image: Blob[];
 }
 
 const Edit = () => {
-    const [userImage, setUserImage] = useState<string>();
+    const [userImage, setUserImage] = useState([]);
     const [projectImage, setProjectImage] = useState<string>();
 
-    const handleChange = async (event: React.ChangeEvent<HTMLInputElement>): Promise<any> => {
-        if (event.target.files) {
-            const fileLoaded = URL.createObjectURL(event.target.files[0]);
-            setUserImage(fileLoaded);
-        } else {
-            return;
-        }
-    };
-
-    // const handleProjectChange = async (event: React.ChangeEvent<HTMLInputElement>): Promise<any> => {
-    //     if (event.target.files) {
-    //         const fileLoaded = URL.createObjectURL(event.target.files[0]);
-    //         console.log(`file loaded : ${fileLoaded}`);
-    //         setProjectImage(fileLoaded);
-    //     } else {
-    //         return;
-    //     }
-    // };
+    const onUserImageDrop = useCallback(acceptedFile => {
+        setUserImage(acceptedFile.map(file => URL.createObjectURL(file)));
+    }, setUserImage);
+    const { getRootProps, getInputProps } = useDropzone({ onUserImageDrop });
 
     return (
         <div className="bg-ourWhite">
             <div className="mt-[10rem]">
                 <form className="flex" action="" method="post">
-                    <div className="flex justify-center items-center flex-col bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%]">
-                        {userImage ? <img src={userImage} alt="userImage" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
-
-                        <input type="file" id="imageUpload" className="mt-3 hidden" accept="image/*" onChange={handleChange} />
-
-                        <label htmlFor="imageUpload" className="cursor-pointer mt-10">
-                            Browse
-                        </label>
+                    <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] pb-5">
+                        <div {...getRootProps()}>
+                            <input {...getInputProps} />
+                            {userImage.length >= 1 ? <img src={userImage} alt="userImage" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
+                        </div>
                     </div>
+
                     <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-md">
                         <label htmlFor="name">이름</label>
                         <input type="text" placeholder="안수진" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
@@ -80,7 +65,8 @@ const Edit = () => {
                             <FiMail size={`1.75rem`} />
                             <p className="text-sm">Mail</p>
                         </div>
-                        <input type="text" placeholder="asj0816" className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-6 p-1 ml-3 mr-5" />
+                        <input type="text" placeholder="asj0816" className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-6 p-1 ml-3 mr-3" />
+                        <div className="flex items-center mr-3 text-xl opacity-50 mb-2">@</div>
                         <input type="text" placeholder="korea.ac.kr" className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-6 p-1" />
                     </div>
                     <div className="flex">
