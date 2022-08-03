@@ -1,21 +1,20 @@
 export interface User {
     id?: number;
     name: string;
+    email: string;
     image?: string;
     position?: string;
     teamName?: string;
-    introduction?: string;
-    university?: string;
-    major?: string;
-    email?: string;
-    instagram?: string;
-    github?: string;
-    career?: {
-        startYear: number;
-        startMonth: string;
-        onProgress: boolean;
-        endYear?: number;
-        endMonth?: string;
-        content: string;
-    }[];
+    profile: {
+        link: {
+            github?: string;
+            blog?: string;
+            instagram?: string;
+        };
+        img: string;
+        introduction?: string;
+        university?: string;
+        major?: string;
+        career: string[];
+    };
 }
