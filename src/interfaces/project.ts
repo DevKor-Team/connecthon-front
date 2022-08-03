@@ -3,6 +3,6 @@ export interface Project {
     teamName: string;
     teamMember: string[];
     projectTitle: string;
-    projectIntroduction?: string;
+    projectDescription?: string;
     projectImage?: string;
 }
