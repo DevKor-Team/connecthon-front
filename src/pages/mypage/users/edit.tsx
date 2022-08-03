@@ -1,8 +1,9 @@
-import Layout from '../../layouts/Layout';
+import Layout from '../../../layouts/Layout';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FiMail, FiInstagram, FiGithub } from 'react-icons/fi';
 import Link from 'next/link';
 import { useDropzone } from 'react-dropzone';
+import Dropzone from 'react-dropzone';
 
 interface PhotoParams {
     image: Blob[];
@@ -10,22 +11,26 @@ interface PhotoParams {
 
 const Edit = () => {
     const [userImage, setUserImage] = useState([]);
-    const [projectImage, setProjectImage] = useState<string>();
-
-    const onDrop = useCallback(acceptedFile => {
-        setUserImage(acceptedFile.map(file => URL.createObjectURL(file)));
-    }, setUserImage);
-    const { getRootProps, getInputProps } = useDropzone({ onDrop });
+    const [projectImage, setProjectImage] = useState([]);
 
     return (
         <div className="bg-ourWhite">
             <div className="mt-[10rem]">
                 <form className="flex" action="" method="post">
                     <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] pb-5">
-                        <div {...getRootProps()}>
-                            <input {...getInputProps} />
-                            {userImage.length >= 1 ? <img src={userImage} alt="userImage" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
-                        </div>
+                        <Dropzone
+                            onDrop={acceptedFiles => {
+                                setUserImage(URL.createObjectURL(acceptedFiles[0]));
+                            }}
+                            multiple={false}
+                        >
+                            {({ getRootProps, getInputProps }) => (
+                                <div {...getRootProps()}>
+                                    <input {...getInputProps} />
+                                    {userImage.length >= 1 ? <img src={userImage} alt="userImage" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
+                                </div>
+                            )}
+                        </Dropzone>
                     </div>
 
                     <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-md">
@@ -88,12 +93,19 @@ const Edit = () => {
                 <form action="" method="post" className="my-[4rem] pt-[2rem] pb-[3rem] px-[4rem] bg-[#FFFFFF] drop-shadow-lg rounded-md">
                     <h4 className="opacity-50 mb-5 font-medium ">프로젝트 썸네일 업로드</h4>
                     <div className="w-[100%] border-dashed border-2 border-sky-500 h-[18rem] flex flex-col items-center ">
-                        {projectImage ? <img src={projectImage} alt="projectImage" /> : <img src="/drag-drop.svg" alt="drag-drop" className="mx-auto pt-[3rem]" />}
-                        <input type="file" id="imageUpload" className="mt-3 hidden" accept="image/*" />
-
-                        <label htmlFor="imageUpload" className="cursor-pointer text-[#2087FF] mt-5">
-                            Browse
-                        </label>
+                        <Dropzone
+                            onDrop={acceptedFiles => {
+                                setProjectImage(URL.createObjectURL(acceptedFiles[0]));
+                            }}
+                            multiple={false}
+                        >
+                            {({ getRootProps, getInputProps }) => (
+                                <div {...getRootProps()}>
+                                    <input {...getInputProps} />
+                                    {projectImage.length >= 1 ? <img src={projectImage} alt="projectImage" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
+                                </div>
+                            )}
+                        </Dropzone>
                     </div>
                 </form>
                 <Link href="/mypage">
