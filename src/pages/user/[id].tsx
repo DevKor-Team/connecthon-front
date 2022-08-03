@@ -14,31 +14,22 @@ const MyPage: CustomNextPage = () => {
     const UserProfile: User = {
         id: 1,
         name: '안수진',
+        email: 'asj0816@korea.ac.kr',
         image: '/soojin.png',
         position: 'developer',
         teamName: 'Tiger',
-        introduction: '내가 생각한 프로젝트를 현실로',
-        university: '고려대학교',
-        major: '국제학부',
-        career: [
-            {
-                startYear: 2022,
-                startMonth: 'Aug',
-                onProgress: false,
-                endYear: 2022,
-                endMonth: 'Aug',
-                content: '2022 KU Summer Hackathon Finalist',
+        profile: {
+            link: {
+                github: 'aiccuracy',
+                blog: 'www.hojins.life',
+                instagram: '@10issoojin_',
             },
-            {
-                startYear: 2021,
-                startMonth: 'Sep',
-                onProgress: true,
-                content: 'Corca ML Engineer',
-            },
-        ],
-        email: 'aiccuracy@gmail.com',
-        instagram: '@10issoojin_',
-        github: 'aiccuracy',
+            img: '/soojin.png',
+            introduction: '뎁코 화이팅',
+            university: '고려대학교',
+            major: '국제학부',
+            career: ['코르카 ML 엔지니어', 'DevKor 노예'],
+        },
     };
 
     const Project: Project = {
@@ -82,15 +73,16 @@ const MyPage: CustomNextPage = () => {
                         <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">
                             <div className="my-4">
                                 <h4 className="font-semibold">한 줄 소개</h4>
-                                <p>{UserProfile.introduction}</p>
+                                <p>{UserProfile.profile.introduction}</p>
                             </div>
                             <div className="my-4">
                                 <h4 className="font-semibold">학력</h4>
-                                <p>{`${UserProfile.university} ${UserProfile.major}`}</p>
+                                <p>{`${UserProfile.profile.university} ${UserProfile.profile.major}`}</p>
                             </div>
                             <div className="my-4">
                                 <h4 className="font-semibold mb-1">경력</h4>
-                                <div>{UserProfile.career ? <p>{UserProfile.career[0].content}</p> : null}</div>
+
+                                <div>{UserProfile.profile.career ? UserProfile.profile.career.map(x => <p>{x}</p>) : null}</div>
                             </div>
 
                             <h4 className="font-semibold my-2">SNS</h4>
