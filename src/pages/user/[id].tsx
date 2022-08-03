@@ -1,13 +1,12 @@
-import { CustomNextPage } from '../../../types/types';
-import Layout from '../../../layouts/Layout';
-import { AiOutlineHeart, AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
+import { CustomNextPage } from '../../types/types';
+import Layout from '../../layouts/Layout';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { BsChatLeft, BsFillChatLeftFill } from 'react-icons/bs';
 import { useState } from 'react';
-import { User } from '../../../interfaces/user';
+import { User } from '../../interfaces/user';
 import { FiMail, FiInstagram, FiGithub } from 'react-icons/fi';
 import Link from 'next/link';
-import { Project } from '../../../interfaces/project';
-import { BiShareAlt } from 'react-icons/bi';
+import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
 
 const MyPage: CustomNextPage = () => {
@@ -47,7 +46,7 @@ const MyPage: CustomNextPage = () => {
         teamName: 'Tiger',
         teamMember: ['이승우', '안수진', '정호진', '노정훈'],
         projectTitle: '해커톤 웹 개발기',
-        projectIntroduction: '뎁코의 노예들 입니다.',
+        projectDescription: '뎁코의 노예들 입니다.',
         projectImage: '/project-ex.svg',
     };
 
@@ -63,7 +62,7 @@ const MyPage: CustomNextPage = () => {
                     className="cursor-pointer"
                     onClick={() => {
                         if (userId - 1 > 0) {
-                            router.push(`/mypage/users/${userId - 1}`);
+                            router.push(`/user/${userId - 1}`);
                         } else {
                             return;
                         }
@@ -178,24 +177,9 @@ const MyPage: CustomNextPage = () => {
                             <div className="grow">
                                 <h4 className="text-lg tracking-wider font-semibold my-1">{`TEAM ${Project.teamName}`}</h4>
                                 <h2 className="text-4xl tracking-wide font-bold my-2">{Project.projectTitle}</h2>
-                                <h3 className="text-lg tracking-normal">{Project.projectIntroduction}</h3>
+                                <h3 className="text-lg tracking-normal">{Project.projectDescription}</h3>
                                 <div className="relative">
                                     <img src="/project-ex.svg" alt="project-example" className="absolute top-[-1rem] w-[80%] opacity-80" />
-                                </div>
-                            </div>
-
-                            <div className="grow-0">
-                                <div className="flex">
-                                    <h4 className="grow">2022 KU HACKATHON</h4>
-                                    <div className="grow-0 bg-[#FFFFFF] rounded-full w-[4rem]">
-                                        <div className="flex justify-center items-center p-1 cursor-pointer">
-                                            <AiOutlineHeart />
-                                            <p className="pl-1">{123}</p>
-                                        </div>
-                                    </div>
-                                    <div className="grow-0 bg-[#FFFFFF] rounded-full w-[2.5rem] flex justify-center items-center ml-2 cursor-pointer">
-                                        <BiShareAlt />
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -206,7 +190,7 @@ const MyPage: CustomNextPage = () => {
                 <AiOutlineRight
                     className="cursor-pointer"
                     onClick={() => {
-                        router.push(`/mypage/users/${userId + 1}`);
+                        router.push(`/user/${userId + 1}`);
                     }}
                 />
             </div>
