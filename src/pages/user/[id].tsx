@@ -141,7 +141,7 @@ const MyPage: CustomNextPage = () => {
                     </div>
                     <div className="w-[70%] h-[85vh] flex flex-col justify-end min-w-[25rem] max-w-[100rem]">
                         <div className="flex flex-col items-end m-4">
-                            {onChat ? (
+                            {/* {onChat ? (
                                 <BsFillChatLeftFill
                                     style={{ fill: '#2087FF' }}
                                     className="text-[1.5rem] cursor-pointer"
@@ -163,7 +163,7 @@ const MyPage: CustomNextPage = () => {
                                         setOnChat(false);
                                     }}
                                 />
-                            )}
+                            )} */}
                         </div>
                         <div className="flex flex-col bg-ourWhite rounded-lg w-[100%] h-[80vh] p-8 ">
                             <div className="grow">
