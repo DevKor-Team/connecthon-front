@@ -2,12 +2,12 @@ import { atom } from 'recoil';
 import { User } from '../interfaces/user';
 
 export interface UserState {
-    accessToken: string | null;
+    isLogin: boolean;
     user: User | null;
 }
 
 const defaultValue = {
-    accessToken: null,
+    isLogin: false,
     user: null,
 };
 
