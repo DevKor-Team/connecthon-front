@@ -2,9 +2,11 @@ import React from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
+import { FiLogOut } from 'react-icons/fi';
 import Link from 'next/link';
 import { userRecoilState } from '../recoil/user';
 import { useRecoilState } from 'recoil';
+import { axiosInstance } from '../hooks/queries';
 
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     const [userData, setUserData] = useRecoilState(userRecoilState);
@@ -63,6 +65,14 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
         }
     }
 
+    async function handleLogOut() {
+        await axiosInstance.get('/auth/logout');
+        setUserData({
+            isLogin: false,
+            user: null,
+        });
+    }
+
     return (
         <>
             <SideMenu theme={theme} />
@@ -88,10 +98,11 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                     </ul>
                 </div>
 
-                <div className="flex items-center font-light cursor-pointer md:mr-12 lg:mr-16">
+                <div className="flex items-center space-x-3 md:space-x-6 font-light cursor-pointer md:mr-12 lg:mr-16">
                     <Link href={`${userData.isLogin ? '/mypage' : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
+                    {userData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null}
                 </div>
             </header>
         </>
