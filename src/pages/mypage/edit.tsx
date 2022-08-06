@@ -1,12 +1,56 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Layout from '../../layouts/Layout';
 import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub } from 'react-icons/fi';
 import { useRouter } from 'next/router';
+import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
+import { canvasPreview } from '../../utils/canvasPreview';
+import { useDebounceEffect } from '../../utils/useDebounceEffect';
+
+import 'react-image-crop/dist/ReactCrop.css';
+
+function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
+    return centerCrop(
+        makeAspectCrop(
+            {
+                unit: '%',
+                width: 90,
+            },
+            aspect,
+            mediaWidth,
+            mediaHeight,
+        ),
+        mediaWidth,
+        mediaHeight,
+    );
+}
 
 const ProfileEdit = () => {
-    const [file, setFile] = useState<string>();
     const router = useRouter();
+    const [file, setfile] = useState('');
+    const previewCanvasRef = useRef<HTMLCanvasElement>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
+    const [crop, setCrop] = useState<Crop>();
+    const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+    const scale = 1;
+    const rotate = 0;
+    const aspect = 1;
+
+    function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
+        if (aspect) {
+            const { width, height } = e.currentTarget;
+            setCrop(centerAspectCrop(width, height, aspect));
+        }
+    }
+    useDebounceEffect(
+        async () => {
+            if (completedCrop?.width && completedCrop?.height && imgRef.current && previewCanvasRef.current) {
+                canvasPreview(imgRef.current, previewCanvasRef.current, completedCrop, scale, rotate);
+            }
+        },
+        100,
+        [completedCrop, scale, rotate],
+    );
 
     return (
         <div className="bg-ourWhite mt-[8rem] mb-[3rem] w-[100%]">
@@ -15,19 +59,44 @@ const ProfileEdit = () => {
                     <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] pb-5">
                         <Dropzone
                             onDrop={acceptedFiles => {
-                                setFile(URL.createObjectURL(acceptedFiles[0]));
+                                setfile(URL.createObjectURL(acceptedFiles[0]));
                             }}
                         >
                             {({ getRootProps, getInputProps }) => (
                                 <section>
                                     <div {...getRootProps()}>
                                         <input {...getInputProps()} />
-                                        {file ? <img src={file} alt="uploaded user image" /> : <img src="/dragdrop.svg" alt="dragdrop" />}
+                                        {file ? null : <img src="/dragdrop.svg" alt="dragdrop" />}
                                     </div>
                                 </section>
                             )}
                         </Dropzone>
+                        {Boolean(file) && (
+                            <ReactCrop
+                                crop={crop}
+                                onChange={(_, percentCrop) => setCrop(percentCrop)}
+                                onComplete={c => {
+                                    setCompletedCrop(c);
+                                }}
+                                aspect={aspect}
+                                circularCrop={true}
+                            >
+                                <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
+                            </ReactCrop>
+                        )}
                     </div>
+                    {/* <div>
+                        {Boolean(completedCrop) && (
+                            <canvas
+                                ref={previewCanvasRef}
+                                style={{
+                                    objectFit: 'contain',
+                                    width: completedCrop?.width,
+                                    height: completedCrop?.height,
+                                }}
+                            />
+                        )}
+                    </div> */}
                     <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-md">
                         <label htmlFor="name">이름</label>
                         <input type="text" placeholder="안수진" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
