@@ -41,11 +41,11 @@ const MyPage: CustomNextPage = () => {
         projectImage: '/project-ex.svg',
     };
 
-    // const [onChat, setOnChat] = useState<boolean>(false);
     const [onMail, setOnMail] = useState<boolean>(false);
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
     const userId = Number(router.query.id);
+
     return (
         <div className="mt-[8rem] flex w-[100%] items-center">
             <div className="grow-0 mr-4 cursor-pointer">
