@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { BiDotsVertical, BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
 import { IoIosCloseCircle } from 'react-icons/io';
+import Tag from '../../../components/Tag';
 
 const Writer = dynamic(() => import('../../../components/Editor'), { ssr: false });
 
@@ -40,8 +41,29 @@ const techStacks: { name: string; image: string }[] = [
     },
 ];
 
+// const Tag = (labels, onRemove) => {
+//     return (
+//         <div>
+//             <IoIosCloseCircle
+//                 className="mr-1 fill-[#FFFFFF] cursor-pointer"
+//                 onClick={() => {
+//                     const index = labels.indexOf(x);
+//                     if (index > -1) {
+//                         labels.splice(index, 1);
+//                     }
+//                     setLabels(labels);
+//                 }}
+//             />
+//             <p className="text-center text-[#FFFFFF] text-md">{x}</p>
+//         </div>
+//     );
+// };
+
 const ProjectEdit = () => {
     const [labels, setLabels] = useState<Array<string>>(['']);
+    const onRemove = (selectedLabel: string) => {
+        setLabels(labels.filter(label => label !== selectedLabel));
+    };
 
     return (
         <div className="mt-[8rem] flex justify-center">
@@ -64,31 +86,21 @@ const ProjectEdit = () => {
                     />
                     <BiSearch size={30} className="fill-[#2086FF] cursor-pointer ml-3" />
                 </div>
-                <div className="flex ml-5 w-[100%] mb-[4rem] mt-3 px-2">
+                <div className="flex ml-5 w-[100%] mb-[2rem] mt-5 px-2">
                     {labels ? (
                         <div className="flex flex-wrap">
                             {labels?.slice(0, -1).map(x => (
-                                <div
-                                    className="flex justify-center items-center mx-1 bg-[#2087FF] rounded-xl px-3 py-1 my-1 "
-                                    onClick={() => {
-                                        const index = labels.indexOf(x);
-                                        if (index > -1) {
-                                            labels.splice(index, 1);
-                                        }
-                                        setLabels(labels);
-                                    }}
-                                >
-                                    <IoIosCloseCircle className="mr-1 fill-[#FFFFFF]" />
-                                    <p className="text-center">{x}</p>
+                                <div className="flex justify-center items-center mx-1 bg-[#2087FF] rounded-xl px-3 py-1 my-1 ">
+                                    <Tag label={x} onRemove={onRemove} />
                                 </div>
                             ))}
                         </div>
                     ) : null}
                 </div>
-                <div className="flex flex-wrap justify-start ml-5 mb-10">
+                <div className="flex flex-wrap justify-start mx-2 mb-10">
                     {techStacks.map(stack => {
                         return (
-                            <div className="w-[30%]">
+                            <div className="w-[25%]">
                                 <img
                                     src={stack.image}
                                     alt={stack.name}
@@ -97,7 +109,7 @@ const ProjectEdit = () => {
                                         if (!labels.includes(stack.name)) setLabels([stack.name, ...labels]);
                                     }}
                                 />
-                                <div className="text-center mt-2 text-sm">{stack.name}</div>
+                                <div className="text-center mt-2 text-[0.77rem]">{stack.name}</div>
                             </div>
                         );
                     })}
