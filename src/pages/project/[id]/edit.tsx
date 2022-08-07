@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
 import Tag from '../../../components/Tag';
+import { useRouter } from 'next/router';
 
 const Writer = dynamic(() => import('../../../components/Editor'), { ssr: false });
 
@@ -39,6 +40,9 @@ const techStacks: { name: string; image: string }[] = [
 
 const ProjectEdit = () => {
     const [labels, setLabels] = useState<Array<string>>(['']);
+    const router = useRouter();
+    const projectId = router.query.id;
+    console.log(`projectid : ${projectId}`);
     const onRemove = (selectedLabel: string) => {
         setLabels(labels.filter(label => label !== selectedLabel));
     };
@@ -48,8 +52,22 @@ const ProjectEdit = () => {
             <div className="w-[70%] h-[100%] mr-2 border-4 border-blue-100 ">
                 <Writer />
                 <div className="flex justify-end mx-5 my-2">
-                    <button className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2">임시 저장</button>
-                    <button className="border-2 border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold">저장</button>
+                    <button
+                        className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2"
+                        onClick={() => {
+                            router.push(`/project/${projectId}/edit`);
+                        }}
+                    >
+                        임시 저장
+                    </button>
+                    <button
+                        className="border-2 border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold"
+                        onClick={() => {
+                            router.push(`/project/${projectId}`);
+                        }}
+                    >
+                        저장
+                    </button>
                 </div>
             </div>
 
