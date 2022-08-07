@@ -16,7 +16,7 @@ const Home: CustomNextPage = () => {
         const getSessionUser = async () => {
             try {
                 const response = await axiosInstance.get('/auth/user');
-                if (response.data) {
+                if (response.status != 401) {
                     setUserData({
                         isLogin: true,
                         user: response.data,
