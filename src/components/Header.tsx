@@ -2,9 +2,15 @@ import React from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
+import { FiLogOut } from 'react-icons/fi';
 import Link from 'next/link';
+import { userRecoilState } from '../recoil/user';
+import { useRecoilState } from 'recoil';
+import { axiosInstance } from '../hooks/queries';
 
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
+    const [userData, setUserData] = useRecoilState(userRecoilState);
+
     function closeMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
@@ -24,17 +30,17 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
                     <MdOutlineClose className="absolute top-5 right-4" size={20} onClick={closeMenu} />
                     <div className="font-impact border-b border-slate-200 py-2 mb-7 text-xl">KU HACKATHON</div>
                     <ul className="font-bold space-y-8">
-                        <li>
+                        <li onClick={closeMenu}>
                             <Link href="/about">ABOUT</Link>
                         </li>
-                        <li>
+                        <li onClick={closeMenu}>
                             <Link href="/project">PROJECT</Link>
                         </li>
-                        <li>
+                        <li onClick={closeMenu}>
                             <Link href="/participants">PARTICIPANTS</Link>
                         </li>
-                        <li>
-                            <Link href="/chat">CHAT</Link>
+                        <li onClick={closeMenu}>
+                            <Link href={`${userData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
                         </li>
                     </ul>
                 </div>
@@ -44,6 +50,8 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
 }
 
 function Header({ theme }: { theme?: 'dark' | 'light' }) {
+    const [userData, setUserData] = useRecoilState(userRecoilState);
+
     function openMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
@@ -55,6 +63,14 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
             sidebg?.classList.replace('bg-black/0', 'bg-black/20');
             sidebar?.classList.replace('-left-[100vw]', 'left-0');
         }
+    }
+
+    async function handleLogOut() {
+        await axiosInstance.get('/auth/logout');
+        setUserData({
+            isLogin: false,
+            user: null,
+        });
     }
 
     return (
@@ -77,15 +93,16 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/participants">PARTICIPANTS</Link>
                         </li>
                         <li>
-                            <Link href="/chat">CHAT</Link>
+                            <Link href={`${userData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
                         </li>
                     </ul>
                 </div>
 
-                <div className="flex items-center font-light cursor-pointer md:mr-12 lg:mr-16">
-                    <Link href="/mypage">
+                <div className="flex items-center space-x-3 md:space-x-6 font-light cursor-pointer md:mr-12 lg:mr-16">
+                    <Link href={`${userData.isLogin ? '/mypage' : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
+                    {userData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null}
                 </div>
             </header>
         </>

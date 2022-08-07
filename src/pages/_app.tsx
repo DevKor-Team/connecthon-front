@@ -10,13 +10,13 @@ function HACKATHON({ Component, pageProps }: AppProps) {
     const page = Component as CustomNextPage;
     const Layout = page.Layout ?? Fragment;
     return (
-        <Layout>
-            <RecoilRoot>
+        <RecoilRoot>
+            <Layout>
                 <ParallaxProvider scrollAxis="vertical">
                     <Component {...pageProps} />
                 </ParallaxProvider>
-            </RecoilRoot>
-        </Layout>
+            </Layout>
+        </RecoilRoot>
     );
 }
 
