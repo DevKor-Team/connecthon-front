@@ -1,11 +1,7 @@
 import Layout from '../../../layouts/Layout';
-// import Writer from '../../../components/Editor';
-import PostView from '../../../components/Viewer';
 import dynamic from 'next/dynamic';
-import { FiSearch } from 'react-icons/fi';
-import { BiDotsVertical, BiSearch } from 'react-icons/bi';
+import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
-import { IoIosCloseCircle } from 'react-icons/io';
 import Tag from '../../../components/Tag';
 
 const Writer = dynamic(() => import('../../../components/Editor'), { ssr: false });
@@ -41,24 +37,6 @@ const techStacks: { name: string; image: string }[] = [
     },
 ];
 
-// const Tag = (labels, onRemove) => {
-//     return (
-//         <div>
-//             <IoIosCloseCircle
-//                 className="mr-1 fill-[#FFFFFF] cursor-pointer"
-//                 onClick={() => {
-//                     const index = labels.indexOf(x);
-//                     if (index > -1) {
-//                         labels.splice(index, 1);
-//                     }
-//                     setLabels(labels);
-//                 }}
-//             />
-//             <p className="text-center text-[#FFFFFF] text-md">{x}</p>
-//         </div>
-//     );
-// };
-
 const ProjectEdit = () => {
     const [labels, setLabels] = useState<Array<string>>(['']);
     const onRemove = (selectedLabel: string) => {
@@ -66,9 +44,13 @@ const ProjectEdit = () => {
     };
 
     return (
-        <div className="mt-[8rem] flex justify-center">
+        <div className="mt-[8rem] mb-10 flex justify-center">
             <div className="w-[70%] h-[100%] mr-2 border-4 border-blue-100 ">
                 <Writer />
+                <div className="flex justify-end mx-5 my-2">
+                    <button className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2">임시 저장</button>
+                    <button className="border-2 border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold">저장</button>
+                </div>
             </div>
 
             <div className="flex flex-col w-[30%] rounded-xl bg-[#FFFFFF] drop-shadow-xl shadow-[#2086FF]">
