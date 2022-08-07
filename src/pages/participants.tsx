@@ -416,7 +416,7 @@ function Participants() {
             <div className="transition-all opacity-100 duration-200 w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]" id="card-wrapper">
                 {(enterPressed ? searchResult : currentCategory == 'users' ? tempUsers : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners).map(
                     user => (
-                        <PersonCard position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
+                        <PersonCard id={user.id} position={user.profile.position} imgurl={user.profile.img} firstname={user.name.first} lastname={user.name.last} team={user.team} key={user.id} />
                     ),
                 )}
 
