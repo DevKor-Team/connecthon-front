@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../../layouts/Layout';
 import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
-import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
+import { AiOutlineMinusCircle, AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
@@ -180,7 +180,14 @@ const ProfileEdit = () => {
                             )}
                         </Dropzone>
                         {Boolean(file) && onModal ? (
-                            <div className="flex flex-col justify-center items-center w-[50rem] overflow-hidden bg-red-300 absolute top-[30%] left-[50%] ">
+                            <div className="flex flex-col justify-center items-center w-[50rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[30%] left-[50%] ">
+                                <AiOutlineClose
+                                    size={18}
+                                    className="cursor-pointer absolute top-5 right-5 opacity-50"
+                                    onClick={() => {
+                                        setOnModal(false);
+                                    }}
+                                />
                                 <div className="flex items-center justify-center">
                                     <ReactCrop
                                         crop={crop}
@@ -190,20 +197,19 @@ const ProfileEdit = () => {
                                         }}
                                         aspect={aspect}
                                         circularCrop={true}
-                                        className=" mt-[6rem] mb-3 overflow-hidden w-[15rem] h-[26rem]"
+                                        className=" mt-[3rem] mb-3 overflow-hidden w-[15rem]"
                                     >
                                         <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
                                     </ReactCrop>
                                     <div>
-                                        <h2 className="text-center text-white text-xl mb-5">미리보기</h2>
-                                        <canvas ref={canvasRef} className="rounded-full w-[10rem] h-[10rem] overflow-hidden mx-10"></canvas>
+                                        <canvas ref={canvasRef} className="rounded-full w-[15rem] overflow-hidden mx-10"></canvas>
                                     </div>
                                 </div>
                                 <div className="flex justify-center">
-                                    <div className="bg-[#2087FF] w-[10rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
+                                    <div className="bg-[#2087FF] w-[7rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
                                         <p className="text-white text-center cursor-pointer">미리보기</p>
                                     </div>
-                                    <div className="bg-[#2087FF] w-[10rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
+                                    <div className="bg-[#2087FF] w-[7rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
                                         <p className="text-white text-center cursor-pointer">저장하기</p>
                                     </div>
                                 </div>

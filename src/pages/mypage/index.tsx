@@ -46,7 +46,7 @@ const MyPage: CustomNextPage = () => {
     const [onGithub, setOnGithub] = useState<boolean>(false);
     const userId = Number(router.query.id);
     const [userState, setUserState] = useRecoilState(userRecoilState);
-    console.log(`userState in main user page : ${userState.user?.profile.introduction}`);
+    console.log(`userState in main user page : ${userState.user?.profile.img}`);
     return (
         <div className="mt-[8rem] flex w-[100%] items-center">
             <div className="grow-0 mr-4 cursor-pointer">
@@ -65,7 +65,7 @@ const MyPage: CustomNextPage = () => {
                 <div className="flex mb-10">
                     <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                         <div className="flex flex-col items-center">
-                            <img src="/soojin.png" alt="soojin" className="rounded-full w-[50%] my-2" />
+                            <img src={userState.user?.profile.img} alt="my photo" className="rounded-full w-[50%] my-2" />
                             <div className="flex items-center my-2">
                                 <h4 className={`text-${userState.user?.profile.position} mx-1`}>{userState.user?.profile.position}</h4>
                                 <FiEdit
