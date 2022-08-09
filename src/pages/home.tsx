@@ -77,7 +77,7 @@ function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
 
 function Information() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-40 md:mt-16 flex items-center justify-start w-full" id="information">
+        <div className="md:h-[calc(100vh-4rem)] mt-40 md:mt-16 flex items-center justify-start w-full" id="information">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">내가 원하는, 상상한 프로젝트를</h1>
