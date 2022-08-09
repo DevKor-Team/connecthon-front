@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { teamMemberRecoilState } from '../../recoil/teamMember';
 
-const BusinessSchool: ReactNode = () => {
+const BusinessSchool = () => {
     const [members, showMembers] = useState<boolean>(false);
     // const businessMember = [
     //     {
