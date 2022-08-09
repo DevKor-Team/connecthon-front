@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
 import MainProjectCard from '../components/MainProjectCard';
 import HomeButton from '../components/HomeButton';
+import { Project } from '../interfaces/project';
 
 const schedule = [
     {
@@ -32,21 +33,33 @@ const schedule = [
     },
 ];
 
-const projects = [
+const projects: Project[] = [
     {
         id: 1,
-        title: 'KU Project - Hackathon',
-        team: 'Team : KU HACKATHON',
+        title: '오늘 뭐 먹지?',
+        content: '',
+        stack: ['python', 'css'],
+        team: '등용문',
+        likes: [''],
+        thumbnail: '/project-sample1.png',
     },
     {
         id: 2,
-        title: 'KU Project - Hackathon',
-        team: 'Team : KU HACKATHON',
+        title: 'BookItOut',
+        content: '',
+        stack: ['python', 'css'],
+        team: 'Next Level',
+        likes: [''],
+        thumbnail: '/project-sample2.png',
     },
     {
-        id: 3,
-        title: 'KU Project - Hackathon',
-        team: 'Team : KU HACKATHON',
+        id: 1,
+        title: '피드백 보관 플랫폼 #posTree',
+        content: '',
+        stack: ['python', 'css'],
+        team: '포스트리',
+        likes: [''],
+        thumbnail: '/project-sample3.png',
     },
 ];
 
@@ -77,7 +90,7 @@ function HomeTitle({ firstScroll }: { firstScroll: boolean }) {
 
 function Information() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-40 md:mt-16 flex items-center justify-start w-full" id="information">
+        <div className="md:h-[calc(100vh-4rem)] mt-40 md:mt-16 flex items-center justify-start w-full" id="information">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">내가 원하는, 상상한 프로젝트를</h1>
@@ -280,7 +293,7 @@ function MainProject() {
                 {/* 프로젝트 리스트 영역 */}
                 <section className="w-full flex flex-col sm:flex-row items-center space-y-8 sm:space-y-0 sm:space-x-6 xl:space-x-14 mb-10">
                     {projects.map(prj => (
-                        <MainProjectCard key={prj.id} title={prj.title} team={prj.team} />
+                        <MainProjectCard key={prj.id} imgurl={prj.thumbnail} title={prj.title} team={prj.team} />
                     ))}
                 </section>
             </main>
@@ -323,7 +336,7 @@ const Homepage: CustomNextPage = () => {
 
     useEffect(() => {
         function titleScroll() {
-            let scrollY = window.pageYOffset;
+            const scrollY = window.pageYOffset;
             if (scrollY > 0) {
                 setFirstScroll(true);
             } else setFirstScroll(false);
