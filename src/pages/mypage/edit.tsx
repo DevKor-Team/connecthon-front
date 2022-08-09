@@ -35,7 +35,7 @@ const ProfileEdit = () => {
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onModal, setOnModal] = useState<boolean>(false);
     const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
-    const [numCareerInput, setNumCareerInput] = useState<number>(userState.user?.profile.career.length || 1);
+    const [numCareerInput, setNumCareerInput] = useState<number>(1);
     const aspect = 1;
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const imgRef = useRef<HTMLImageElement>(null);
@@ -65,14 +65,18 @@ const ProfileEdit = () => {
                 },
             ),
         );
-        console.log(`user state Afterward : ${data}`);
     };
     const onInvalid = errors => {
-        console.log(`# onInvalid : ${errors}`);
+        console.log(errors);
     };
 
     useEffect(() => {
         setOnModal(false);
+        if (userState.user?.profile.career) {
+            setNumCareerInput(userState.user?.profile.career.length);
+        } else {
+            setNumCareerInput(1);
+        }
     }, []);
 
     useEffect(() => {
