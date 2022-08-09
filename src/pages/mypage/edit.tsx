@@ -57,6 +57,7 @@ const ProfileEdit = () => {
                                 instagram: data.instagram,
                             },
                             introduction: data.introduction,
+                            img: userState.user?.profile.img,
                             position: data.position,
                             university: data.university,
                             major: data.major,
