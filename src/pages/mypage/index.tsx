@@ -65,7 +65,11 @@ const MyPage: CustomNextPage = () => {
                 <div className="flex mb-10">
                     <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                         <div className="flex flex-col items-center">
-                            <img src={userState.user?.profile.img} alt="my photo" className="rounded-full w-[50%] my-2" />
+                            {userState.user?.profile.img ? (
+                                <img src={userState.user?.profile.img} alt="my photo" className="rounded-full w-[50%] my-2" />
+                            ) : (
+                                <img src="/profile-default.jpg" alt="default-profile" className="rounded-full w-[50%] my-2" />
+                            )}
                             <div className="flex items-center my-2">
                                 <h4 className={`text-${userState.user?.profile.position} mx-1`}>{userState.user?.profile.position}</h4>
                                 <FiEdit
