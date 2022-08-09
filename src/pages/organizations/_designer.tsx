@@ -4,8 +4,8 @@ const Dijo = () => {
     const [members, showMembers] = useState<boolean>(false);
     return (
         <div className="mx-1 w-[90%] md:mx-[8rem] text-left justify-end relative">
-            <div className="absolute left-[45%] md:left-[-6rem]">
-                <img src="design-logo.svg" alt="business-reverse" className="w-[16rem]" />
+            <div className="absolute left-0 w-[10rem] md:left-[-6rem]">
+                <img src="design-logo.svg" alt="design-logo" />
             </div>
 
             <div className="w-[100%]">
@@ -32,37 +32,37 @@ const Dijo = () => {
             </div>
             {members ? (
                 <div className="flex mt-3">
-                    <div className="flex flex-col w-[15%] mr-1 md:my-5 md:mr-5">
+                    <div className="flex flex-col items-center w-[15%] mr-1 md:my-5 md:mr-3">
                         <div>
                             <img src="/designers/hyuna.jpeg" alt="hyuna" className="md:w-[6rem]" />
                         </div>
                         <p className="text-center text-ourWhite my-3 tracking-wide">김현아</p>
                     </div>
-                    <div className="flex flex-col w-[15%] mx-1  md:my-5 md:mr-5">
+                    <div className="flex flex-col items-center  w-[15%] mx-1  md:my-5 md:mr-3">
                         <div>
                             <img src="/designers/jiyoon.jpeg" alt="hyuna" className="md:w-[6rem]" />
                         </div>
                         <p className="text-center text-ourWhite my-3 tracking-wide">김지윤</p>
                     </div>
-                    <div className="flex flex-col w-[15%] mx-1  md:my-5 md:mr-5">
+                    <div className="flex flex-col items-center  w-[15%] mx-1  md:my-5 md:mr-3">
                         <div>
                             <img src="/designers/jio.jpeg" alt="hyuna" className="md:w-[6rem]" />
                         </div>
                         <p className="text-center text-ourWhite my-3 tracking-wide">유지오</p>
                     </div>
-                    <div className="flex flex-col w-[15%] mx-1  md:my-5 md:mr-5">
+                    <div className="flex flex-col items-center  w-[15%] mx-1  md:my-5 md:mr-3">
                         <div>
                             <img src="/designers/taewoong.jpeg" alt="hyuna" className="md:w-[6rem]" />
                         </div>
                         <p className="text-center  text-ourWhite my-3 tracking-wide">장태웅</p>
                     </div>
-                    <div className="flex flex-col w-[15%] mx-1  md:my-5 md:mr-5">
+                    <div className="flex flex-col items-center  w-[15%] mx-1  md:my-5 md:mr-3">
                         <div>
                             <img src="/designers/seungyeon.jpeg" alt="hyuna" className="md:w-[6rem]" />
                         </div>
                         <p className="text-center text-ourWhite my-3 tracking-wide">정승연</p>
                     </div>
-                    <div className="flex flex-col w-[15%] mx-1 md:my-5 md:mr-5">
+                    <div className="flex flex-col items-center  w-[15%] mx-1 md:my-5 md:mr-3">
                         <div>
                             <img src="/designers/eun.jpeg" alt="hyuna" className="md:w-[6rem]" />
                         </div>

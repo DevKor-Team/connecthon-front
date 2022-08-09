@@ -34,7 +34,7 @@ const BusinessSchool = () => {
     // ];
 
     return (
-        <div className="mx-1 mb-[8rem] w-[70%] md:ml-[8rem] text-left justify-end relative">
+        <div className="mx-1 mb-[8rem] w-[90%] md:ml-[8rem] text-left justify-end relative">
             <div className="absolute left-[-5rem] w-[15rem] md:left-[-6rem]">
                 <img src="business-logo.svg" alt="business-reverse" className="w-[16rem]" />
             </div>
@@ -62,48 +62,48 @@ const BusinessSchool = () => {
                 />
             </div>
             {members ? (
-                <div className="flex">
-                    <div className="flex flex-col my-5 mr-5">
+                <div className="flex mt-3">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5 md:mr-5">
                         <div>
                             <img src="/bs/sojeong.png" alt="sojeong" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">이소정</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">이소정</p>
                     </div>
-                    <div className="flex flex-col my-5 mr-5">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5 md:mr-5">
                         <div>
                             <img src="/bs/hyunjeong.png" alt="hyunjeong" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">이현정</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">이현정</p>
                     </div>
-                    <div className="flex flex-col my-5 mr-5">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5 md:mr-5">
                         <div>
                             <img src="/bs/hayoon.png" alt="hayoon" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">정하윤</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">정하윤</p>
                     </div>
-                    <div className="flex flex-col my-5 mr-5">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5 md:mr-5">
                         <div>
                             <img src="/bs/dongin.png" alt="dongin" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">최동인</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">최동인</p>
                     </div>
-                    <div className="flex flex-col my-5 mr-5">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5 md:mr-5">
                         <div>
                             <img src="/bs/joonha.png" alt="joonha" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">박준하</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">박준하</p>
                     </div>
-                    <div className="flex flex-col my-5 mr-5">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5 md:mr-5">
                         <div>
                             <img src="/bs/yoonseo.png" alt="yoonseo" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">최윤서</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">최윤서</p>
                     </div>
-                    <div className="flex flex-col my-5">
+                    <div className="flex flex-col w-[12%] mr-2 md:my-5">
                         <div>
                             <img src="/bs/raewon.png" alt="raewon" className="w-[7rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">김래원</p>
+                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">김래원</p>
                     </div>
                 </div>
             ) : null}

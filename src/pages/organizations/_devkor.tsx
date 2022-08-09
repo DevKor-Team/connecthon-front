@@ -5,8 +5,8 @@ const DevKor = () => {
 
     return (
         <div className="mx-3 mb-[8rem] w-[90%] md:mr-[8rem] text-right justify-end relative">
-            <div className="absolute right-[10rem] z-0 md:right-[-8rem] md:top-[-5rem]">
-                <img src="devkor-logo.svg" alt="business-reverse" className="opacity-20 " />
+            <div className="absolute top-[-1rem] left-[7rem] w-[11rem] md:right-[-8rem] md:top-[-5rem]">
+                <img src="devkor-logo.svg" alt="devkor-logo" />
             </div>
             <div className="w-[100%] flex flex-col items-end">
                 <h1 className="text-[2.5rem] font-bold text-[#F6CC00] pt-10 md:pt-[5rem] md:text-[3.5rem]">2</h1>
@@ -30,36 +30,36 @@ const DevKor = () => {
                 />
             </div>
             {members ? (
-                <div className="flex justify-end my-5">
-                    <div className="flex flex-col w-[17%] mx-2 md:my-5 md:mx-5">
+                <div className="flex justify-end my-5 ">
+                    <div className="flex flex-col items-center w-[17%] mx-2 md:my-5 md:ml-5">
                         <div>
                             <img src="/devkors/an.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">안수진</p>
+                        <p className="text-center text-ourWhite my-3 md:tracking-wide">안수진</p>
                     </div>
-                    <div className="flex flex-col w-[17%] mx-2  md:my-5 md:mx-5">
+                    <div className="flex flex-col items-center w-[17%] mx-2  md:my-5 md:ml-5">
                         <div>
                             <img src="/devkors/jeong.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">정호진</p>
+                        <p className="text-center text-ourWhite my-3 md:tracking-wide">정호진</p>
                     </div>
-                    <div className="flex flex-col w-[17%] mx-2 md:my-5 md:mx-5">
+                    <div className="flex flex-col items-center w-[17%] mx-2 md:my-5 md:ml-5">
                         <div>
                             <img src="/devkors/no.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">노정훈</p>
+                        <p className="text-center text-ourWhite my-3 md:tracking-wide">노정훈</p>
                     </div>
-                    <div className="flex flex-col w-[17%] mx-2 md:my-5 md:mx-5">
+                    <div className="flex flex-col items-center w-[17%] mx-2 md:my-5 md:ml-5">
                         <div>
                             <img src="/devkors/baek.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">백승윤</p>
+                        <p className="text-center text-ourWhite my-3 md:tracking-wide">백승윤</p>
                     </div>
-                    <div className="flex flex-col w-[17%] ml-2 md:my-5 md:mx-5">
+                    <div className="flex flex-col items-center w-[17%] ml-2 md:my-5 md:ml-5">
                         <div>
                             <img src="/devkors/lee.png" alt="an" className="w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">이승우</p>
+                        <p className="text-center text-ourWhite my-3 md:tracking-wide">이승우</p>
                     </div>
                 </div>
             ) : null}
