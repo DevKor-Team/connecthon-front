@@ -300,7 +300,7 @@ const ProfileEdit = () => {
                             {...register('instagram')}
                             type="text"
                             placeholder="인스타그램 아이디를 입력해주세요!"
-                            defaultValue={userState.user?.profile.link.instagram}
+                            defaultValue={userState.user?.profile?.link?.instagram ? userState.user.profile.link.instagram : ''}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
                         />
                     </div>
@@ -313,7 +313,7 @@ const ProfileEdit = () => {
                             {...register('github')}
                             type="text"
                             placeholder="Github 아이디를 입력해주세요!"
-                            defaultValue={userState.user?.profile.link.github}
+                            defaultValue={userState.user?.profile?.link?.github ? userState.user.profile.link.github : ''}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-5 p-1 ml-3 mr-5"
                         />
                     </div>
@@ -326,7 +326,7 @@ const ProfileEdit = () => {
                             {...register('blog')}
                             type="text"
                             placeholder="개인 웹사이트의 URL을 입력해주세요!"
-                            defaultValue={userState.user?.profile.link.blog}
+                            defaultValue={userState.user?.profile?.link?.blog ? userState.user.profile.link.blog : ''}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
                         />
                     </div>
