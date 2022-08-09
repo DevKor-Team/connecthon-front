@@ -36,19 +36,19 @@ const AboutUs = () => {
                         <img
                             src="/business-org.svg"
                             alt="business-text"
-                            className="w-[12rem] md:w-[22rem] absolute top-[4rem] left-[-1rem] md:top-[3rem] md:left-[-12rem]"
+                            className="w-[12rem] md:w-[22rem] absolute top-[4rem] left-[-1rem] md:top-[3rem] md:left-[-12rem] grayscale-[95%] hover:grayscale-0 hover:md:w-[25rem] duration-200"
                             onClick={organizationTab[1].onElement}
                         />
                         <img
                             src="/devkor-org.svg"
                             alt="devkor-text"
-                            className="w-[12rem] md:w-[22rem] absolute top-[14rem] left-[5rem] md:top-[15rem] md:left-[12rem]"
+                            className="w-[12rem] md:w-[22rem] absolute top-[14rem] left-[5rem] md:top-[15rem] md:left-[12rem] grayscale hover:grayscale-0 hover:md:w-[25rem] duration-200"
                             onClick={organizationTab[0].onElement}
                         />
                         <img
                             src="/designer-org.svg"
                             alt="designer-text"
-                            className="w-[13rem] ml-auto mr-0 md:w-[26rem] absolute top-[22rem] left-[-1rem] md:top-[30rem] md:left-[-6rem]"
+                            className="w-[13rem] ml-auto mr-0 md:w-[26rem] absolute top-[22rem] left-[-1rem] md:top-[30rem] md:left-[-6rem] grayscale hover:grayscale-0 hover:md:w-[30rem] duration-200"
                             onClick={organizationTab[2].onElement}
                         />
                     </div>
