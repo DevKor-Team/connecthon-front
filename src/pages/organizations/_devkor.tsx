@@ -4,7 +4,7 @@ const DevKor = () => {
     const [members, showMembers] = useState<boolean>(false);
 
     return (
-        <div className="mx-3 mb-[8rem] w-[70%] md:mr-[8rem] text-right justify-end relative">
+        <div className="mx-3 mb-[8rem] w-[90%] md:mr-[8rem] text-right justify-end relative">
             <div className="absolute right-[10rem] z-0 md:right-[-8rem] md:top-[-5rem]">
                 <img src="devkor-logo.svg" alt="business-reverse" className="opacity-20 " />
             </div>
@@ -18,7 +18,7 @@ const DevKor = () => {
                     넓게 바라볼 수 있는 인사이트를 기르게 되며, 다양한 소프트웨어 기술을 도구로써 적절히 활용하는 능력을 갖추게 됩니다.
                 </p>
             </div>
-            <div className="flex mt-2 md:mt-4">
+            <div className="flex justify-end mt-2 md:mt-4">
                 <p className="text-ourWhite text-md md:ml-auto md:mr-0">멤버 소개</p>
                 <img
                     src="/expand-more.svg"
@@ -30,36 +30,36 @@ const DevKor = () => {
                 />
             </div>
             {members ? (
-                <div className="flex justify-end">
-                    <div className="flex flex-col my-5 mx-5">
+                <div className="flex justify-end my-5">
+                    <div className="flex flex-col w-[17%] mx-2 md:my-5 md:mx-5">
                         <div>
-                            <img src="/devkors/an.png" alt="an" className="w-[6rem]" />
+                            <img src="/devkors/an.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">안수진</p>
+                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">안수진</p>
                     </div>
-                    <div className="flex flex-col my-5 mx-5">
+                    <div className="flex flex-col w-[17%] mx-2  md:my-5 md:mx-5">
                         <div>
-                            <img src="/devkors/jeong.png" alt="an" className="w-[6rem]" />
+                            <img src="/devkors/jeong.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">정호진</p>
+                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">정호진</p>
                     </div>
-                    <div className="flex flex-col my-5 mx-5">
+                    <div className="flex flex-col w-[17%] mx-2 md:my-5 md:mx-5">
                         <div>
-                            <img src="/devkors/no.png" alt="an" className="w-[6rem]" />
+                            <img src="/devkors/no.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">노정훈</p>
+                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">노정훈</p>
                     </div>
-                    <div className="flex flex-col my-5 mx-5">
+                    <div className="flex flex-col w-[17%] mx-2 md:my-5 md:mx-5">
                         <div>
-                            <img src="/devkors/baek.png" alt="an" className="w-[6rem]" />
+                            <img src="/devkors/baek.png" alt="an" className="md:w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">백승윤</p>
+                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">백승윤</p>
                     </div>
-                    <div className="flex flex-col my-5 mx-5">
+                    <div className="flex flex-col w-[17%] ml-2 md:my-5 md:mx-5">
                         <div>
                             <img src="/devkors/lee.png" alt="an" className="w-[6rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">이승우</p>
+                        <p className="text-center text-ourWhite md:my-3 md:tracking-wide">이승우</p>
                     </div>
                 </div>
             ) : null}

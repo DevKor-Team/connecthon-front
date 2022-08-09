@@ -35,7 +35,7 @@ const BusinessSchool = () => {
 
     return (
         <div className="mx-1 mb-[8rem] w-[70%] md:ml-[8rem] text-left justify-end relative">
-            <div className="absolute left-[45%] md:left-[-6rem]">
+            <div className="absolute left-[-5rem] w-[15rem] md:left-[-6rem]">
                 <img src="business-logo.svg" alt="business-reverse" className="w-[16rem]" />
             </div>
 
