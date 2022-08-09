@@ -9,7 +9,7 @@ import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-im
 
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRecoilState } from 'recoil';
-import { userRecoilState, UserState } from '../../recoil/user';
+import { userRecoilState } from '../../recoil/user';
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -57,6 +57,7 @@ const ProfileEdit = () => {
                                 instagram: data.instagram,
                             },
                             introduction: data.introduction,
+                            position: data.position,
                             university: data.university,
                             major: data.major,
                             career: data.career,
@@ -212,7 +213,7 @@ const ProfileEdit = () => {
                         <label htmlFor="name">이름</label>
                         <input type="text" value={userState.user?.name} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
                         <label htmlFor="position">직책</label>
-                        <select name="" id="" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" defaultValue={userState?.user?.profile.position}>
+                        <select {...register('position')} name="position" id="position" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" defaultValue={userState?.user?.profile.position}>
                             <option value="developer">개발자</option>
                             <option value="planner">기획자</option>
                             <option value="designer">디자이너</option>
