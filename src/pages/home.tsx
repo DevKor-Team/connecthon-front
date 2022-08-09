@@ -323,7 +323,7 @@ const Homepage: CustomNextPage = () => {
 
     useEffect(() => {
         function titleScroll() {
-            let scrollY = window.pageYOffset;
+            const scrollY = window.pageYOffset;
             if (scrollY > 0) {
                 setFirstScroll(true);
             } else setFirstScroll(false);
