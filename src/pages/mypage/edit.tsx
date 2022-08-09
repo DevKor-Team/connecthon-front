@@ -4,11 +4,12 @@ import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
 
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRecoilState } from 'recoil';
-import { userRecoilState } from '../../recoil/user';
+import { userRecoilState, UserState } from '../../recoil/user';
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -38,6 +39,37 @@ const ProfileEdit = () => {
     const aspect = 1;
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const imgRef = useRef<HTMLImageElement>(null);
+    const { register, handleSubmit } = useForm({
+        mode: 'onSubmit',
+    });
+
+    const onValid = data => {
+        setUserState(
+            Object.assign(
+                { ...userState },
+                {
+                    user: {
+                        team: data.team,
+                        profile: {
+                            link: {
+                                github: data.github,
+                                blog: data.blog,
+                                instagram: data.instagram,
+                            },
+                            introduction: data.introduction,
+                            university: data.university,
+                            major: data.major,
+                            career: data.career,
+                        },
+                    },
+                },
+            ),
+        );
+        console.log(`user state Afterward : ${data}`);
+    };
+    const onInvalid = errors => {
+        console.log(`# onInvalid : ${errors}`);
+    };
 
     useEffect(() => {
         setOnModal(false);
@@ -118,7 +150,7 @@ const ProfileEdit = () => {
 
     return (
         <div className="bg-ourWhite mt-[8rem] mb-[3rem] w-[100%]">
-            <form action="" method="post">
+            <form onSubmit={handleSubmit(onValid, onInvalid)}>
                 <div className="flex relative">
                     <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] h-[20rem] pb-5">
                         <Dropzone
@@ -182,22 +214,7 @@ const ProfileEdit = () => {
                             <option value="designer">디자이너</option>
                         </select>
                         <label htmlFor="teamName">소속 팀</label>
-                        <input
-                            type="text"
-                            placeholder="팀명을 입력해주세요"
-                            defaultValue={userState.user?.team}
-                            className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1"
-                            onChange={data => {
-                                Object.assign(
-                                    { ...userState },
-                                    {
-                                        user: {
-                                            team: data.target.value,
-                                        },
-                                    },
-                                );
-                            }}
-                        />
+                        <input {...register('team')} type="text" placeholder="팀명을 입력해주세요" defaultValue={userState.user?.team} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
                     </div>
                 </div>
                 <div className="flex flex-col mt-[4rem] mb-[2rem] py-[3rem] px-[4rem] bg-[#FFFFFF] drop-shadow-lg rounded-md">
@@ -205,62 +222,29 @@ const ProfileEdit = () => {
                         한 줄 소개
                     </label>
                     <input
+                        {...register('introduction')}
                         type="text"
                         placeholder="본인을 한 줄로 소개해주세요!"
                         defaultValue={userState.user?.profile.introduction}
                         className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1 mx-[1rem]"
-                        onChange={data => {
-                            Object.assign(
-                                { ...userState },
-                                {
-                                    user: {
-                                        profile: {
-                                            introduction: data.target.value,
-                                        },
-                                    },
-                                },
-                            );
-                        }}
                     />
                     <label htmlFor="univ" className="opacity-50 mx-[1rem]">
                         학력
                     </label>
                     <div>
                         <input
+                            {...register('university')}
                             type="text"
                             placeholder="재학 중인 학교명을 입력해주세요"
                             defaultValue={userState.user?.profile.university}
                             className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1 mr-7 mx-[1rem]"
-                            onChange={data => {
-                                Object.assign(
-                                    { ...userState },
-                                    {
-                                        user: {
-                                            profile: {
-                                                university: data.target.value,
-                                            },
-                                        },
-                                    },
-                                );
-                            }}
                         />
                         <input
+                            {...register('major')}
                             type="text"
                             placeholder="전공을 입력해주세요"
                             defaultValue={userState.user?.profile.major}
                             className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1"
-                            onChange={data => {
-                                Object.assign(
-                                    { ...userState },
-                                    {
-                                        user: {
-                                            profile: {
-                                                major: data.target.value,
-                                            },
-                                        },
-                                    },
-                                );
-                            }}
                         />
                     </div>
                     <label htmlFor="career" className="opacity-50 mx-[1rem]">
@@ -269,7 +253,7 @@ const ProfileEdit = () => {
                     {Array.from({ length: numCareerInput }).map(() => {
                         return (
                             <div className="flex items-center">
-                                <input type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1 mr-3 mx-[1rem]" />
+                                <input {...register('career')} type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1 mr-3 mx-[1rem]" />
                                 <AiOutlinePlusCircle
                                     onClick={() => {
                                         setNumCareerInput(numCareerInput + 1);
@@ -301,7 +285,6 @@ const ProfileEdit = () => {
                             <p className="text-sm">Mail</p>
                         </div>
                         <input type="text" className="border-2 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3" value={userState.user?.email} />
-                        {/* <div className="border border-gray-300 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3">{`hi`}</div> */}
                     </div>
                     <div className="flex">
                         <div className="flex flex-col justify-center items-center mx-[0.2rem]">
@@ -309,24 +292,11 @@ const ProfileEdit = () => {
                             <p className="text-xs">Instagram</p>
                         </div>
                         <input
+                            {...register('instagram')}
                             type="text"
                             placeholder="인스타그램 아이디를 입력해주세요!"
                             defaultValue={userState.user?.profile.link.instagram}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
-                            onChange={data => {
-                                Object.assign(
-                                    { ...userState },
-                                    {
-                                        user: {
-                                            profile: {
-                                                link: {
-                                                    instagram: data.target.value,
-                                                },
-                                            },
-                                        },
-                                    },
-                                );
-                            }}
                         />
                     </div>
                     <div className="flex">
@@ -335,24 +305,11 @@ const ProfileEdit = () => {
                             <p className="text-sm">Github</p>
                         </div>
                         <input
+                            {...register('github')}
                             type="text"
                             placeholder="Github 아이디를 입력해주세요!"
                             defaultValue={userState.user?.profile.link.github}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-5 p-1 ml-3 mr-5"
-                            onChange={data => {
-                                Object.assign(
-                                    { ...userState },
-                                    {
-                                        user: {
-                                            profile: {
-                                                link: {
-                                                    github: data.target.value,
-                                                },
-                                            },
-                                        },
-                                    },
-                                );
-                            }}
                         />
                     </div>
                     <div className="flex">
@@ -361,24 +318,11 @@ const ProfileEdit = () => {
                             <p className="text-sm">Blog</p>
                         </div>
                         <input
+                            {...register('blog')}
                             type="text"
                             placeholder="개인 웹사이트의 URL을 입력해주세요!"
                             defaultValue={userState.user?.profile.link.blog}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
-                            onChange={data => {
-                                Object.assign(
-                                    { ...userState },
-                                    {
-                                        user: {
-                                            profile: {
-                                                link: {
-                                                    blog: data.target.value,
-                                                },
-                                            },
-                                        },
-                                    },
-                                );
-                            }}
                         />
                     </div>
                 </div>
