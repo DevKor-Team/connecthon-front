@@ -122,8 +122,8 @@ const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
                 <div className="flex flex-col justify-center items-center">
                     <Parallax opacity={[0, 1]} startScroll={700} endScroll={1150}>
                         <div className="flex flex-col items-center">
-                            <h3 className="tracking-wide text-center font-bold text-xl md:text-2xl xl:test-3xl">KU HACKATHON</h3>
-                            <h4 className="tracking-wide text-center text-xl md:text-2xl xl:text-3xl">청춘들의 여름 항해가 시작됩니다</h4>
+                            <h3 className="tracking-normal text-center font-bold text-xl md:text-2xl xl:test-3xl">KU HACKATHON</h3>
+                            <h4 className="tracking-wide text-center font-bold text-xl md:text-2xl">청춘들의 여름 항해가 시작됩니다</h4>
                         </div>
                     </Parallax>
                     <div className="absolute">
