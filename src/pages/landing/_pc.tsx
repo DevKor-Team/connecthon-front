@@ -12,44 +12,72 @@ interface Location {
 const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
     const companies = [
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '쿼드마이너',
+            logo: '/companies/quadminers.png',
+        },
+        {
+            name: 'pplink',
+            logo: '/companies/pplink.png',
+        },
+        {
+            name: '위에이알',
+            logo: '/companies/wear.png',
+        },
+        {
+            name: '카펜스트리트',
+            logo: '/companies/carpenstreet.png',
+        },
+        {
+            name: 'AWS',
+            logo: '/companies/AWS.png',
         },
         {
             name: '코르카',
-            logo: '/companies/visual_camp.png',
+            logo: '/companies/corca.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '엔젤스윙',
+            logo: '/companies/angelswing.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '우트',
+            logo: '/companies/woot.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '아루',
+            logo: '/companies/aru.jpg',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: 'RXC',
+            logo: '/companies/rxc.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '스캐터랩스',
+            logo: '/companies/scatterlabs.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '푸망',
+            logo: '/companies/poomang.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '플레이키보드',
+            logo: '/companies/playkeyboard.png',
         },
         {
-            name: '코르카',
-            logo: '/companies/visual_camp.png',
+            name: '소프트스퀘어드',
+            logo: '/companies/softsquared.png',
+        },
+        {
+            name: '너드프렌즈',
+            logo: '/companies/nerdfrenz.jpg',
+        },
+        {
+            name: 'Visual Camp',
+            logo: '/companies/visualcamp.png',
+        },
+        {
+            name: '페이지콜',
+            logo: '/companies/pagecall.png',
         },
     ];
     return (
@@ -89,16 +117,17 @@ const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
             <Parallax speed={-10} opacity={[0, 1]} translateY={[`${yLocation}`, `${yLocation}`]} translateX={[`${xLocation}`, `${xLocation}`]} startScroll={60} endScroll={80}>
                 <img src="/spreads.svg" alt="spreads" className="w-[100vw]" />
             </Parallax>
+
             <div className="relative">
                 <div className="flex flex-col justify-center items-center">
-                    <Parallax opacity={[0, 1]} startScroll={300} endScroll={600}>
+                    <Parallax opacity={[0, 1]} startScroll={700} endScroll={1150}>
                         <div className="flex flex-col items-center">
                             <h3 className="tracking-wide text-center font-bold text-xl md:text-2xl xl:test-3xl">KU HACKATHON</h3>
                             <h4 className="tracking-wide text-center text-xl md:text-2xl xl:text-3xl">청춘들의 여름 항해가 시작됩니다</h4>
                         </div>
                     </Parallax>
                     <div className="absolute">
-                        <Parallax opacity={[1, 0]} startScroll={300} endScroll={600}>
+                        <Parallax opacity={[1, 0]} startScroll={700} endScroll={1150}>
                             <div className="flex justify-center">
                                 <img src="/symbol-2d.svg" alt="symbol-2d" className="w-[50%]" />
                             </div>
@@ -122,18 +151,22 @@ const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
                 </div>
             </div> */}
 
-            <div className="flex justify-center text-center mt-[20rem]">
-                <Parallax opacity={[0.1, 1]} translateY={[-50, -50]} startScroll={800} endScroll={1200}>
+            <div className="flex justify-center text-center mt-[60rem]">
+                <Parallax opacity={[0.1, 1]} translateY={[-50, -50]} startScroll={1400} endScroll={1900}>
                     <div>
                         <h3 className="mb-[3rem] text-3xl">후원</h3>
                         <div className="flex justify-evenly flex-wrap">
                             {companies.map(company => {
-                                return <img src={company.logo} alt={company.name} className="w-[20%] " />;
+                                return (
+                                    <div className="flex flex-col justify-center items-center w-[20%]">
+                                        <img src={company.logo} alt={company.name} className="w-[80%]" />
+                                    </div>
+                                );
                             })}
                         </div>
                         <Link href="/home">
                             <a>
-                                <Button size="lg" className="block mt-[5rem] mx-auto border-2 border-black hover:text-white mb-0">
+                                <Button size="lg" className="block mt-[8rem] mx-auto border-2 border-black hover:text-white mb-0">
                                     Get Started
                                 </Button>
                             </a>
