@@ -1,9 +1,9 @@
 import Head from 'next/head';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 import { FiSearch } from 'react-icons/fi';
 import React, { useEffect, useState } from 'react';
-import ProjectCard from '../components/ProjectCard';
+import ProjectCard from '../../components/ProjectCard';
 
 type ProjectType = { team: string; prjname: string; img: string };
 
