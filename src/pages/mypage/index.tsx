@@ -4,7 +4,7 @@ import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
 import { useState } from 'react';
 import { User } from '../../interfaces/user';
-import { FiMail, FiInstagram, FiGithub } from 'react-icons/fi';
+import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import Link from 'next/link';
 import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
@@ -112,8 +112,8 @@ const MyPage: CustomNextPage = () => {
                                     />
                                     {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
                                 </div>
-                                <div className="px-3">
-                                    <Link href="https://www.instagram.com/10issoojin_/">
+                                <div className="mx-2">
+                                    <Link href={userState.user?.profile.link.instagram ? `https://www.instagram.com/${userState.user?.profile.link.instagram}` : ''}>
                                         <a>
                                             <FiInstagram
                                                 className="text-2xl cursor-pointer"
@@ -130,7 +130,7 @@ const MyPage: CustomNextPage = () => {
                                     {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.65rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div>
-                                    <Link href="https://github.com/aiccuracy">
+                                    <Link href={userState.user?.profile.link.github ? `https://github.com/${userState.user?.profile.link.github}` : ''}>
                                         <a>
                                             <FiGithub
                                                 className="text-2xl cursor-pointer"
@@ -145,6 +145,13 @@ const MyPage: CustomNextPage = () => {
                                     </Link>
 
                                     {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[5.8rem] drop-shadow-lg" /> : null}
+                                </div>
+                                <div>
+                                    <Link href={userState.user?.profile.link.blog ? userState.user?.profile.link.blog : ''}>
+                                        <a>
+                                            <FiHome className="text-2xl cursor-pointer mx-2" />
+                                        </a>
+                                    </Link>
                                 </div>
                             </div>
                             <div className="border-t-2 my-7">
