@@ -1,16 +1,17 @@
+import { PositionType } from './position.types';
+
 export interface User {
     id?: number;
     name: string;
     email: string;
-    image?: string;
-    position?: string;
-    teamName?: string;
+    team?: string;
     profile: {
         link: {
             github?: string;
             blog?: string;
             instagram?: string;
         };
+        position?: PositionType;
         img: string;
         introduction?: string;
         university?: string;
