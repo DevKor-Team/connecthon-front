@@ -8,7 +8,25 @@ export interface UserState {
 
 const defaultValue = {
     isLogin: false,
-    user: null,
+    user: {
+        id: 0,
+        name: '',
+        email: '',
+        team: '',
+        profile: {
+            link: {
+                github: '',
+                blog: '',
+                instagram: '',
+            },
+            position: '',
+            img: '',
+            introduction: '',
+            university: '',
+            major: '',
+            career: [''],
+        },
+    },
 };
 
 export const userRecoilState = atom<UserState>({

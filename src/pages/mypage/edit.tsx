@@ -1,13 +1,14 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../../layouts/Layout';
 import Dropzone from 'react-dropzone';
-import { FiMail, FiInstagram, FiGithub } from 'react-icons/fi';
+import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
+import { AiOutlineMinusCircle, AiOutlinePlusCircle } from 'react-icons/ai';
 import { useRouter } from 'next/router';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
-import { canvasPreview } from '../../utils/canvasPreview';
-import { useDebounceEffect } from '../../utils/useDebounceEffect';
 
 import 'react-image-crop/dist/ReactCrop.css';
+import { useRecoilState } from 'recoil';
+import { userRecoilState } from '../../recoil/user';
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -26,15 +27,29 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 
 const ProfileEdit = () => {
+    const [userState, setUserState] = useRecoilState(userRecoilState);
     const router = useRouter();
-    const [file, setfile] = useState('');
-    const previewCanvasRef = useRef<HTMLCanvasElement>(null);
-    const imgRef = useRef<HTMLImageElement>(null);
+    const [file, setfile] = useState<string>();
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-    const scale = 1;
-    const rotate = 0;
+    const [onModal, setOnModal] = useState<boolean>(false);
+    const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
+    const [numCareerInput, setNumCareerInput] = useState<number>(userState.user?.profile.career.length || 1);
     const aspect = 1;
+    const canvasRef = useRef<HTMLCanvasElement | null>(null);
+    const imgRef = useRef<HTMLImageElement>(null);
+
+    useEffect(() => {
+        setOnModal(false);
+    }, []);
+
+    useEffect(() => {
+        if (file) {
+            setOnModal(true);
+        } else {
+            setOnModal(false);
+        }
+    }, [file]);
 
     function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
         if (aspect) {
@@ -42,21 +57,70 @@ const ProfileEdit = () => {
             setCrop(centerAspectCrop(width, height, aspect));
         }
     }
-    useDebounceEffect(
-        async () => {
-            if (completedCrop?.width && completedCrop?.height && imgRef.current && previewCanvasRef.current) {
-                canvasPreview(imgRef.current, previewCanvasRef.current, completedCrop, scale, rotate);
-            }
-        },
-        100,
-        [completedCrop, scale, rotate],
-    );
+    const uploadProfileImage = async (blob: Blob | null) => {
+        if (!blob) return;
+        const url = URL.createObjectURL(blob);
+        setUserState(
+            Object.assign(
+                { ...userState },
+                {
+                    user: {
+                        profile: {
+                            img: url,
+                        },
+                    },
+                },
+            ),
+        ),
+            setOnModal(false);
+        console.log(`blob 객체를 서버로 데이터 전송`);
+    };
+
+    const onPreview = () => {
+        createCanvas();
+    };
+    const onSave = () => {
+        if (!canvasRef.current) {
+            return alert('이미지 저장에 실패하였습니다.');
+        }
+        createCanvas();
+        canvasRef.current.toBlob((blob: Blob | null) => uploadProfileImage(blob), 'image/*', 0.95);
+        setOnProfileImage(true);
+    };
+
+    const createCanvas = () => {
+        if (!completedCrop) {
+            return;
+        }
+        if (!canvasRef.current) {
+            return;
+        }
+        if (!imgRef.current) {
+            return;
+        }
+        const ctx = canvasRef.current.getContext('2d');
+        if (!ctx) return;
+
+        const crop = completedCrop;
+
+        const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
+        const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
+        const pixelRatio = window.devicePixelRatio;
+
+        canvasRef.current.width = crop.width * pixelRatio * scaleX;
+        canvasRef.current.height = crop?.height * pixelRatio * scaleY;
+
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.imageSmoothingQuality = 'high';
+
+        ctx.drawImage(imgRef.current, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width * scaleX, crop.height * scaleY);
+    };
 
     return (
         <div className="bg-ourWhite mt-[8rem] mb-[3rem] w-[100%]">
             <form action="" method="post">
-                <div className="flex">
-                    <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] pb-5">
+                <div className="flex relative">
+                    <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] h-[20rem] pb-5">
                         <Dropzone
                             onDrop={acceptedFiles => {
                                 setfile(URL.createObjectURL(acceptedFiles[0]));
@@ -66,67 +130,169 @@ const ProfileEdit = () => {
                                 <section>
                                     <div {...getRootProps()}>
                                         <input {...getInputProps()} />
-                                        {file ? null : <img src="/dragdrop.svg" alt="dragdrop" />}
+                                        {onProfileImage ? (
+                                            <div className="flex justify-center">
+                                                <img src={userState.user?.profile.img} alt="user profile image" className="rounded-full w-[50%]" />
+                                            </div>
+                                        ) : (
+                                            <img src="/dragdrop.svg" alt="dragdrop" />
+                                        )}
                                     </div>
                                 </section>
                             )}
                         </Dropzone>
-                        {Boolean(file) && (
-                            <ReactCrop
-                                crop={crop}
-                                onChange={(_, percentCrop) => setCrop(percentCrop)}
-                                onComplete={c => {
-                                    setCompletedCrop(c);
-                                }}
-                                aspect={aspect}
-                                circularCrop={true}
-                            >
-                                <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
-                            </ReactCrop>
-                        )}
+                        {Boolean(file) && onModal ? (
+                            <div className="flex flex-col justify-center items-center w-[50rem] overflow-hidden bg-red-300 absolute top-[30%] left-[50%] ">
+                                <div className="flex items-center justify-center">
+                                    <ReactCrop
+                                        crop={crop}
+                                        onChange={(_, percentCrop) => setCrop(percentCrop)}
+                                        onComplete={c => {
+                                            setCompletedCrop(c);
+                                        }}
+                                        aspect={aspect}
+                                        circularCrop={true}
+                                        className=" mt-[6rem] mb-3 overflow-hidden w-[15rem] h-[26rem]"
+                                    >
+                                        <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
+                                    </ReactCrop>
+                                    <div>
+                                        <h2 className="text-center text-white text-xl mb-5">미리보기</h2>
+                                        <canvas ref={canvasRef} className="rounded-full w-[10rem] h-[10rem] overflow-hidden mx-10"></canvas>
+                                    </div>
+                                </div>
+                                <div className="flex justify-center">
+                                    <div className="bg-[#2087FF] w-[10rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
+                                        <p className="text-white text-center cursor-pointer">미리보기</p>
+                                    </div>
+                                    <div className="bg-[#2087FF] w-[10rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
+                                        <p className="text-white text-center cursor-pointer">저장하기</p>
+                                    </div>
+                                </div>
+                            </div>
+                        ) : null}
                     </div>
-                    {/* <div>
-                        {Boolean(completedCrop) && (
-                            <canvas
-                                ref={previewCanvasRef}
-                                style={{
-                                    objectFit: 'contain',
-                                    width: completedCrop?.width,
-                                    height: completedCrop?.height,
-                                }}
-                            />
-                        )}
-                    </div> */}
                     <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-md">
                         <label htmlFor="name">이름</label>
-                        <input type="text" placeholder="안수진" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
+                        <input type="text" value={userState.user?.name} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
                         <label htmlFor="position">직책</label>
-                        <input type="text" placeholder="designer" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
+                        <select name="" id="" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" defaultValue={userState?.user?.profile.position}>
+                            <option value="developer">개발자</option>
+                            <option value="planner">기획자</option>
+                            <option value="designer">디자이너</option>
+                        </select>
                         <label htmlFor="teamName">소속 팀</label>
-                        <input type="text" placeholder="ex.Team DEVKOR" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
+                        <input
+                            type="text"
+                            placeholder="팀명을 입력해주세요"
+                            defaultValue={userState.user?.team}
+                            className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1"
+                            onChange={data => {
+                                Object.assign(
+                                    { ...userState },
+                                    {
+                                        user: {
+                                            team: data.target.value,
+                                        },
+                                    },
+                                );
+                            }}
+                        />
                     </div>
                 </div>
                 <div className="flex flex-col mt-[4rem] mb-[2rem] py-[3rem] px-[4rem] bg-[#FFFFFF] drop-shadow-lg rounded-md">
                     <label htmlFor="teamIntro" className="opacity-50 px-[1rem]">
                         한 줄 소개
                     </label>
-                    <input type="text" placeholder="우리는 고대!" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1 mx-[1rem]" />
+                    <input
+                        type="text"
+                        placeholder="본인을 한 줄로 소개해주세요!"
+                        defaultValue={userState.user?.profile.introduction}
+                        className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1 mx-[1rem]"
+                        onChange={data => {
+                            Object.assign(
+                                { ...userState },
+                                {
+                                    user: {
+                                        profile: {
+                                            introduction: data.target.value,
+                                        },
+                                    },
+                                },
+                            );
+                        }}
+                    />
                     <label htmlFor="univ" className="opacity-50 mx-[1rem]">
                         학력
                     </label>
                     <div>
-                        <input type="text" placeholder="고려대학교" className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1 mr-7 mx-[1rem]" />
-                        <input type="text" placeholder="디자인조형학부" className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1" />
+                        <input
+                            type="text"
+                            placeholder="재학 중인 학교명을 입력해주세요"
+                            defaultValue={userState.user?.profile.university}
+                            className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1 mr-7 mx-[1rem]"
+                            onChange={data => {
+                                Object.assign(
+                                    { ...userState },
+                                    {
+                                        user: {
+                                            profile: {
+                                                university: data.target.value,
+                                            },
+                                        },
+                                    },
+                                );
+                            }}
+                        />
+                        <input
+                            type="text"
+                            placeholder="전공을 입력해주세요"
+                            defaultValue={userState.user?.profile.major}
+                            className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1"
+                            onChange={data => {
+                                Object.assign(
+                                    { ...userState },
+                                    {
+                                        user: {
+                                            profile: {
+                                                major: data.target.value,
+                                            },
+                                        },
+                                    },
+                                );
+                            }}
+                        />
                     </div>
                     <label htmlFor="career" className="opacity-50 mx-[1rem]">
                         경력
                     </label>
-                    <div>
-                        <input type="text" placeholder="2021" className="border-2 rounded-md w-[25%] mt-2 mb-6 p-1 mr-3 mx-[1rem]" />
-                        <input type="text" placeholder="Corca Inc." className="border-2 rounded-md w-[25%] mt-2 mb-6 p-1 mr-3" />
-                        <input type="text" placeholder="ML Engineer" className="border-2 rounded-md w-[25%] mt-2 mb-6 p-1" />
-                    </div>
-                    <label htmlFor="sns" className="opacity-50 mx-[1rem]">
+                    {Array.from({ length: numCareerInput }).map(() => {
+                        return (
+                            <div className="flex items-center">
+                                <input type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1 mr-3 mx-[1rem]" />
+                                <AiOutlinePlusCircle
+                                    onClick={() => {
+                                        setNumCareerInput(numCareerInput + 1);
+                                    }}
+                                    className="fill-[#2087FF]"
+                                    size={24}
+                                />
+                                <AiOutlineMinusCircle
+                                    onClick={() => {
+                                        if (numCareerInput === 1) {
+                                            return;
+                                        } else {
+                                            setNumCareerInput(numCareerInput - 1);
+                                        }
+                                    }}
+                                    className="fill-[#c02224] mx-1"
+                                    size={24}
+                                />
+                            </div>
+                        );
+                    })}
+
+                    <label htmlFor="sns" className="opacity-50 mx-[1rem] mt-4">
                         SNS
                     </label>
                     <div className="flex mb-1">
@@ -134,25 +300,86 @@ const ProfileEdit = () => {
                             <FiMail size={`1.75rem`} />
                             <p className="text-sm">Mail</p>
                         </div>
-                        <div className="border border-gray-300 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3">{`hi`}</div>
-
-                        {/* <input type="text" placeholder="asj0816" className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-6 p-1 ml-3 mr-3" /> */}
-                        {/* <div className="flex items-center mr-3 text-xl opacity-50 mb-2">@</div> */}
-                        {/* <input type="text" placeholder="korea.ac.kr" className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-6 p-1" /> */}
+                        <input type="text" className="border-2 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3" value={userState.user?.email} />
+                        {/* <div className="border border-gray-300 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3">{`hi`}</div> */}
                     </div>
                     <div className="flex">
                         <div className="flex flex-col justify-center items-center mx-[0.2rem]">
                             <FiInstagram size={`1.75rem`} />
                             <p className="text-xs">Instagram</p>
                         </div>
-                        <input type="text" placeholder="@10issoojin_" className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5" />
+                        <input
+                            type="text"
+                            placeholder="인스타그램 아이디를 입력해주세요!"
+                            defaultValue={userState.user?.profile.link.instagram}
+                            className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
+                            onChange={data => {
+                                Object.assign(
+                                    { ...userState },
+                                    {
+                                        user: {
+                                            profile: {
+                                                link: {
+                                                    instagram: data.target.value,
+                                                },
+                                            },
+                                        },
+                                    },
+                                );
+                            }}
+                        />
                     </div>
                     <div className="flex">
-                        <div className="flex flex-col justify-center items-center mx-[0.5rem]">
+                        <div className="flex flex-col justify-center items-center mx-[0.5rem] mt-2">
                             <FiGithub size={`1.75rem`} />
                             <p className="text-sm">Github</p>
                         </div>
-                        <input type="text" placeholder="@aiccuracy" className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-6 p-1 ml-3 mr-5" />
+                        <input
+                            type="text"
+                            placeholder="Github 아이디를 입력해주세요!"
+                            defaultValue={userState.user?.profile.link.github}
+                            className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-5 p-1 ml-3 mr-5"
+                            onChange={data => {
+                                Object.assign(
+                                    { ...userState },
+                                    {
+                                        user: {
+                                            profile: {
+                                                link: {
+                                                    github: data.target.value,
+                                                },
+                                            },
+                                        },
+                                    },
+                                );
+                            }}
+                        />
+                    </div>
+                    <div className="flex">
+                        <div className="flex flex-col justify-center items-center mx-[0.9rem]">
+                            <FiHome size={`1.75rem`} />
+                            <p className="text-sm">Blog</p>
+                        </div>
+                        <input
+                            type="text"
+                            placeholder="개인 웹사이트의 URL을 입력해주세요!"
+                            defaultValue={userState.user?.profile.link.blog}
+                            className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
+                            onChange={data => {
+                                Object.assign(
+                                    { ...userState },
+                                    {
+                                        user: {
+                                            profile: {
+                                                link: {
+                                                    blog: data.target.value,
+                                                },
+                                            },
+                                        },
+                                    },
+                                );
+                            }}
+                        />
                     </div>
                 </div>
                 <button
