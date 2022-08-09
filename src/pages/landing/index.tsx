@@ -11,18 +11,22 @@ const Landing = () => {
     const [symbolLocation, setSymbolLocation] = useState<number>(-550);
 
     useEffect(() => {
-        if (size.width && size.width < 1280 && size.width >= 1024) {
+        if (size.width && size.width < 765) {
             setXLocation(7);
-            setYLocation(-85);
-            setSymbolLocation(-620);
-        } else if (size.width && size.width < 1024 && size.width >= 900) {
-            setXLocation(7);
-            setYLocation(-100);
-            setSymbolLocation(-625);
-        } else if (size.width && size.width < 900) {
+            setYLocation(-130);
+            setSymbolLocation(-550);
+        } else if (size.width && size.width <= 1024) {
             setXLocation(7);
             setYLocation(-110);
-            setSymbolLocation(-630);
+            setSymbolLocation(-450);
+        } else if (size.width && size.width <= 1280) {
+            setXLocation(7);
+            setYLocation(-95);
+            setSymbolLocation(-620);
+        } else if (size.width && size.width > 1280) {
+            setXLocation(7);
+            setYLocation(-80);
+            setSymbolLocation(-450);
         }
     }, [size]);
 
