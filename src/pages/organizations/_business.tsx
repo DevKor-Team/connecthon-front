@@ -1,5 +1,4 @@
-import { ReactNode, useState } from 'react';
-import { teamMemberRecoilState } from '../../recoil/teamMember';
+import { useState } from 'react';
 
 const BusinessSchool = () => {
     const [members, showMembers] = useState<boolean>(false);
@@ -35,8 +34,8 @@ const BusinessSchool = () => {
     // ];
 
     return (
-        <div className="mx-1 mb-[8rem] w-[70%] md:ml-[8rem] text-left justify-end">
-            <div className="absolute left-[45%] md:left-[2rem]">
+        <div className="mx-1 mb-[8rem] w-[70%] md:ml-[8rem] text-left justify-end relative">
+            <div className="absolute left-[45%] md:left-[-6rem]">
                 <img src="business-logo.svg" alt="business-reverse" className="w-[16rem]" />
             </div>
 
