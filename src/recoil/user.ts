@@ -1,6 +1,7 @@
 import { atom } from 'recoil';
 import { User } from '../interfaces/user';
 import { PositionType } from '../interfaces/position.types';
+import { ProviderType } from '../interfaces/provider.types';
 
 export interface UserState {
     isLogin: boolean;
@@ -10,6 +11,7 @@ export interface UserState {
 const defaultValue = {
     isLogin: false,
     user: {
+        type: 'user',
         id: 0,
         name: '',
         email: '',
@@ -27,6 +29,8 @@ const defaultValue = {
             major: '',
             career: [''],
         },
+        provider: ProviderType.none,
+        isAdmin: false,
     },
 };
 

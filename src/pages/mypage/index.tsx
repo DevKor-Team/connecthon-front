@@ -14,6 +14,7 @@ import { axiosInstance } from '../../hooks/queries';
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
     // const UserProfile: User = {
+    //     type: 'user',
     //     id: 1,
     //     name: '안수진',
     //     email: 'asj0816@korea.ac.kr',
@@ -31,6 +32,8 @@ const MyPage: CustomNextPage = () => {
     //         major: '국제학부',
     //         career: ['코르카 ML 엔지니어', 'DevKor 노예'],
     //     },
+    //     provider: 'kakao',
+    //     isAdmin: true,
     // };
 
     const Project: Project = {
@@ -46,7 +49,7 @@ const MyPage: CustomNextPage = () => {
     const [onGithub, setOnGithub] = useState<boolean>(false);
     const userId = Number(router.query.id);
 
-    const [userList, setUserList] = useState<User[]>([]);
+    const [userList, setUserList] = useState([]);
     const [userState, setUserState] = useRecoilState(userRecoilState);
     console.log(`userState in main user page : ${userState.user?.profile.img}`);
 

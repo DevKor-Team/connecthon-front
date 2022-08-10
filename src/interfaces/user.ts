@@ -1,6 +1,8 @@
 import { PositionType } from './position.types';
+import { ProviderType } from './provider.types';
 
 export interface User {
+    type: string;
     id?: number;
     name: string;
     email: string;
@@ -18,4 +20,6 @@ export interface User {
         major?: string;
         career: string[];
     };
+    provider: ProviderType;
+    isAdmin: boolean;
 }
