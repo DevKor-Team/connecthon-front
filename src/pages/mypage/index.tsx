@@ -3,7 +3,6 @@ import Layout from '../../layouts/Layout';
 import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
 import { useState } from 'react';
-import { User } from '../../interfaces/user';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import Link from 'next/link';
 import { Project } from '../../interfaces/project';
@@ -35,9 +34,9 @@ const MyPage: CustomNextPage = () => {
 
     const Project: Project = {
         id: 1,
-        teamName: 'Tiger',
+        team: 'Tiger',
         title: '해커톤 웹 개발기',
-        description: '뎁코의 노예들 입니다.',
+        content: '뎁코의 노예들 입니다.',
         thumbnail: '/project-ex.svg',
     };
 
