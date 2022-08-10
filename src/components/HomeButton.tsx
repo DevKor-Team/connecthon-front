@@ -13,8 +13,8 @@ const sizes = {
 };
 
 export default function HomeButton({ size, className, children }: BtnType) {
-    let btnSize = sizes[size];
-    let shadowStyle = 'shadow-[0px_5px_20px_5px_rgba(17,17,26,0.4)]';
+    const btnSize = sizes[size];
+    const shadowStyle = 'shadow-[0px_5px_20px_5px_rgba(17,17,26,0.4)]';
 
     return (
         <Link href="/about">
