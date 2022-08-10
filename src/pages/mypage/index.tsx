@@ -3,12 +3,12 @@ import Layout from '../../layouts/Layout';
 import { FiEdit } from 'react-icons/fi';
 import { useState } from 'react';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import Link from 'next/link';
 import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
-import { axiosInstance } from '../../hooks/queries';
 
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
@@ -48,7 +48,6 @@ const MyPage: CustomNextPage = () => {
     const [onGithub, setOnGithub] = useState<boolean>(false);
     const userId = Number(router.query.id);
 
-    const [userList, setUserList] = useState([]);
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     console.log(`userState in main user page : ${loginUserState.user?.profile.img}`);
 
@@ -84,7 +83,7 @@ const MyPage: CustomNextPage = () => {
                                     }}
                                 />
                             </div>
-                            <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name.first}${loginUserState.user?.name.last}`}</h3>
+                            <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name}`}</h3>
                             <p className="mt-1 mb-5">{`TEAM ${loginUserState.user?.team}`}</p>
                         </div>
 
@@ -118,7 +117,7 @@ const MyPage: CustomNextPage = () => {
                                     {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div className="mx-2">
-                                    <Link href={loginUserState.user?.profile.link.instagram ? `https://www.instagram.com/${loginUserState.user?.profile.link.instagram}` : ''}>
+                                    <Link href={loginUserState.user?.profile.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile.link.instagram}` : ''}>
                                         <a>
                                             <FiInstagram
                                                 className="text-2xl cursor-pointer"
@@ -135,7 +134,7 @@ const MyPage: CustomNextPage = () => {
                                     {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.65rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div>
-                                    <Link href={loginUserState.user?.profile.link.github ? `https://github.com/${loginUserState.user?.profile.link.github}` : ''}>
+                                    <Link href={loginUserState.user?.profile.link?.github ? `https://github.com/${loginUserState.user?.profile.link.github}` : ''}>
                                         <a>
                                             <FiGithub
                                                 className="text-2xl cursor-pointer"
@@ -152,7 +151,7 @@ const MyPage: CustomNextPage = () => {
                                     {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[5.8rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div>
-                                    <Link href={loginUserState.user?.profile.link.blog ? loginUserState.user?.profile.link.blog : ''}>
+                                    <Link href={loginUserState.user?.profile.link?.blog ? loginUserState.user?.profile.link.blog : ''}>
                                         <a>
                                             <FiHome className="text-2xl cursor-pointer mx-2" />
                                         </a>

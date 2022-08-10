@@ -18,10 +18,17 @@ const Home: CustomNextPage = () => {
             try {
                 const response = await axiosInstance.get('/auth/user');
                 if (response.status != 401) {
-                    setLoginUserData({
-                        isLogin: true,
-                        user: response.data,
-                    });
+                    if (response.data.type == 'user') {
+                        setLoginUserData({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + response.data.name.last },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserData({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
                 }
             } catch (err) {
                 console.log(err);
