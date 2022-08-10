@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { User } from '../interfaces/user';
+import { PositionType } from '../interfaces/position.types';
 
 export interface UserState {
     isLogin: boolean;
@@ -19,7 +20,7 @@ const defaultValue = {
                 blog: '',
                 instagram: '',
             },
-            position: '',
+            position: PositionType.developer,
             img: '',
             introduction: '',
             university: '',

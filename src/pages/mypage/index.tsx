@@ -9,6 +9,7 @@ import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { userRecoilState } from '../../recoil/user';
+import { axiosInstance } from '../../hooks/queries';
 
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
@@ -44,8 +45,11 @@ const MyPage: CustomNextPage = () => {
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
     const userId = Number(router.query.id);
+
+    const [userList, setUserList] = useState<User[]>([]);
     const [userState, setUserState] = useRecoilState(userRecoilState);
     console.log(`userState in main user page : ${userState.user?.profile.img}`);
+
     return (
         <div className="mt-[8rem] flex w-[100%] items-center">
             <div className="grow-0 mr-4 cursor-pointer">
