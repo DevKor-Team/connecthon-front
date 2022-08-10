@@ -1,4 +1,4 @@
-import { userRecoilState } from '../recoil/user';
+import { loginRecoilState } from '../recoil/loginuser';
 import { useRecoilState } from 'recoil';
 import Link from 'next/link';
 
@@ -39,7 +39,7 @@ type PersonType = {
 };
 
 function PersonCard({ id, position, imgurl, firstname, lastname, team }: PersonType) {
-    const [userData, setUserData] = useRecoilState(userRecoilState);
+    const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 
     return (
         <div className="box-border w-[48%] md:w-[31%] 2xl:w-[24%] h-56 lg:h-[22.5rem] rounded-xl border-2 px-2 lg:px-4 border-slate-200 flex flex-col justify-center mb-3.5 sm:mb-6 lg:mb-8">
@@ -52,7 +52,7 @@ function PersonCard({ id, position, imgurl, firstname, lastname, team }: PersonT
                 </div>
             </div>
             <div className="flex justify-center">
-                <Link href={`${userData.isLogin ? `/user:${id}` : '/login'}`}>
+                <Link href={`${loginUserData.isLogin ? `/user:${id}` : '/login'}`}>
                     <div className="rounded-3xl bg-ourBlack text-white py-2 lg:py-2.5 px-5 md:px-8 text-xs lg:text-sm font-medium text-center mb-2 cursor-pointer">CONTACT</div>
                 </Link>
             </div>
