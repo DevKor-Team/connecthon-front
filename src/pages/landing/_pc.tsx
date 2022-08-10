@@ -96,28 +96,29 @@ const PCLanding = ({ xLocation, yLocation, symbolLocation }: Location) => {
                 </div>
 
                 <div className="flex justify-evenly h-full">
-                    <Parallax speed={-10} translateY={[25, 35]} translateX={[0, 70]} startScroll={0} endScroll={60}>
+                    <Parallax speed={-10} translateY={[25, 10]} translateX={[0, 100]} startScroll={0} endScroll={60}>
                         <div className="self-end w-[14rem]  md:w-[20rem] xl:w-[28rem]">
                             <img src="/business.svg" alt="business" />
                         </div>
                     </Parallax>
-                    <Parallax speed={-10} translateY={[10, 30]} startScroll={0} endScroll={60}>
+                    <Parallax speed={-10} translateX={[0, 25]} translateY={[10, 5]} startScroll={0} endScroll={60}>
                         <div className="self-center w-[14rem] md:w-[20rem] xl:w-[28rem]">
                             <img src="/designer.svg" alt="designer" />
                         </div>
                     </Parallax>
 
-                    <Parallax speed={-10} translateY={[0, 28]} translateX={[20, -63]} startScroll={0} endScroll={60}>
+                    <Parallax speed={-10} translateY={[0, 3]} translateX={[20, -33]} startScroll={0} endScroll={60}>
                         <div className="self-start w-[10rem] md:w-[14rem] xl:w-[23rem]">
                             <img src="/devkor.svg" alt="devkor" />
                         </div>
                     </Parallax>
                 </div>
             </div>
+            {/*
             <Parallax speed={-10} opacity={[0, 1]} translateY={[`${yLocation}`, `${yLocation}`]} translateX={[`${xLocation}`, `${xLocation}`]} startScroll={60} endScroll={80}>
                 <img src="/spreads.svg" alt="spreads" className="w-[100vw]" />
             </Parallax>
-
+            */}
             <div className="relative">
                 <div className="flex flex-col justify-center items-center">
                     <Parallax opacity={[0, 1]} startScroll={700} endScroll={1150}>
