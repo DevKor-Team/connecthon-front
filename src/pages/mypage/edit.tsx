@@ -32,6 +32,7 @@ const ProfileEdit = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const router = useRouter();
     const [file, setfile] = useState<string>();
+    const [imgFile, setImgFile] = useState<File>();
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onModal, setOnModal] = useState<boolean>(false);
@@ -122,8 +123,8 @@ const ProfileEdit = () => {
                     },
                 },
             ),
-        ),
-            axiosInstance.post('/image/profile', blob);
+        );
+        axiosInstance.post('/image/profile', blob);
         setOnModal(false);
         console.log(`blob 객체를 서버로 데이터 전송`);
     };
@@ -137,6 +138,7 @@ const ProfileEdit = () => {
             return alert('이미지 저장에 실패하였습니다.');
         }
         createCanvas();
+        console.log(canvasRef.current);
         canvasRef.current.toBlob((blob: Blob | null) => uploadProfileImage(blob), 'image/*', 0.95);
         setOnProfileImage(true);
     };
@@ -177,7 +179,7 @@ const ProfileEdit = () => {
                         <Dropzone
                             onDrop={acceptedFiles => {
                                 setfile(URL.createObjectURL(acceptedFiles[0]));
-                                console.log(acceptedFiles[0]);
+                                setImgFile(acceptedFiles[0]);
                             }}
                         >
                             {({ getRootProps, getInputProps }) => (
@@ -204,7 +206,7 @@ const ProfileEdit = () => {
                                         setOnModal(false);
                                     }}
                                 />
-                                <div className="flex items-center justify-center">
+                                <div className="flex items-center justify-center mt-[3rem] mb-[3rem]">
                                     <ReactCrop
                                         crop={crop}
                                         onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -213,7 +215,7 @@ const ProfileEdit = () => {
                                         }}
                                         aspect={aspect}
                                         circularCrop={true}
-                                        className=" mt-[3rem] mb-3 overflow-hidden w-[15rem]"
+                                        className="overflow-hidden w-[15rem]"
                                     >
                                         <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
                                     </ReactCrop>
