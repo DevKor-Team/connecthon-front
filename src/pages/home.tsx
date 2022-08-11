@@ -1,5 +1,7 @@
-import { CustomNextPage } from '../types/types';
-import Layout from '../layouts/Layout';
+import { CustomNextPage } from '../lib/types';
+import Head from 'next/head';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
 import { useEffect, useState } from 'react';
 import MainProjectCard from '../components/MainProjectCard';
 import HomeButton from '../components/HomeButton';
@@ -189,7 +191,7 @@ function Merit() {
     }, [firstShadow, secondShadow, thirdShadow]);
 
     return (
-        <div className="w-full mt-40 md:mt-16 flex items-center justify-start w-full">
+        <div className="w-full mt-40 md:mt-16 flex items-center justify-start">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">새로운 사람과 새로운 도전을 통해</h1>
@@ -278,7 +280,7 @@ function Merit() {
 
 function MainProject() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 flex items-center justify-start w-full">
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 flex items-center justify-start">
             <main className="flex flex-col justify-center items-start w-full">
                 {/* 섹션 제목, 부제목 영역 */}
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
@@ -311,7 +313,9 @@ function BottomBanner() {
                         <h1 className="text-ourWhite font-impact text-[1.688rem]">2022</h1>
                         <h1 className="text-ourWhite font-impact text-[1.688rem]">KU HACKATHON</h1>
                     </section>
-                    <HomeButton className="w-40 h-9 text-sm">주관 소개 바로가기</HomeButton>
+                    <HomeButton size="md" className="w-40 h-9 text-sm">
+                        주관 소개 바로가기
+                    </HomeButton>
                 </div>
             </div>
 
@@ -323,7 +327,9 @@ function BottomBanner() {
                             <h1 className="text-ourWhite font-impact text-6xl">2022</h1>
                             <h1 className="text-ourWhite font-impact text-6xl">KU HACKATHON</h1>
                         </section>
-                        <HomeButton className="w-60 h-12 text-base rounded-xl">주관 소개 바로가기</HomeButton>
+                        <HomeButton size="md" className="w-60 h-12 text-base rounded-xl">
+                            주관 소개 바로가기
+                        </HomeButton>
                     </div>
                 </div>
             </div>
@@ -346,17 +352,27 @@ const Homepage: CustomNextPage = () => {
     }, [firstScroll]);
 
     return (
-        <div className="relative h-full">
-            <main>
-                <HomeTitle firstScroll={firstScroll} />
-                <Information />
-                <Merit />
-                <MainProject />
-                <BottomBanner />
-            </main>
-        </div>
+        <>
+            <Head>
+                <title>KU HACKATHON</title>
+                <link rel="icon" href="/symbol-2d.svg" />
+            </Head>
+            <Header />
+            <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
+                <div className="relative h-full">
+                    <main>
+                        <HomeTitle firstScroll={firstScroll} />
+                        <Information />
+                        <Merit />
+                        <MainProject />
+                        <BottomBanner />
+                    </main>
+                </div>
+            </div>
+
+            <Footer />
+        </>
     );
 };
 
-Homepage.Layout = Layout;
 export default Homepage;
