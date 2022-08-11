@@ -58,7 +58,7 @@ const ProfileEdit = () => {
         mode: 'onSubmit',
     });
 
-    const onValid: SubmitHandler<FormValues> = data => {
+    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
         setLoginUserState(
             Object.assign(
                 { ...loginUserState },
@@ -82,10 +82,7 @@ const ProfileEdit = () => {
                 },
             ),
         );
-        axiosInstance.put(`/users/:${loginUserState.user?.id}/profile`);
-    };
-    const onInvalid = errors => {
-        console.log(errors);
+        axiosInstance.put(`/users/:${loginUserState.user?.id}/profile`, loginRecoilState);
     };
 
     useEffect(() => {
@@ -126,7 +123,7 @@ const ProfileEdit = () => {
                 },
             ),
         ),
-            axiosInstance.post('/image/profile');
+            axiosInstance.post('/image/profile', blob);
         setOnModal(false);
         console.log(`blob 객체를 서버로 데이터 전송`);
     };
@@ -134,6 +131,7 @@ const ProfileEdit = () => {
     const onPreview = () => {
         createCanvas();
     };
+
     const onSave = () => {
         if (!canvasRef.current) {
             return alert('이미지 저장에 실패하였습니다.');
@@ -173,12 +171,13 @@ const ProfileEdit = () => {
 
     return (
         <div className="bg-ourWhite mt-[8rem] mb-[3rem] w-[100%]">
-            <form onSubmit={handleSubmit(onValid, onInvalid)}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex relative">
                     <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] h-[20rem] pb-5">
                         <Dropzone
                             onDrop={acceptedFiles => {
                                 setfile(URL.createObjectURL(acceptedFiles[0]));
+                                console.log(acceptedFiles[0]);
                             }}
                         >
                             {({ getRootProps, getInputProps }) => (
