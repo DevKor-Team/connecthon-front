@@ -32,7 +32,6 @@ const ProfileEdit = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const router = useRouter();
     const [file, setfile] = useState<string>();
-    const [imgFile, setImgFile] = useState<File>();
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onModal, setOnModal] = useState<boolean>(false);
@@ -124,9 +123,16 @@ const ProfileEdit = () => {
                 },
             ),
         );
-        axiosInstance.post('/image/profile', blob);
+        //blob객체를 서버로 전송한다.
+        //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
+        axiosInstance.post('/image/profile', blob).then(res =>
+            setLoginUserState({
+                isLogin: true,
+                user: res.data,
+            }),
+        );
+
         setOnModal(false);
-        console.log(`blob 객체를 서버로 데이터 전송`);
     };
 
     const onPreview = () => {
@@ -179,7 +185,6 @@ const ProfileEdit = () => {
                         <Dropzone
                             onDrop={acceptedFiles => {
                                 setfile(URL.createObjectURL(acceptedFiles[0]));
-                                setImgFile(acceptedFiles[0]);
                             }}
                         >
                             {({ getRootProps, getInputProps }) => (
