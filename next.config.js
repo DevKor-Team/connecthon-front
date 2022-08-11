@@ -4,6 +4,14 @@ const nextConfig = {
         ENDPOINT: process.env.ENDPOINT,
     },
     reactStrictMode: false,
+    async rewrites() {
+        return [
+            {
+                source: '/:path*',
+                destination: `${process.env.ENDPOINT}/:path*`,
+            },
+        ];
+    },
 };
 
 module.exports = nextConfig;
