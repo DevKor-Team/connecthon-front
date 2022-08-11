@@ -13,7 +13,10 @@ const defaultValue = {
     user: {
         type: 'user',
         id: '',
-        name: '',
+        name: {
+            first: '',
+            last: '',
+        },
         email: '',
         team: '',
         profile: {

@@ -1,15 +1,10 @@
 import { PositionType } from './position.types';
 import { ProviderType } from './provider.types';
 
-export interface User {
+export interface Company {
     type: string;
     id?: string;
-    name: {
-        first: string;
-        last: string;
-    };
-    email: string;
-    team?: string;
+    name: string;
     profile: {
         link?: {
             github?: string;
@@ -21,7 +16,7 @@ export interface User {
         introduction?: string;
         university?: string;
         major?: string;
-        career: string[];
+        career?: string[];
     };
     provider?: ProviderType;
     isAdmin?: boolean;

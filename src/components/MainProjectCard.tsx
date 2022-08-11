@@ -17,7 +17,7 @@ function attachScaling(e: MouseEvent<HTMLDivElement>) {
     console.log('mouse over');
 
     //first child of the parent element
-    let currentChild = target.parentElement.firstChild as HTMLDivElement;
+    let currentChild: HTMLDivElement = target.parentElement.firstChild as HTMLDivElement;
 
     //collecting siblings
     if (currentChild instanceof HTMLDivElement) {

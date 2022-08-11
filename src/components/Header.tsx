@@ -4,12 +4,12 @@ import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 import Link from 'next/link';
-import { userRecoilState } from '../recoil/user';
+import { loginRecoilState } from '../recoil/loginuser';
 import { useRecoilState } from 'recoil';
 import { axiosInstance } from '../hooks/queries';
 
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
-    const [userData, setUserData] = useRecoilState(userRecoilState);
+    const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 
     function closeMenu() {
         if (typeof window !== 'undefined') {
@@ -40,7 +40,7 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/participants">PARTICIPANTS</Link>
                         </li>
                         <li onClick={closeMenu}>
-                            <Link href={`${userData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
+                            <Link href={`${loginUserData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
                         </li>
                     </ul>
                 </div>
@@ -50,7 +50,7 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
 }
 
 function Header({ theme }: { theme?: 'dark' | 'light' }) {
-    const [userData, setUserData] = useRecoilState(userRecoilState);
+    const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 
     function openMenu() {
         if (typeof window !== 'undefined') {
@@ -67,7 +67,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
 
     async function handleLogOut() {
         await axiosInstance.get('/auth/logout');
-        setUserData({
+        setLoginUserData({
             isLogin: false,
             user: null,
         });
@@ -93,16 +93,16 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/participants">PARTICIPANTS</Link>
                         </li>
                         <li>
-                            <Link href={`${userData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
+                            <Link href={`${loginUserData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
                         </li>
                     </ul>
                 </div>
 
                 <div className="flex items-center space-x-3 md:space-x-6 font-light cursor-pointer md:mr-12 lg:mr-16">
-                    <Link href={`${userData.isLogin ? '/mypage' : '/login'}`}>
+                    <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
-                    {userData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null}
+                    {loginUserData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null}
                 </div>
             </header>
         </>

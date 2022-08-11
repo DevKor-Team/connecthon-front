@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 interface BtnType {
-    size?: 'sm' | 'md' | 'lg';
+    size: 'sm' | 'md' | 'lg';
     className?: string;
     children: string;
 }
