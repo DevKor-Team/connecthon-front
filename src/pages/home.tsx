@@ -1,5 +1,4 @@
 import { CustomNextPage } from '../types/types';
-import Layout from '../layouts/Layout';
 import { useEffect, useState } from 'react';
 import MainProjectCard from '../components/MainProjectCard';
 import HomeButton from '../components/HomeButton';
@@ -278,7 +277,7 @@ function Merit() {
 
 function MainProject() {
     return (
-        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 flex items-center justify-start w-full">
+        <div className="w-full md:h-[calc(100vh-4rem)] mt-36 md:mt-16 flex items-center justify-start">
             <main className="flex flex-col justify-center items-start w-full">
                 {/* 섹션 제목, 부제목 영역 */}
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
@@ -358,5 +357,4 @@ const Homepage: CustomNextPage = () => {
     );
 };
 
-Homepage.Layout = Layout;
 export default Homepage;

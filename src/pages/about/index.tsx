@@ -1,4 +1,3 @@
-import Layout from '../../layouts/Layout';
 import BusinessSchool from './_business';
 import DevKor from './_devkor';
 import Dijo from './_designer';
