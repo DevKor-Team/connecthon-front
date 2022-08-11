@@ -17,7 +17,7 @@ function attachScaling(e: MouseEvent<HTMLDivElement>) {
     console.log('mouse over');
 
     //first child of the parent element
-    let currentChild = target.parentElement.firstChild;
+    let currentChild = target.parentElement.firstChild as HTMLDivElement;
 
     //collecting siblings
     if (currentChild instanceof HTMLDivElement) {
@@ -26,7 +26,7 @@ function attachScaling(e: MouseEvent<HTMLDivElement>) {
                 siblings.push(currentChild);
             }
 
-            currentChild = currentChild.nextSibling;
+            currentChild = currentChild.nextSibling as HTMLDivElement;
         }
     }
     target.classList.add('sm:scale-110', 'sm:shadow-[7px_7px_18px_2px_rgba(0,0,0,0.1)]');
