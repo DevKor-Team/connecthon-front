@@ -4,11 +4,8 @@ import { ProviderType } from './provider.types';
 export interface User {
     type: string;
     id?: string;
-    name: {
-        first: string;
-        last: string;
-    };
-    email: string;
+    name: string;
+    email?: string;
     team?: string;
     profile: {
         link?: {
