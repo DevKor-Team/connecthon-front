@@ -1,13 +1,17 @@
+import React from 'react';
 import '../../styles/globals.css';
 import type { AppProps } from 'next/app';
+import Layout from '../layouts/Layout';
 import { RecoilRoot } from 'recoil';
 
-function HACKATHON({ Component, pageProps }: AppProps) {
+export default function HACKATHON({ Component, pageProps }: AppProps) {
     return (
-        <RecoilRoot>
-            <Component {...pageProps} />
-        </RecoilRoot>
+        <>
+            <RecoilRoot>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </RecoilRoot>
+        </>
     );
 }
-
-export default HACKATHON;
