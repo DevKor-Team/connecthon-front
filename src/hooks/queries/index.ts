@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const ENDPOINT = process.env.ENDPOINT as string;
-
 export const axiosInstance = axios.create({
-    baseURL: ENDPOINT,
+    baseURL: '/',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
