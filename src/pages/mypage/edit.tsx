@@ -4,12 +4,13 @@ import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
 
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
+import { axiosInstance } from '../../hooks/queries';
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -39,11 +40,25 @@ const ProfileEdit = () => {
     const aspect = 1;
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const imgRef = useRef<HTMLImageElement>(null);
-    const { register, handleSubmit } = useForm({
+
+    type FormValues = {
+        team: string;
+        github: string;
+        blog: string;
+        instagram: string;
+        introduction: string;
+        img: string;
+        position: string;
+        university: string;
+        major: string;
+        career: string[];
+    };
+
+    const { register, handleSubmit } = useForm<FormValues>({
         mode: 'onSubmit',
     });
 
-    const onValid = data => {
+    const onValid: SubmitHandler<FormValues> = data => {
         setLoginUserState(
             Object.assign(
                 { ...loginUserState },
@@ -67,6 +82,7 @@ const ProfileEdit = () => {
                 },
             ),
         );
+        axiosInstance.put(`/users/:${loginUserState.user?.id}/profile`);
     };
     const onInvalid = errors => {
         console.log(errors);
@@ -110,7 +126,8 @@ const ProfileEdit = () => {
                 },
             ),
         ),
-            setOnModal(false);
+            axiosInstance.post('/image/profile');
+        setOnModal(false);
         console.log(`blob 객체를 서버로 데이터 전송`);
     };
 
@@ -218,7 +235,7 @@ const ProfileEdit = () => {
                     </div>
                     <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-md">
                         <label htmlFor="name">이름</label>
-                        <input type="text" value={`${loginUserState.user?.name.first}${loginUserState.user?.name.last}`} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
+                        <input type="text" value={`${loginUserState.user?.name}`} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
                         <label htmlFor="position">직책</label>
                         <select {...register('position')} name="position" id="position" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" defaultValue={loginUserState?.user?.profile.position}>
                             <option value="developer">개발자</option>
