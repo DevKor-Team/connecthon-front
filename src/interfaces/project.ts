@@ -6,4 +6,5 @@ export interface Project {
     team: string;
     likes?: string[];
     thumbnail?: string;
+    description?: string;
 }

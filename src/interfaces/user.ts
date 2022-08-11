@@ -1,12 +1,13 @@
 import { PositionType } from './position.types';
 
 export interface User {
-    id?: number;
+    type: string;
+    id?: string;
     name: string;
-    email: string;
+    email?: string;
     team?: string;
     profile: {
-        link: {
+        link?: {
             github?: string;
             blog?: string;
             instagram?: string;
@@ -18,4 +19,6 @@ export interface User {
         major?: string;
         career: string[];
     };
+    provider?: ProviderType;
+    isAdmin?: boolean;
 }

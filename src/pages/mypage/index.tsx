@@ -1,19 +1,19 @@
 import { CustomNextPage } from '../../types/types';
 import Layout from '../../layouts/Layout';
-import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
 import { useState } from 'react';
-import { User } from '../../interfaces/user';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
+import { AiOutlineLeft, AiOutlineRight } from 'react-icons/ai';
 import Link from 'next/link';
 import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { userRecoilState } from '../../recoil/user';
+import { loginRecoilState } from '../../recoil/loginuser';
 
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
     // const UserProfile: User = {
+    //     type: 'user',
     //     id: 1,
     //     name: '안수진',
     //     email: 'asj0816@korea.ac.kr',
@@ -31,13 +31,15 @@ const MyPage: CustomNextPage = () => {
     //         major: '국제학부',
     //         career: ['코르카 ML 엔지니어', 'DevKor 노예'],
     //     },
+    //     provider: 'kakao',
+    //     isAdmin: true,
     // };
 
     const Project: Project = {
         id: 1,
-        teamName: 'Tiger',
+        team: 'Tiger',
         title: '해커톤 웹 개발기',
-        description: '뎁코의 노예들 입니다.',
+        content: '뎁코의 노예들 입니다.',
         thumbnail: '/project-ex.svg',
     };
 
@@ -45,8 +47,10 @@ const MyPage: CustomNextPage = () => {
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
     const userId = Number(router.query.id);
-    const [userState, setUserState] = useRecoilState(userRecoilState);
-    console.log(`userState in main user page : ${userState.user?.profile.img}`);
+
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+    console.log(`userState in main user page : ${loginUserState.user?.profile.img}`);
+
     return (
         <div className="mt-[8rem] flex w-[100%] items-center">
             <div className="grow-0 mr-4 cursor-pointer">
@@ -65,13 +69,13 @@ const MyPage: CustomNextPage = () => {
                 <div className="flex mb-10">
                     <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                         <div className="flex flex-col items-center">
-                            {userState.user?.profile.img ? (
-                                <img src={userState.user?.profile.img} alt="my photo" className="rounded-full w-[50%] my-2" />
+                            {loginUserState.user?.profile.img ? (
+                                <img src={loginUserState.user?.profile.img} alt="my photo" className="rounded-full w-[50%] my-2" />
                             ) : (
                                 <img src="/profile-default.jpg" alt="default-profile" className="rounded-full w-[50%] my-2" />
                             )}
                             <div className="flex items-center my-2">
-                                <h4 className={`text-${userState.user?.profile.position} mx-1`}>{userState.user?.profile.position}</h4>
+                                <h4 className={`text-${loginUserState.user?.profile.position} mx-1`}>{loginUserState.user?.profile.position}</h4>
                                 <FiEdit
                                     className="pb-[0.1rem] cursor-pointer"
                                     onClick={() => {
@@ -79,23 +83,23 @@ const MyPage: CustomNextPage = () => {
                                     }}
                                 />
                             </div>
-                            <h3 className="font-bold text-[1.75rem] my-1">{userState.user?.name}</h3>
-                            <p className="mt-1 mb-5">{`TEAM ${userState.user?.team}`}</p>
+                            <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name}`}</h3>
+                            <p className="mt-1 mb-5">{`TEAM ${loginUserState.user?.team}`}</p>
                         </div>
 
                         <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">
                             <div className="my-4">
                                 <h4 className="font-semibold">한 줄 소개</h4>
-                                <p>{userState.user?.profile.introduction}</p>
+                                <p>{loginUserState.user?.profile.introduction}</p>
                             </div>
                             <div className="my-4">
                                 <h4 className="font-semibold">학력</h4>
-                                <p>{`${userState.user?.profile.university} ${userState.user?.profile.major}`}</p>
+                                <p>{`${loginUserState.user?.profile.university} ${loginUserState.user?.profile.major}`}</p>
                             </div>
                             <div className="my-4">
                                 <h4 className="font-semibold mb-1">경력</h4>
 
-                                <div>{userState.user?.profile.career ? null : null}</div>
+                                <div>{loginUserState.user?.profile.career ? null : null}</div>
                             </div>
 
                             <h4 className="font-semibold my-2">SNS</h4>
@@ -113,7 +117,7 @@ const MyPage: CustomNextPage = () => {
                                     {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div className="mx-2">
-                                    <Link href={userState.user?.profile.link.instagram ? `https://www.instagram.com/${userState.user?.profile.link.instagram}` : ''}>
+                                    <Link href={loginUserState.user?.profile.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile.link.instagram}` : ''}>
                                         <a>
                                             <FiInstagram
                                                 className="text-2xl cursor-pointer"
@@ -130,7 +134,7 @@ const MyPage: CustomNextPage = () => {
                                     {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.65rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div>
-                                    <Link href={userState.user?.profile.link.github ? `https://github.com/${userState.user?.profile.link.github}` : ''}>
+                                    <Link href={loginUserState.user?.profile.link?.github ? `https://github.com/${loginUserState.user?.profile.link.github}` : ''}>
                                         <a>
                                             <FiGithub
                                                 className="text-2xl cursor-pointer"
@@ -147,7 +151,7 @@ const MyPage: CustomNextPage = () => {
                                     {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[5.8rem] drop-shadow-lg" /> : null}
                                 </div>
                                 <div>
-                                    <Link href={userState.user?.profile.link.blog ? userState.user?.profile.link.blog : ''}>
+                                    <Link href={loginUserState.user?.profile.link?.blog ? loginUserState.user?.profile.link.blog : ''}>
                                         <a>
                                             <FiHome className="text-2xl cursor-pointer mx-2" />
                                         </a>
@@ -187,7 +191,7 @@ const MyPage: CustomNextPage = () => {
                         </div>
                         <div className="flex flex-col bg-ourWhite rounded-lg w-[100%] h-[80vh] p-8 ">
                             <div className="grow">
-                                <h4 className="text-lg tracking-wider font-semibold my-1">{`TEAM ${userState.user?.team}`}</h4>
+                                <h4 className="text-lg tracking-wider font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
                                 <h2 className="text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
                                 <h3 className="text-lg tracking-normal">{Project.description}</h3>
                                 <div className="relative">
