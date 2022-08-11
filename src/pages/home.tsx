@@ -189,7 +189,7 @@ function Merit() {
     }, [firstShadow, secondShadow, thirdShadow]);
 
     return (
-        <div className="w-full mt-40 md:mt-16 flex items-center justify-start w-full">
+        <div className="w-full mt-40 md:mt-16 flex items-center justify-start">
             <main className="flex flex-col justify-center items-start w-full">
                 <section className="flex flex-col justify-center items-start mb-3 md:mb-8">
                     <h1 className="text-2xl md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">새로운 사람과 새로운 도전을 통해</h1>
