@@ -13,7 +13,7 @@ export interface User {
             blog?: string;
             instagram?: string;
         };
-        position?: PositionType;
+        position?: PositionType | null;
         img: string;
         introduction?: string;
         university?: string;

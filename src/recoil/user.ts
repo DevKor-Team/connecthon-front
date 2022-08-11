@@ -9,7 +9,8 @@ export interface UserState {
 const defaultValue = {
     isLogin: false,
     user: {
-        id: 0,
+        type: '',
+        id: '',
         name: '',
         email: '',
         team: '',
@@ -19,13 +20,15 @@ const defaultValue = {
                 blog: '',
                 instagram: '',
             },
-            position: '',
+            position: null,
             img: '',
             introduction: '',
             university: '',
             major: '',
             career: [''],
         },
+        provider: undefined,
+        isAdmin: false,
     },
 };
 
