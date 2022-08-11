@@ -1,7 +1,4 @@
-import { CustomNextPage } from '../lib/types';
-import Head from 'next/head';
-import Footer from '../components/Footer';
-import Header from '../components/Header';
+import { CustomNextPage } from '../types/types';
 import { useEffect, useState } from 'react';
 import MainProjectCard from '../components/MainProjectCard';
 import HomeButton from '../components/HomeButton';
@@ -353,11 +350,6 @@ const Homepage: CustomNextPage = () => {
 
     return (
         <>
-            <Head>
-                <title>KU HACKATHON</title>
-                <link rel="icon" href="/symbol-2d.svg" />
-            </Head>
-            <Header />
             <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
                 <div className="relative h-full">
                     <main>
@@ -369,8 +361,6 @@ const Homepage: CustomNextPage = () => {
                     </main>
                 </div>
             </div>
-
-            <Footer />
         </>
     );
 };
