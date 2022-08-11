@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import { FiPhoneCall, FiMail, FiInstagram } from 'react-icons/fi';
 import { SiNotion } from 'react-icons/si';
-import { userRecoilState } from '../recoil/user';
+import { loginRecoilState } from '../recoil/loginuser';
 import { useRecoilState } from 'recoil';
 
 function Footer({ theme }: { theme?: 'dark' | 'light' }) {
-    const [userData, setUserData] = useRecoilState(userRecoilState);
+    const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 
     return (
         <footer className={`w-screen px-4 md:px-16 lg:px-20 xl:px-[13.375rem] pt-10 pb-5 lg:py-8 ${theme == 'dark' ? 'bg-ourBlack' : 'bg-ourWhite'} border-t border-ourWhite`}>
@@ -39,7 +39,7 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/participants">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>PARTICIPANTS</span>
                             </Link>
-                            <Link href={`${userData.isLogin ? '/chat' : '/login'}`}>
+                            <Link href={`${loginUserData.isLogin ? '/chat' : '/login'}`}>
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>CHAT</span>
                             </Link>
                         </nav>
@@ -51,7 +51,7 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/homepage">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>HOME PAGE</span>
                             </Link>
-                            <Link href={`${userData.isLogin ? '/mypage' : '/login'}`}>
+                            <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>MY PAGE</span>
                             </Link>
                             <span className="hidden lg:inline-block font-semibold text-ourBlack invisible">BLANK</span>

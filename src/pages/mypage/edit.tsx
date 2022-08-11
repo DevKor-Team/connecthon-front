@@ -9,7 +9,7 @@ import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-im
 
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRecoilState } from 'recoil';
-import { userRecoilState } from '../../recoil/user';
+import { loginRecoilState } from '../../recoil/loginuser';
 
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -28,7 +28,7 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 
 const ProfileEdit = () => {
-    const [userState, setUserState] = useRecoilState(userRecoilState);
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const router = useRouter();
     const [file, setfile] = useState<string>();
     const [crop, setCrop] = useState<Crop>();
@@ -44,9 +44,9 @@ const ProfileEdit = () => {
     });
 
     const onValid = data => {
-        setUserState(
+        setLoginUserState(
             Object.assign(
-                { ...userState },
+                { ...loginUserState },
                 {
                     user: {
                         team: data.team,
@@ -57,7 +57,7 @@ const ProfileEdit = () => {
                                 instagram: data.instagram,
                             },
                             introduction: data.introduction,
-                            img: userState.user?.profile.img,
+                            img: loginUserState.user?.profile.img,
                             position: data.position,
                             university: data.university,
                             major: data.major,
@@ -74,8 +74,8 @@ const ProfileEdit = () => {
 
     useEffect(() => {
         setOnModal(false);
-        if (userState.user?.profile.career) {
-            setNumCareerInput(userState.user?.profile.career.length);
+        if (loginUserState.user?.profile.career) {
+            setNumCareerInput(loginUserState.user?.profile.career.length);
         } else {
             setNumCareerInput(1);
         }
@@ -98,9 +98,9 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
-        setUserState(
+        setLoginUserState(
             Object.assign(
-                { ...userState },
+                { ...loginUserState },
                 {
                     user: {
                         profile: {
@@ -170,7 +170,7 @@ const ProfileEdit = () => {
                                         <input {...getInputProps()} />
                                         {onProfileImage ? (
                                             <div className="flex justify-center">
-                                                <img src={userState.user?.profile.img} alt="user profile image" className="rounded-full w-[50%]" />
+                                                <img src={loginUserState.user?.profile.img} alt="user profile image" className="rounded-full w-[50%]" />
                                             </div>
                                         ) : (
                                             <img src="/dragdrop.svg" alt="dragdrop" />
@@ -218,15 +218,15 @@ const ProfileEdit = () => {
                     </div>
                     <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-md">
                         <label htmlFor="name">이름</label>
-                        <input type="text" value={userState.user?.name} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
+                        <input type="text" value={`${loginUserState.user?.name.first}${loginUserState.user?.name.last}`} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
                         <label htmlFor="position">직책</label>
-                        <select {...register('position')} name="position" id="position" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" defaultValue={userState?.user?.profile.position}>
+                        <select {...register('position')} name="position" id="position" className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" defaultValue={loginUserState?.user?.profile.position}>
                             <option value="developer">개발자</option>
                             <option value="planner">기획자</option>
                             <option value="designer">디자이너</option>
                         </select>
                         <label htmlFor="teamName">소속 팀</label>
-                        <input {...register('team')} type="text" placeholder="팀명을 입력해주세요" defaultValue={userState.user?.team} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
+                        <input {...register('team')} type="text" placeholder="팀명을 입력해주세요" defaultValue={loginUserState.user?.team} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1" />
                     </div>
                 </div>
                 <div className="flex flex-col mt-[4rem] mb-[2rem] py-[3rem] px-[4rem] bg-[#FFFFFF] drop-shadow-lg rounded-md">
@@ -237,7 +237,7 @@ const ProfileEdit = () => {
                         {...register('introduction')}
                         type="text"
                         placeholder="본인을 한 줄로 소개해주세요!"
-                        defaultValue={userState.user?.profile.introduction}
+                        defaultValue={loginUserState.user?.profile.introduction}
                         className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1 mx-[1rem]"
                     />
                     <label htmlFor="univ" className="opacity-50 mx-[1rem]">
@@ -248,14 +248,14 @@ const ProfileEdit = () => {
                             {...register('university')}
                             type="text"
                             placeholder="재학 중인 학교명을 입력해주세요"
-                            defaultValue={userState.user?.profile.university}
+                            defaultValue={loginUserState.user?.profile.university}
                             className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1 mr-7 mx-[1rem]"
                         />
                         <input
                             {...register('major')}
                             type="text"
                             placeholder="전공을 입력해주세요"
-                            defaultValue={userState.user?.profile.major}
+                            defaultValue={loginUserState.user?.profile.major}
                             className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1"
                         />
                     </div>
@@ -296,7 +296,7 @@ const ProfileEdit = () => {
                             <FiMail size={`1.75rem`} />
                             <p className="text-sm">Mail</p>
                         </div>
-                        <input type="text" className="border-2 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3" value={userState.user?.email} />
+                        <input type="text" className="border-2 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1 flex justify-start items-center ml-3 mr-5 mb-4 mt-3" value={loginUserState.user?.email} />
                     </div>
                     <div className="flex">
                         <div className="flex flex-col justify-center items-center mx-[0.2rem]">
@@ -307,7 +307,7 @@ const ProfileEdit = () => {
                             {...register('instagram')}
                             type="text"
                             placeholder="인스타그램 아이디를 입력해주세요!"
-                            defaultValue={userState.user?.profile?.link?.instagram ? userState.user.profile.link.instagram : ''}
+                            defaultValue={loginUserState.user?.profile?.link?.instagram ? loginUserState.user.profile.link.instagram : ''}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
                         />
                     </div>
@@ -320,7 +320,7 @@ const ProfileEdit = () => {
                             {...register('github')}
                             type="text"
                             placeholder="Github 아이디를 입력해주세요!"
-                            defaultValue={userState.user?.profile?.link?.github ? userState.user.profile.link.github : ''}
+                            defaultValue={loginUserState.user?.profile?.link?.github ? loginUserState.user.profile.link.github : ''}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-5 p-1 ml-3 mr-5"
                         />
                     </div>
@@ -333,7 +333,7 @@ const ProfileEdit = () => {
                             {...register('blog')}
                             type="text"
                             placeholder="개인 웹사이트의 URL을 입력해주세요!"
-                            defaultValue={userState.user?.profile?.link?.blog ? userState.user.profile.link.blog : ''}
+                            defaultValue={loginUserState.user?.profile?.link?.blog ? loginUserState.user.profile.link.blog : ''}
                             className="border-2 rounded-md w-[30%] h-[2.5rem] p-1 ml-3 mr-5"
                         />
                     </div>

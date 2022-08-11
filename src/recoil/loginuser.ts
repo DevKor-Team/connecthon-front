@@ -1,15 +1,19 @@
 import { atom } from 'recoil';
 import { User } from '../interfaces/user';
+import { Company } from '../interfaces/company';
+import { PositionType } from '../interfaces/position.types';
+import { ProviderType } from '../interfaces/provider.types';
 
-export interface UserState {
+export interface LoginState {
     isLogin: boolean;
-    user: User | null;
+    user: User | Company | null;
 }
 
 const defaultValue = {
     isLogin: false,
     user: {
-        id: 0,
+        type: 'user',
+        id: '',
         name: '',
         email: '',
         team: '',
@@ -19,17 +23,19 @@ const defaultValue = {
                 blog: '',
                 instagram: '',
             },
-            position: '',
+            position: PositionType.developer,
             img: '',
             introduction: '',
             university: '',
             major: '',
             career: [''],
         },
+        provider: ProviderType.none,
+        isAdmin: false,
     },
 };
 
-export const userRecoilState = atom<UserState>({
-    key: 'userState',
+export const loginRecoilState = atom<LoginState>({
+    key: 'loginState',
     default: defaultValue,
 });
