@@ -7,7 +7,7 @@ import { axiosInstance } from '../hooks/queries';
 const LoginPage: CustomNextPage = () => {
     const [isParticipantMode, setParticipantMode] = useState(true);
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleCompanyLogin = (e: React.FormEvent) => {
         e.preventDefault();
         axiosInstance.post('/auth/local');
     };
@@ -44,7 +44,7 @@ const LoginPage: CustomNextPage = () => {
                     </div>
 
                     {/* 기업 로그인 섹션 */}
-                    <form className={`w-full h-[10.375rem] flex flex-col items-center justify-center space-y-4 ${isParticipantMode ? 'hidden' : 'visible'}`} onSubmit={handleFormSubmit}>
+                    <form className={`w-full h-[10.375rem] flex flex-col items-center justify-center space-y-4 ${isParticipantMode ? 'hidden' : 'visible'}`} onSubmit={handleCompanyLogin}>
                         <input type="text" name="username" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="아이디" />
                         <input type="password" name="password" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="비밀번호" />
                         <button type="submit" className="w-[20rem] h-12 bg-ourBlue text-white font-semibold rounded">
