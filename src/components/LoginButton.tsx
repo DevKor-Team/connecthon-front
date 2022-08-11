@@ -1,17 +1,19 @@
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { BsGithub, BsGoogle } from 'react-icons/bs';
-import { axiosInstance } from '../hooks/queries';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const handleKakaoLogin = async () => {
-    await axiosInstance.get('/auth/kakao');
+    window.location.href = `${publicRuntimeConfig.ENDPOINT}/auth/kakao`;
 };
 
 const handleGoogleLogin = async () => {
-    await axiosInstance.get('/auth/google');
+    window.location.href = `${publicRuntimeConfig.ENDPOINT}/auth/google`;
 };
 
 const handleGithubLogin = async () => {
-    await axiosInstance.get('/auth/github');
+    window.location.href = `${publicRuntimeConfig.ENDPOINT}/auth/github`;
 };
 
 const BtnCommonProperty = 'w-full sm:w-[20.625rem] h-[2.625rem] flex items-center justify-center rounded-xl px-5';

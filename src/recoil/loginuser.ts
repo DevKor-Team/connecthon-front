@@ -1,12 +1,11 @@
 import { atom } from 'recoil';
 import { User } from '../interfaces/user';
-import { Company } from '../interfaces/company';
 import { PositionType } from '../interfaces/position.types';
 import { ProviderType } from '../interfaces/provider.types';
 
 export interface LoginState {
     isLogin: boolean;
-    user: User | Company | null;
+    user: User | null;
 }
 
 const defaultValue = {
@@ -14,7 +13,10 @@ const defaultValue = {
     user: {
         type: 'user',
         id: '',
-        name: '',
+        name: {
+            first: '',
+            last: '',
+        },
         email: '',
         team: '',
         profile: {

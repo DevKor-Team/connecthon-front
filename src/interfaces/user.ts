@@ -11,7 +11,7 @@ export interface User {
     email: string;
     team?: string;
     profile: {
-        link: {
+        link?: {
             github?: string;
             blog?: string;
             instagram?: string;
@@ -23,6 +23,6 @@ export interface User {
         major?: string;
         career: string[];
     };
-    provider: ProviderType;
-    isAdmin: boolean;
+    provider?: ProviderType;
+    isAdmin?: boolean;
 }
