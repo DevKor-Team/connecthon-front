@@ -1,9 +1,7 @@
 import Layout from '../../layouts/Layout';
 import useWindowSize from '../../hooks/useWindowSize';
 import MobileLanding from './_mobile';
-import PCLanding from './labtop';
 import TabletLanding from './_tablet';
-import { useEffect, useState } from 'react';
 import LabTopLanding from './labtop';
 import DeskTopLanding from './_desktop';
 
