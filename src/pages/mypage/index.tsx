@@ -46,7 +46,7 @@ const MyPage: CustomNextPage = () => {
     const [onGithub, setOnGithub] = useState<boolean>(false);
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    console.log(`userState in main user page : ${loginUserState.user?.profile.img}`);
+    console.log(`userState in main user page : ${loginUserState.user?.profile?.img}`);
 
     return (
         <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
@@ -55,13 +55,13 @@ const MyPage: CustomNextPage = () => {
                     <div className="flex mb-10">
                         <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                             <div className="flex flex-col items-center">
-                                {loginUserState.user?.profile.img ? (
-                                    <img src={loginUserState.user?.profile.img} alt="my photo" className="rounded-full w-[50%] my-2" />
+                                {loginUserState.user?.profile?.img ? (
+                                    <img src={loginUserState.user?.profile?.img} alt="my photo" className="rounded-full w-[50%] my-2" />
                                 ) : (
                                     <img src="/profile-default.jpg" alt="default-profile" className="rounded-full w-[50%] my-2" />
                                 )}
                                 <div className="flex items-center my-2">
-                                    <h4 className={`text-${loginUserState.user?.profile.position} mx-1`}>{loginUserState.user?.profile.position}</h4>
+                                    <h4 className={`text-${loginUserState.user?.profile?.position} mx-1`}>{loginUserState.user?.profile?.position}</h4>
                                     <FiEdit
                                         className="pb-[0.1rem] cursor-pointer"
                                         onClick={() => {
@@ -76,16 +76,16 @@ const MyPage: CustomNextPage = () => {
                             <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">
                                 <div className="my-4">
                                     <h4 className="font-semibold">한 줄 소개</h4>
-                                    <p>{loginUserState.user?.profile.introduction}</p>
+                                    <p>{loginUserState.user?.profile?.introduction}</p>
                                 </div>
                                 <div className="my-4">
                                     <h4 className="font-semibold">학력</h4>
-                                    <p>{`${loginUserState.user?.profile.university} ${loginUserState.user?.profile.major}`}</p>
+                                    <p>{`${loginUserState.user?.profile?.university} ${loginUserState.user?.profile?.major}`}</p>
                                 </div>
                                 <div className="my-4">
                                     <h4 className="font-semibold mb-1">경력</h4>
 
-                                    <div>{loginUserState.user?.profile.career ? loginUserState.user?.profile.career.map(crr => <p>{crr}</p>) : null}</div>
+                                    <div>{loginUserState.user?.profile?.career ? loginUserState.user?.profile?.career.map(crr => <p>{crr}</p>) : null}</div>
                                 </div>
 
                                 <h4 className="font-semibold my-2">SNS</h4>
@@ -103,7 +103,7 @@ const MyPage: CustomNextPage = () => {
                                         {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div className="mx-2">
-                                        <Link href={loginUserState.user?.profile.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile.link.instagram}` : ''}>
+                                        <Link href={loginUserState.user?.profile?.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile?.link.instagram}` : ''}>
                                             <a>
                                                 <FiInstagram
                                                     className="text-2xl cursor-pointer"
@@ -120,7 +120,7 @@ const MyPage: CustomNextPage = () => {
                                         {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.8rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
-                                        <Link href={loginUserState.user?.profile.link?.github ? `https://github.com/${loginUserState.user?.profile.link.github}` : ''}>
+                                        <Link href={loginUserState.user?.profile?.link?.github ? `https://github.com/${loginUserState.user?.profile?.link.github}` : ''}>
                                             <a>
                                                 <FiGithub
                                                     className="text-2xl cursor-pointer"
@@ -137,7 +137,7 @@ const MyPage: CustomNextPage = () => {
                                         {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[6.2rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
-                                        <Link href={loginUserState.user?.profile.link?.blog ? loginUserState.user?.profile.link.blog : ''}>
+                                        <Link href={loginUserState.user?.profile?.link?.blog ? loginUserState.user?.profile?.link.blog : ''}>
                                             <a>
                                                 <FiHome className="text-2xl cursor-pointer" />
                                             </a>

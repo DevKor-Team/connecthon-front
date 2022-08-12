@@ -7,7 +7,7 @@ export interface User {
     name: string;
     email?: string;
     team?: string;
-    profile: {
+    profile?: {
         link?: {
             github?: string;
             blog?: string;
