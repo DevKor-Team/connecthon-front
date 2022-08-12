@@ -86,7 +86,7 @@ const ProfileEdit = () => {
                                 instagram: data.instagram,
                             },
                             introduction: data.introduction,
-                            img: loginUserState.user?.profile.img,
+                            img: loginUserState.user?.profile?.img,
                             position: data.position,
                             university: data.university,
                             major: data.major,
@@ -101,8 +101,8 @@ const ProfileEdit = () => {
 
     useEffect(() => {
         setOnModal(false);
-        if (loginUserState.user?.profile.career) {
-            setNumCareerInput(loginUserState.user?.profile.career.length);
+        if (loginUserState.user?.profile?.career) {
+            setNumCareerInput(loginUserState.user?.profile?.career.length);
         } else {
             setNumCareerInput(1);
         }
@@ -208,7 +208,7 @@ const ProfileEdit = () => {
                                             <input {...getInputProps()} />
                                             {onProfileImage ? (
                                                 <div className="flex justify-center">
-                                                    <img src={loginUserState.user?.profile.img} alt="user profile image" className="rounded-full w-[50%]" />
+                                                    <img src={loginUserState.user?.profile?.img} alt="user profile image" className="rounded-full w-[50%]" />
                                                 </div>
                                             ) : (
                                                 <img src="/dragdrop.svg" alt="dragdrop" />
@@ -264,7 +264,7 @@ const ProfileEdit = () => {
                                 name="position"
                                 id="position"
                                 className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5"
-                                defaultValue={loginUserState?.user?.profile.position}
+                                defaultValue={loginUserState?.user?.profile?.position}
                             >
                                 <option value="developer">개발자</option>
                                 <option value="planner">기획자</option>
@@ -288,7 +288,7 @@ const ProfileEdit = () => {
                             {...register('introduction')}
                             type="text"
                             placeholder="본인을 한 줄로 소개해주세요!"
-                            defaultValue={loginUserState.user?.profile.introduction}
+                            defaultValue={loginUserState.user?.profile?.introduction}
                             className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5 mx-[1rem]"
                         />
                         <label htmlFor="univ" className="opacity-50 mx-[1rem]">
@@ -299,14 +299,14 @@ const ProfileEdit = () => {
                                 {...register('university')}
                                 type="text"
                                 placeholder="재학 중인 학교명을 입력해주세요"
-                                defaultValue={loginUserState.user?.profile.university}
+                                defaultValue={loginUserState.user?.profile?.university}
                                 className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1.5 mr-7 mx-[1rem]"
                             />
                             <input
                                 {...register('major')}
                                 type="text"
                                 placeholder="전공을 입력해주세요"
-                                defaultValue={loginUserState.user?.profile.major}
+                                defaultValue={loginUserState.user?.profile?.major}
                                 className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1.5"
                             />
                         </div>
@@ -362,7 +362,7 @@ const ProfileEdit = () => {
                                 {...register('instagram')}
                                 type="text"
                                 placeholder="인스타그램 아이디를 입력해주세요!"
-                                defaultValue={loginUserState.user?.profile?.link?.instagram ? loginUserState.user.profile.link.instagram : ''}
+                                defaultValue={loginUserState.user?.profile?.link?.instagram ? loginUserState.user.profile?.link.instagram : ''}
                                 className="border-2 rounded-md w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
                             />
                         </div>
@@ -375,7 +375,7 @@ const ProfileEdit = () => {
                                 {...register('github')}
                                 type="text"
                                 placeholder="Github 아이디를 입력해주세요!"
-                                defaultValue={loginUserState.user?.profile?.link?.github ? loginUserState.user.profile.link.github : ''}
+                                defaultValue={loginUserState.user?.profile?.link?.github ? loginUserState.user.profile?.link.github : ''}
                                 className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-5 p-1.5 ml-3 mr-5"
                             />
                         </div>
@@ -388,7 +388,7 @@ const ProfileEdit = () => {
                                 {...register('blog')}
                                 type="text"
                                 placeholder="개인 웹사이트의 URL을 입력해주세요!"
-                                defaultValue={loginUserState.user?.profile?.link?.blog ? loginUserState.user.profile.link.blog : ''}
+                                defaultValue={loginUserState.user?.profile?.link?.blog ? loginUserState.user.profile?.link.blog : ''}
                                 className="border-2 rounded-md w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
                             />
                         </div>
