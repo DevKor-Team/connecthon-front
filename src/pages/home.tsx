@@ -217,7 +217,7 @@ function Merit() {
                         <div
                             className={`${
                                 firstLine ? 'h-36 md:h-60' : 'h-0'
-                            } transition-all ease-in duration-400 w-0.5 md:w-1 absolute -bottom-30 -left-[0.438rem] md:-left-5 bg-ourBlue bg-opacity-20`}
+                            } transition-all ease-in duration-600 w-0.5 md:w-1 absolute -bottom-30 -left-[0.438rem] md:-left-5 bg-ourBlue bg-opacity-20`}
                         >
                             {' '}
                         </div>
@@ -241,7 +241,7 @@ function Merit() {
                         <div
                             className={`${
                                 secondLine ? 'h-36 md:h-60' : 'h-0'
-                            } transition-all ease-in duration-400 w-0.5 md:w-1 absolute -bottom-30 -left-[0.438rem] md:-left-5 bg-ourBlue bg-opacity-20`}
+                            } transition-all ease-in duration-600 w-0.5 md:w-1 absolute -bottom-30 -left-[0.438rem] md:-left-5 bg-ourBlue bg-opacity-20`}
                         >
                             {' '}
                         </div>
