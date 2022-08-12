@@ -3,10 +3,10 @@ import { useState } from 'react';
 const Dijo = () => {
     const [members, showMembers] = useState<boolean>(false);
     return (
-        <div className="ml-2 w-[80%] md:ml-[3rem] text-left justify-end relative">
-            <div className="absolute left-[-3rem] w-[12rem] md:w-[14rem] md:left-[-6rem] md:top-[-2rem]">
+        <div className="w-[80%] text-left justify-end relative">
+            {/* <div className="absolute left-[-3rem] w-[12rem] md:w-[14rem] md:left-[-6rem] md:top-[-2rem]">
                 <img src="design-logo.svg" alt="design-logo" />
-            </div>
+            </div> */}
 
             <div className="w-[100%]">
                 <h1 className="text-[2.5rem] font-bold text-[#29AAE4] sm:text-[3.5rem] pt-10 md:pt-[5rem] md:text-[3.5rem]">3</h1>

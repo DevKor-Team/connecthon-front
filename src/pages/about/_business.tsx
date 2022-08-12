@@ -3,7 +3,7 @@ import { useState } from 'react';
 const BusinessSchool = () => {
     const [members, showMembers] = useState<boolean>(false);
     return (
-        <div className="mb-[8rem] w-[80%] md:ml-[2rem] text-left flex flex-col items-start relative">
+        <div className="mb-[8rem] w-[80%] text-left flex flex-col items-start relative">
             <div className="absolute left-[-3rem] w-[12rem] md:left-[-5rem] md:w-[16rem]">
                 <img src="business-logo.svg" alt="business-reverse" className="w-[16rem]" />
             </div>
