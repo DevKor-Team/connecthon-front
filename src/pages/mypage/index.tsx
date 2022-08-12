@@ -214,5 +214,4 @@ const MyPage: CustomNextPage = () => {
     );
 };
 
-MyPage.Layout = Layout;
 export default MyPage;
