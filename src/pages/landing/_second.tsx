@@ -1,5 +1,6 @@
 import { useSpring, animated } from 'react-spring';
 import Button from '../../components/Button';
+import Link from 'next/link';
 
 const SecondLanding = () => {
     const componentAnimation = useSpring({
@@ -16,9 +17,13 @@ const SecondLanding = () => {
                 <h3 className="text-center mb-7">후원</h3>
                 <img className="w-[90%] mx-auto" src="/mobile-company.svg" alt="company" />
             </div>
-            <Button size="sm" className="block px-3 mt-[5rem] mb-[5rem] mx-auto border-2 border-black hover:text-white">
-                Get Started
-            </Button>
+            <Link href="/home">
+                <a>
+                    <Button size="sm" className="block px-3 mt-[5rem] mb-[7rem] mx-auto border-2 border-black hover:text-white">
+                        Get Started
+                    </Button>
+                </a>
+            </Link>
         </animated.div>
     );
 };
