@@ -5,7 +5,7 @@ import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import { AiOutlineMinusCircle, AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { TbTrashOff } from 'react-icons/tb';
 import { useRouter } from 'next/router';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm, useFieldArray, Controller } from 'react-hook-form';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
 
 import 'react-image-crop/dist/ReactCrop.css';
@@ -30,18 +30,30 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 
 const ProfileEdit = () => {
+    //로그인 Recoil State
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
+    //라우터
     const router = useRouter();
+
+    //파일
     const [file, setfile] = useState<string>();
-    const [crop, setCrop] = useState<Crop>();
-    const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+
+    //모달
     const [onModal, setOnModal] = useState<boolean>(false);
-    const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
+
+    //경력(career) 관련
     const [numCareerInput, setNumCareerInput] = useState<number>(1);
+
+    //img 관련
     const aspect = 1;
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const imgRef = useRef<HTMLImageElement>(null);
+    const [crop, setCrop] = useState<Crop>();
+    const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
+    const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
 
+    //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
         team: string;
         github: string;
@@ -55,7 +67,8 @@ const ProfileEdit = () => {
         career: string[];
     };
 
-    const { register, handleSubmit } = useForm<FormValues>({
+    //react-hook-form
+    const { control, register, handleSubmit } = useForm<FormValues>({
         mode: 'onSubmit',
     });
 
@@ -300,10 +313,10 @@ const ProfileEdit = () => {
                         <label htmlFor="career" className="opacity-50 mx-[1rem]">
                             경력
                         </label>
-                        {Array.from({ length: numCareerInput }).map(() => {
+                        {Array.from({ length: numCareerInput }).map((item, idx) => {
                             return (
                                 <div className="flex items-center">
-                                    <input {...register('career')} type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]" />
+                                    <input {...register(`career.${idx}`)} type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]" />
                                     <AiOutlinePlusCircle
                                         onClick={() => {
                                             setNumCareerInput(numCareerInput + 1);

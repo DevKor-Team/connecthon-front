@@ -85,7 +85,7 @@ const MyPage: CustomNextPage = () => {
                                 <div className="my-4">
                                     <h4 className="font-semibold mb-1">경력</h4>
 
-                                    <div>{loginUserState.user?.profile.career ? null : null}</div>
+                                    <div>{loginUserState.user?.profile.career ? loginUserState.user?.profile.career.map(crr => <p>{crr}</p>) : null}</div>
                                 </div>
 
                                 <h4 className="font-semibold my-2">SNS</h4>
@@ -143,9 +143,6 @@ const MyPage: CustomNextPage = () => {
                                             </a>
                                         </Link>
                                     </div>
-                                </div>
-                                <div className="border-t-2 my-7">
-                                    <h4 className="font-extralight text-sm mt-5">Participant in the 2022 KU Hackathon.</h4>
                                 </div>
                             </div>
                         </div>
