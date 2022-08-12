@@ -34,7 +34,7 @@ const Home: CustomNextPage = () => {
         };
 
         getSessionUser();
-    });
+    }, []);
 
     return (
         <div>
