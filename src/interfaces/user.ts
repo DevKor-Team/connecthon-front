@@ -22,4 +22,5 @@ export interface User {
     };
     provider?: ProviderType;
     isAdmin?: boolean;
+    oauthid: string;
 }

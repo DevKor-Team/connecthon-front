@@ -31,6 +31,7 @@ const defaultValue = {
         },
         provider: ProviderType.none,
         isAdmin: false,
+        oauthid: '',
     },
 };
 
