@@ -18,9 +18,9 @@ const AboutUs = () => {
                         <h1 className="font-impact text-2xl sm:text-3xl mt-1 md:text-7xl md:mt-3">The Management Team</h1>
                         <div className="mt-[2rem] md:mt-[8rem]">
                             <h3 className="text-md sm:text-lg text-[#2087FF] font-semibold tracking-wide md:text-xl">청춘들의 여름 항해를 도울 운영진</h3>
-                            <p className="text-[0.6rem] sm:text-[0.75rem] leading-4 mt-5 md:mt-[4rem] md:text-lg">청춘들의 성공적인 여름 항해를 돕기 위한 각 분야의 운영진 입니다.</p>
-                            <p className="text-[0.6rem] sm:text-[0.75rem] md:text-lg leading-4 ">청춘들의 성공적인 항해를 진심으로 응원할, 고려대학교 최고의 </p>
-                            <p className="text-[0.6rem] sm:text-[0.75rem] md:text-lg leading-4">PLANNER / DEVELOPER / DESIGNER 를 소개합니다.</p>
+                            <p className="text-[0.6rem] sm:text-[0.75rem] mt-5 md:mt-[4rem] md:text-lg leading-snug">청춘들의 성공적인 여름 항해를 돕기 위한 각 분야의 운영진 입니다.</p>
+                            <p className="text-[0.6rem] sm:text-[0.75rem] md:text-lg leading-snug">청춘들의 성공적인 항해를 진심으로 응원할, 고려대학교 최고의 </p>
+                            <p className="text-[0.6rem] sm:text-[0.75rem] md:text-lg leading-snug">PLANNER / DEVELOPER / DESIGNER 를 소개합니다.</p>
                         </div>
                         <img
                             src="/organization-bg.svg"
@@ -29,11 +29,6 @@ const AboutUs = () => {
                         />
 
                         <div className="relative mt-[5rem]">
-                            {/* <img
-                                src="/organization-bg.svg"
-                                alt="organization-background "
-                                className="absolute top-[11rem] left-[-12rem] sm:w-[17rem] sm:left-[-21rem] md:left-[-25rem] lg:left-[-32rem] xl:left-[-43rem]"
-                            /> */}
                             <div className="w-[100%] h-[60rem] relative">
                                 <img
                                     src="/business-org.svg"
