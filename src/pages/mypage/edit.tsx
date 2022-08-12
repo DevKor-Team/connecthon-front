@@ -212,7 +212,7 @@ const ProfileEdit = () => {
                                         <div {...getRootProps()}>
                                             <input {...getInputProps()} />
                                             {onProfileImage || loginUserState.user?.profile?.img ? (
-                                                <div className="flex justify-center">
+                                                <div className="flex justify-center w-[100%] max-w-[30rem]">
                                                     <img src={loginUserState.user?.profile?.img} alt="user profile image" className="rounded-full w-[50%]" />
                                                 </div>
                                             ) : (
@@ -224,7 +224,7 @@ const ProfileEdit = () => {
                             </Dropzone>
                             <section className="text-sm">5MB 이하의 파일로 등록해주세요</section>
                             {Boolean(file) && onModal ? (
-                                <div className="flex flex-col justify-center items-center w-[50rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[30%] left-[50%] ">
+                                <div className="flex flex-col justify-center items-center w-[50%] sm:w-[40rem] md:w-[45rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[-15%] md:top-0 md:left-0">
                                     <AiOutlineClose
                                         size={18}
                                         className="cursor-pointer absolute top-5 right-5 opacity-50"
@@ -232,7 +232,7 @@ const ProfileEdit = () => {
                                             setOnModal(false);
                                         }}
                                     />
-                                    <div className="flex items-center justify-center mt-[3rem] mb-[3rem]">
+                                    <div className="flex flex-col sm:flex-row items-center justify-center mt-[3rem] mb-[3rem]">
                                         <ReactCrop
                                             crop={crop}
                                             onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -241,20 +241,20 @@ const ProfileEdit = () => {
                                             }}
                                             aspect={aspect}
                                             circularCrop={true}
-                                            className="overflow-hidden w-[15rem]"
+                                            className="overflow-hidden  sm:w-[15rem]"
                                         >
                                             <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
                                         </ReactCrop>
                                         <div>
-                                            <canvas ref={canvasRef} className="rounded-full w-[15rem] overflow-hidden mx-10"></canvas>
+                                            <canvas ref={canvasRef} className="rounded-full w-[50%] mx-auto sm:w-[15rem] mt-5 sm:mt-0 overflow-hidden sm:mx-10"></canvas>
                                         </div>
                                     </div>
-                                    <div className="flex justify-center">
-                                        <div className="bg-[#2087FF] w-[7rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
-                                            <p className="text-white text-center cursor-pointer">미리보기</p>
+                                    <div className="flex justify-center flex-col sm:flex-row">
+                                        <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
+                                            <p className="text-white md:text-md text-center cursor-pointer">미리보기</p>
                                         </div>
-                                        <div className="bg-[#2087FF] w-[7rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
-                                            <p className="text-white text-center cursor-pointer">저장하기</p>
+                                        <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
+                                            <p className="text-white md:text-md text-center cursor-pointer">저장하기</p>
                                         </div>
                                     </div>
                                 </div>
