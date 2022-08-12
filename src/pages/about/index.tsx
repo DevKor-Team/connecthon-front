@@ -54,7 +54,7 @@ const AboutUs = () => {
 
                 <div className="bg-[#1D1D1D] opacity-85 ">
                     <div className="w-[100%] mt-[30rem] md:pt-[13rem] px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-                        <div className="text-center p-1">
+                        <div className="ml-10 sm:ml-0 text-center p-1">
                             <h2 className="font-impact text-ourWhite text-2xl mt-[10rem] md:text-3xl ">Who We Are?</h2>
                             <h4 className="mt-3 text-ourWhite md:text-lg">2022 KU SUMMER HACKATHON 운영진 소개</h4>
                         </div>

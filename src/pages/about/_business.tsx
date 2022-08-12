@@ -36,43 +36,43 @@ const BusinessSchool = () => {
                         <div>
                             <img src="/bs/sojeong.png" alt="sojeong" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">이소정</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">이소정</p>
                     </div>
                     <div className="flex flex-col items-center w-[12%] md:my-5">
                         <div>
                             <img src="/bs/hyunjeong.png" alt="hyunjeong" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">이현정</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">이현정</p>
                     </div>
                     <div className="flex flex-col items-center w-[12%] md:my-5 ">
                         <div>
                             <img src="/bs/hayoon.png" alt="hayoon" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">정하윤</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">정하윤</p>
                     </div>
                     <div className="flex flex-col items-center w-[12%] md:my-5">
                         <div>
                             <img src="/bs/dongin.png" alt="dongin" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">최동인</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">최동인</p>
                     </div>
                     <div className="flex flex-col items-center w-[12%] md:my-5 ">
                         <div>
                             <img src="/bs/joonha.png" alt="joonha" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">박준하</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">박준하</p>
                     </div>
                     <div className="flex flex-col items-center w-[12%] md:my-5">
                         <div>
                             <img src="/bs/yoonseo.png" alt="yoonseo" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">최윤서</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">최윤서</p>
                     </div>
                     <div className="flex flex-col items-center w-[12%] md:my-5">
                         <div>
                             <img src="/bs/raewon.png" alt="raewon" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-sm text-ourWhite my-3 tracking-wide">김래원</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">김래원</p>
                     </div>
                 </div>
             ) : null}

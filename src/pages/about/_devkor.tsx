@@ -36,31 +36,31 @@ const DevKor = () => {
                             <div>
                                 <img src="/devkors/an.png" alt="an" className="md:w-[5.5rem]" />
                             </div>
-                            <p className="text-center text-ourWhite my-3 md:tracking-wide">안수진</p>
+                            <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">안수진</p>
                         </div>
                         <div className="flex flex-col items-center w-[12%] md:my-5">
                             <div>
                                 <img src="/devkors/jeong.png" alt="an" className="md:w-[5.5rem]" />
                             </div>
-                            <p className="text-center text-ourWhite my-3 md:tracking-wide">정호진</p>
+                            <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">정호진</p>
                         </div>
                         <div className="flex flex-col items-center w-[12%] md:my-5">
                             <div>
                                 <img src="/devkors/no.png" alt="an" className="md:w-[5.5rem]" />
                             </div>
-                            <p className="text-center text-ourWhite my-3 md:tracking-wide">노정훈</p>
+                            <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">노정훈</p>
                         </div>
                         <div className="flex flex-col items-center w-[12%] md:my-5">
                             <div>
                                 <img src="/devkors/baek.png" alt="an" className="md:w-[5.5rem]" />
                             </div>
-                            <p className="text-center text-ourWhite my-3 md:tracking-wide">백승윤</p>
+                            <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">백승윤</p>
                         </div>
                         <div className="flex flex-col items-center w-[12%] md:my-5">
                             <div>
                                 <img src="/devkors/lee.png" alt="an" className="w-[5.5rem]" />
                             </div>
-                            <p className="text-center text-ourWhite my-3 md:tracking-wide">이승우</p>
+                            <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">이승우</p>
                         </div>
                     </div>
                 ) : null}

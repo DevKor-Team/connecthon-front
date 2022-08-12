@@ -32,41 +32,41 @@ const Dijo = () => {
             </div>
             {members ? (
                 <div className="flex mt-3 w-[80%] justify-between">
-                    <div className="flex flex-col items-center w-[12%] md:my-5 md:mr-3">
+                    <div className="flex flex-col items-center w-[12%] md:my-5">
                         <div>
-                            <img src="/designers/hyuna.jpeg" alt="hyuna" className="md:w-[5.5rem]" />
+                            <img src="/designers/hyuna.jpeg" alt="hyuna" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">김현아</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">김현아</p>
                     </div>
-                    <div className="flex flex-col items-center  w-[12%] md:my-5 md:mr-3">
+                    <div className="flex flex-col items-center  w-[12%] md:my-5">
                         <div>
-                            <img src="/designers/jiyoon.jpeg" alt="hyuna" className="md:w-[5.5rem]" />
+                            <img src="/designers/jiyoon.jpeg" alt="hyuna" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">김지윤</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">김지윤</p>
                     </div>
-                    <div className="flex flex-col items-center  w-[12%] md:my-5 md:mr-3">
+                    <div className="flex flex-col items-center  w-[12%] md:my-5">
                         <div>
-                            <img src="/designers/jio.jpeg" alt="hyuna" className="md:w-[5.5rem]" />
+                            <img src="/designers/jio.jpeg" alt="hyuna" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">유지오</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">유지오</p>
                     </div>
-                    <div className="flex flex-col items-center  w-[12%] md:my-5 md:mr-3">
+                    <div className="flex flex-col items-center  w-[12%] md:my-5">
                         <div>
-                            <img src="/designers/taewoong.jpeg" alt="hyuna" className="md:w-[5.5rem]" />
+                            <img src="/designers/taewoong.jpeg" alt="hyuna" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center  text-ourWhite my-3 tracking-wide">장태웅</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">장태웅</p>
                     </div>
-                    <div className="flex flex-col items-center  w-[12%] md:my-5 md:mr-3">
+                    <div className="flex flex-col items-center  w-[12%] md:my-5">
                         <div>
-                            <img src="/designers/seungyeon.jpeg" alt="hyuna" className="md:w-[5.5rem]" />
+                            <img src="/designers/seungyeon.jpeg" alt="hyuna" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">정승연</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">정승연</p>
                     </div>
-                    <div className="flex flex-col items-center  w-[12%] md:my-5 md:mr-3">
+                    <div className="flex flex-col items-center  w-[12%] md:my-5">
                         <div>
-                            <img src="/designers/eun.jpeg" alt="hyuna" className="md:w-[5.5rem]" />
+                            <img src="/designers/eun.jpeg" alt="hyuna" className="w-[5.5rem]" />
                         </div>
-                        <p className="text-center text-ourWhite my-3 tracking-wide">고은</p>
+                        <p className="text-center text-[0.6rem] my-2 sm:text-sm text-ourWhite sm:my-3 tracking-wide">고은</p>
                     </div>
                 </div>
             ) : null}
