@@ -82,7 +82,7 @@ const ProfileEdit = () => {
                 },
             ),
         );
-        axiosInstance.put(`/users/:${loginUserState.user?.id}/profile`, loginRecoilState);
+        axiosInstance.put(`/users/:${loginUserState.user?.id}/profile`, loginUserState.user?.profile);
     };
 
     useEffect(() => {
@@ -181,7 +181,7 @@ const ProfileEdit = () => {
         <div className="bg-ourWhite mt-[8rem] mb-[3rem] w-[100%]">
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex relative">
-                    <div className="flex justify-center items-center bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] h-[20rem] pb-5">
+                    <div className="flex flex-col justify-center items-center space-y-4 bg-[#FFFFFF] drop-shadow-2xl z-10 rounded-md w-[35%] h-[20rem] pb-5">
                         <Dropzone
                             onDrop={acceptedFiles => {
                                 setfile(URL.createObjectURL(acceptedFiles[0]));
@@ -202,6 +202,7 @@ const ProfileEdit = () => {
                                 </section>
                             )}
                         </Dropzone>
+                        <section className="text-sm">5MB 이하의 파일로 등록해주세요</section>
                         {Boolean(file) && onModal ? (
                             <div className="flex flex-col justify-center items-center w-[50rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[30%] left-[50%] ">
                                 <AiOutlineClose
