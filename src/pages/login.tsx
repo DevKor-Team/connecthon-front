@@ -1,4 +1,3 @@
-import Layout from '../layouts/Layout';
 import { CustomNextPage } from '../types/types';
 import { GithubLoginBtn, GoogleLoginBtn, KakaoLoginBtn } from '../components/LoginButton';
 import React, { useState } from 'react';
@@ -57,5 +56,4 @@ const LoginPage: CustomNextPage = () => {
     );
 };
 
-LoginPage.Layout = Layout;
 export default LoginPage;
