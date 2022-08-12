@@ -11,28 +11,6 @@ import { loginRecoilState } from '../../recoil/loginuser';
 
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
-    // const UserProfile: User = {
-    //     type: 'user',
-    //     id: 1,
-    //     name: '안수진',
-    //     email: 'asj0816@korea.ac.kr',
-    //     teamName: 'Tiger',
-    //     profile: {
-    //         link: {
-    //             github: 'aiccuracy',
-    //             blog: 'www.hojins.life',
-    //             instagram: '@10issoojin_',
-    //         },
-    //         position: 'developer',
-    //         img: '/soojin.png',
-    //         introduction: '뎁코 화이팅',
-    //         university: '고려대학교',
-    //         major: '국제학부',
-    //         career: ['코르카 ML 엔지니어', 'DevKor 노예'],
-    //     },
-    //     provider: 'kakao',
-    //     isAdmin: true,
-    // };
 
     const Project: Project = {
         id: 1,
@@ -177,31 +155,7 @@ const MyPage: CustomNextPage = () => {
                         </div>
 
                         <div className="w-[70%] h-[85vh] flex flex-col justify-end min-w-[25rem] max-w-[100rem]">
-                            <div className="flex flex-col items-end m-4">
-                                {/* {onChat ? (
-                                <BsFillChatLeftFill
-                                    style={{ fill: '#2087FF' }}
-                                    className="text-[1.5rem] cursor-pointer"
-                                    onMouseOver={() => {
-                                        setOnChat(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                        setOnChat(false);
-                                    }}
-                                />
-                            ) : (
-                                <BsChatLeft
-                                    style={{ fill: '#2087FF' }}
-                                    className="text-[1.5rem] cursor-pointer"
-                                    onMouseOver={() => {
-                                        setOnChat(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                        setOnChat(false);
-                                    }}
-                                />
-                            )} */}
-                            </div>
+                            <div className="flex flex-col items-end m-4"></div>
                             <div className="flex flex-col bg-ourWhite rounded-lg w-[100%] h-[80vh] p-8 ">
                                 <div className="grow">
                                     <h4 className="text-lg font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
