@@ -19,12 +19,12 @@ const Dijo = () => {
                 </p>
             </div>
 
-            <div className="flex mt-4">
+            <div className="flex mt-4 z-10">
                 <p className="text-ourWhite text-md">멤버 소개</p>
                 <img
                     src="/expand-more.svg"
                     alt="expand-more"
-                    className="w-5 cursor-pointer"
+                    className="w-5 cursor-pointer z-10"
                     onClick={() => {
                         members ? showMembers(false) : showMembers(true);
                     }}
