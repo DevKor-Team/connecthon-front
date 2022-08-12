@@ -12,39 +12,45 @@ const AboutUs = () => {
     return (
         <>
             <div className="flex flex-col justify-center items-center pt-[8rem] relative ">
-                <div className="md:pt-[13rem] px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
+                <div className="ml-5 sm:ml-0 md:pt-[13rem] px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
                     <div className="text-center w-[100%]">
-                        <h4 className="font-impact text-sm md:text-3xl">2022 KU SUMMER HACKATHON's</h4>
-                        <h1 className="font-impact text-2xl mt-1 md:text-7xl md:mt-3">The Management Team</h1>
+                        <h4 className="font-impact text-sm sm:text-md md:text-3xl">2022 KU SUMMER HACKATHON's</h4>
+                        <h1 className="font-impact text-2xl sm:text-3xl mt-1 md:text-7xl md:mt-3">The Management Team</h1>
                         <div className="mt-[2rem] md:mt-[8rem]">
-                            <h3 className="text-md text-[#2087FF] font-semibold tracking-wide md:text-xl">청춘들의 여름 항해를 도울 운영진</h3>
-                            <p className="text-[0.6rem] leading-4 mt-5 md:mt-[4rem] md:text-lg">청춘들의 성공적인 여름 항해를 돕기 위한 각 분야의 운영진 입니다.</p>
-                            <p className="text-[0.6rem] md:text-lg leading-4 ">청춘들의 성공적인 항해를 진심으로 응원할, 고려대학교 최고의 </p>
-                            <p className="text-[0.6rem] md:text-lg leading-4">PLANNER / DEVELOPER / DESIGNER 를 소개합니다.</p>
+                            <h3 className="text-md sm:text-lg text-[#2087FF] font-semibold tracking-wide md:text-xl">청춘들의 여름 항해를 도울 운영진</h3>
+                            <p className="text-[0.6rem] sm:text-[0.75rem] leading-4 mt-5 md:mt-[4rem] md:text-lg">청춘들의 성공적인 여름 항해를 돕기 위한 각 분야의 운영진 입니다.</p>
+                            <p className="text-[0.6rem] sm:text-[0.75rem] md:text-lg leading-4 ">청춘들의 성공적인 항해를 진심으로 응원할, 고려대학교 최고의 </p>
+                            <p className="text-[0.6rem] sm:text-[0.75rem] md:text-lg leading-4">PLANNER / DEVELOPER / DESIGNER 를 소개합니다.</p>
                         </div>
-                        <div className=" w-[100%] relative h-[50rem]">
-                            <img
+                        <img
+                            src="/organization-bg.svg"
+                            alt="organization-background "
+                            className="absolute w-[50rem] left-[-12.5rem] top-[20rem] sm:top-[20rem] sm:left-[-22rem] md:top-[50rem] md:left-[-25rem]"
+                        />
+
+                        <div className="relative">
+                            {/* <img
                                 src="/organization-bg.svg"
                                 alt="organization-background "
-                                className="absolute top-[11rem] left-[-12rem] sm:left-[-21rem] md:left-[-25rem] lg:left-[-32rem] xl:left-[-43rem]"
-                            />
+                                className="absolute top-[11rem] left-[-12rem] sm:w-[17rem] sm:left-[-21rem] md:left-[-25rem] lg:left-[-32rem] xl:left-[-43rem]"
+                            /> */}
                             <div className="w-[100%] h-[60rem] relative">
                                 <img
                                     src="/business-org.svg"
                                     alt="business-text"
-                                    className="absolute w-[14rem] top-[10rem] left-[3rem] sm:w-[18rem] md:w-[21rem] lg:w-[24rem] md:grayscale md:hover:grayscale-0 hover:md:w-[27rem] duration-200 "
+                                    className="absolute w-[14rem] top-[8rem] left-[-1rem] sm:w-[18rem] sm:left-[-4rem] md:w-[21rem] md:left-[4rem] lg:w-[24rem] lg:left-0 md:grayscale md:hover:grayscale-0 hover:md:w-[27rem] duration-200 "
                                     onClick={organizationTab[1].onElement}
                                 />
                                 <img
                                     src="/devkor-org.svg"
                                     alt="devkor-text"
-                                    className="absolute w-[14rem] top-[19rem] right-0 sm:w-[18rem] md:w-[21rem] md:top-[23rem] lg:w-[24rem] md:grayscale md:hover:grayscale-0 hover:md:w-[27rem] duration-200"
+                                    className="absolute w-[14rem] top-[18.5rem] right-[-4rem] sm:w-[18rem] sm:right-[-7rem] md:w-[21rem] md:right-0 md:top-[23rem] lg:w-[24rem] lg:right-[-5rem] md:grayscale md:hover:grayscale-0 hover:md:w-[27rem] duration-200"
                                     onClick={organizationTab[0].onElement}
                                 />
                                 <img
                                     src="/designer-org.svg"
                                     alt="designer-text"
-                                    className="absolute w-[16rem] top-[26rem] left-[3rem] sm:w-[20rem] md:w-[25rem] md:top-[35rem] lg:w-[29rem] md:grayscale md:hover:grayscale-0 hover:md:w-[32rem] duration-200 "
+                                    className="absolute w-[16rem] top-[28rem] left-0 sm:w-[20rem] sm:left-[-1rem] md:w-[25rem] md:top-[35rem] md:left-[6rem] lg:w-[29rem] lg:left-[4rem] md:grayscale md:hover:grayscale-0 hover:md:w-[32rem] duration-200 "
                                     onClick={organizationTab[2].onElement}
                                 />
                             </div>
@@ -54,7 +60,7 @@ const AboutUs = () => {
 
                 <div className="bg-[#1D1D1D] opacity-85 ">
                     <div className="w-[100%] mt-[30rem] md:pt-[13rem] px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-                        <div className="ml-10 sm:ml-0 text-center p-1">
+                        <div className="ml-5 text-center p-1">
                             <h2 className="font-impact text-ourWhite text-2xl mt-[10rem] md:text-3xl ">Who We Are?</h2>
                             <h4 className="mt-3 text-ourWhite md:text-lg">2022 KU SUMMER HACKATHON 운영진 소개</h4>
                         </div>
