@@ -2,8 +2,11 @@ import Layout from '../layouts/Layout';
 import { useState, useEffect } from 'react';
 import { CustomNextPage } from '../types/types';
 import { ChatList, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
-import { AxiosInstance } from 'axios';
 import io from 'socket.io-client';
+import getConfig from 'next/config';
+import { Socket } from 'socket.io';
+
+const { publicRuntimeConfig } = getConfig();
 
 const userList = [
     { name: '안수진', team: '해커톤 숨막혀요' },
@@ -57,19 +60,52 @@ const userList = [
     },
 ];
 
+interface ChatDataType {
+    room: string;
+    sender: 'user' | 'company';
+    when: Date;
+    msg: string;
+}
+
 const Chat: CustomNextPage = () => {
     //selectedUser는 채팅방리스트에서 선택된 유저이며,
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
     const [selectedUser, setSelectedUser] = useState<string>('');
-    const ENDPOINT = process.env.ENDPOINT as string;
+    const ENDPOINT = publicRuntimeConfig.ENDPOINT;
+
+    let sendMessage;
+    let disconnectSocket;
 
     useEffect(() => {
         const socket = io(ENDPOINT);
+
         socket.on('connect', () => {
             socket.emit('make session', {
                 uid: 'userid', //loginRecoilState 사용해서 넣기
                 userType: 'usertype', //마찬가지로 loginReocilState의 user의 type 넣기
             });
+        });
+
+        socket.on('error', () => {
+            //제대로 안 보내졌다고 띄워주세요.
+        });
+
+        socket.on('receive', data => {
+            /*
+		    data = {
+			room: roomid,
+			sender: 'user'|'company',
+			when: Date, 
+			msg: string,
+		}
+		*/
+            //채팅 메세지 왔으니까 띄워주시면 될 듯
+            //data 구조 위와 동일, 서버에 메세지 보내는 event
+            sendMessage = data => {
+                socket.emit('send', data);
+            };
+
+            disconnectSocket = socket.disconnect;
         });
     });
 
