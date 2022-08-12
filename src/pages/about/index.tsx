@@ -62,7 +62,7 @@ const AboutUs = () => {
                             <div ref={organizationTab[1].element} className="ml-10 md:ml-0 mt-[2rem] pb-[4rem] pt-[10rem] md:mt-[9rem] md:pt-[15rem]">
                                 <BusinessSchool />
                             </div>
-                            <div ref={organizationTab[0].element} className="mr-2 md:mr-0 pt-[15rem] md:mt-[20rem] md:pt-[10rem]">
+                            <div ref={organizationTab[0].element} className="mr-5 md:mr-0 pt-[15rem] md:mt-[20rem] md:pt-[10rem]">
                                 <DevKor />
                             </div>
                             <div ref={organizationTab[2].element} className="ml-10 md:ml-0 pt-[15rem] md:mt-[20rem] md:pt-[15rem]">
