@@ -4,7 +4,7 @@ const Dijo = () => {
     const [members, showMembers] = useState<boolean>(false);
     return (
         <div className="w-[80%] text-left justify-end relative">
-            <div className="absolute left-[-3rem] w-[12rem] md:w-[14rem] md:left-[-6rem] md:top-[-2rem]">
+            <div className="absolute left-[-3rem] w-[12rem] md:w-[17rem] md:left-[-6rem] md:top-[1rem]">
                 <img src="design-logo.svg" alt="design-logo" />
             </div>
 
