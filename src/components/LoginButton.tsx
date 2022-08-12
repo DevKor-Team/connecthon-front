@@ -5,15 +5,15 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 
 const handleKakaoLogin = async () => {
-    window.location.href = `${publicRuntimeConfig.ENDPOINT}/auth/kakao`;
+    window.location.href = `https://${publicRuntimeConfig.ENDPOINT}/auth/kakao`;
 };
 
 const handleGoogleLogin = async () => {
-    window.location.href = `${publicRuntimeConfig.ENDPOINT}/auth/google`;
+    window.location.href = `https://${publicRuntimeConfig.ENDPOINT}/auth/google`;
 };
 
 const handleGithubLogin = async () => {
-    window.location.href = `${publicRuntimeConfig.ENDPOINT}/auth/github`;
+    window.location.href = `https://${publicRuntimeConfig.ENDPOINT}/auth/github`;
 };
 
 const BtnCommonProperty = 'w-full sm:w-[20.625rem] h-[2.625rem] flex items-center justify-center rounded-xl px-5';
