@@ -37,11 +37,11 @@ const MyPage: CustomNextPage = () => {
     }, [showCopied]);
 
     return (
-        <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <div className="mt-[5rem] flex w-[100%] items-center h-[calc(100vh-4rem)]">
+        <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">
+            <div className="mt-[8rem] md:mt-[5rem] flex w-[100%] items-center md:h-[calc(100vh-4rem)]">
                 <div className="grow">
-                    <div className="flex mb-10">
-                        <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
+                    <div className="flex mb-10 flex-col items-center md:flex-row">
+                        <div className="w-[80%] md:w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                             <div className="flex flex-col items-center">
                                 {loginUserState.user?.profile?.img ? (
                                     <img src={loginUserState.user?.profile?.img} alt="my photo" className="rounded-full w-[50%] my-2" />
@@ -154,15 +154,16 @@ const MyPage: CustomNextPage = () => {
                             ) : null}
                         </div>
 
-                        <div className="w-[70%] h-[85vh] flex flex-col justify-end min-w-[25rem] max-w-[100rem]">
-                            <div className="flex flex-col items-end m-4"></div>
-                            <div className="flex flex-col bg-ourWhite rounded-lg w-[100%] h-[80vh] p-8 ">
-                                <div className="grow">
+                        <div className="mt-[5rem] md:mt-0 md:w-[70%] h-[70vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
+                            <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[80%] p-[1rem] mx-auto">
+                                <div className="grow p-3 md:p-0">
                                     <h4 className="text-lg font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
-                                    <h2 className="text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
+                                    <h2 className="text-[1.7rem] md:text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
                                     <h3 className="text-lg tracking-normal">{Project.description}</h3>
-                                    <div className="relative">
-                                        <img src="/project-ex.svg" alt="project-example" className="absolute top-[-1rem] w-[80%] opacity-80" />
+                                    <div className="flex justify-center mx-auto">
+                                        {/* <img src="/project-ex.svg" alt="project-example" className="absolute md:top-[-1rem] w-[80%] opacity-80" /> */}
+
+                                        <img src="/project-ex.svg" alt="project-example" className="w-[80%]" />
                                     </div>
                                 </div>
                             </div>
