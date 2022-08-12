@@ -55,6 +55,7 @@ const ProfileEdit = () => {
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
+        name: string;
         team: string;
         github: string;
         blog: string;
@@ -78,6 +79,7 @@ const ProfileEdit = () => {
                 { ...loginUserState },
                 {
                     user: {
+                        name: data.name,
                         team: data.team,
                         profile: {
                             link: {
@@ -125,6 +127,7 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
+        console.log(`이미지는 저장을 할거고, ${loginUserState.user?.name}`);
         setLoginUserState(
             Object.assign(
                 { ...loginUserState },
@@ -257,7 +260,13 @@ const ProfileEdit = () => {
                         </div>
                         <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-b-3xl rounded-t-md">
                             <label htmlFor="name">이름</label>
-                            <input type="text" value={`${loginUserState.user?.name}`} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5" />
+                            <input
+                                {...register('name')}
+                                type="text"
+                                defaultValue={`${loginUserState.user?.name}`}
+                                placeholder="이름을 입력해주세요"
+                                className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5"
+                            />
                             <label htmlFor="position">직책</label>
                             <select
                                 {...register('position')}
@@ -316,7 +325,13 @@ const ProfileEdit = () => {
                         {Array.from({ length: numCareerInput }).map((item, idx) => {
                             return (
                                 <div className="flex items-center">
-                                    <input {...register(`career.${idx}`)} type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]" />
+                                    <input
+                                        {...register(`career.${idx}`)}
+                                        defaultValue={loginUserState.user?.profile?.career[idx]}
+                                        type="text"
+                                        placeholder="경력을 입력해주세요"
+                                        className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]"
+                                    />
                                     <AiOutlinePlusCircle
                                         onClick={() => {
                                             setNumCareerInput(numCareerInput + 1);

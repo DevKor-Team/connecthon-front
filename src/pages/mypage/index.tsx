@@ -47,6 +47,7 @@ const MyPage: CustomNextPage = () => {
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     console.log(`userState in main user page : ${loginUserState.user?.profile?.img}`);
+    console.log(`경력은 어떻게 가나 : ${loginUserState.user?.profile?.career}`);
 
     return (
         <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
