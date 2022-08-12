@@ -56,6 +56,7 @@ const ProfileEdit = () => {
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
         name: string;
+        email: string;
         team: string;
         github: string;
         blog: string;
@@ -80,6 +81,7 @@ const ProfileEdit = () => {
                 {
                     user: {
                         name: data.name,
+                        email: data.email,
                         team: data.team,
                         profile: {
                             link: {
@@ -209,7 +211,7 @@ const ProfileEdit = () => {
                                     <section>
                                         <div {...getRootProps()}>
                                             <input {...getInputProps()} />
-                                            {onProfileImage ? (
+                                            {onProfileImage || loginUserState.user?.profile?.img ? (
                                                 <div className="flex justify-center">
                                                     <img src={loginUserState.user?.profile?.img} alt="user profile image" className="rounded-full w-[50%]" />
                                                 </div>
@@ -327,7 +329,7 @@ const ProfileEdit = () => {
                                 <div className="flex items-center">
                                     <input
                                         {...register(`career.${idx}`)}
-                                        defaultValue={loginUserState.user?.profile?.career[idx]}
+                                        defaultValue={loginUserState.user?.profile?.career && loginUserState.user?.profile?.career.length >= 1 ? loginUserState.user?.profile?.career[idx] : ''}
                                         type="text"
                                         placeholder="경력을 입력해주세요"
                                         className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]"
@@ -363,9 +365,11 @@ const ProfileEdit = () => {
                                 <p className="text-sm">Mail</p>
                             </div>
                             <input
+                                {...register('email')}
                                 type="text"
+                                placeholder="이메일을 입력해주세요"
                                 className="border-2 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1.5 flex justify-start items-center ml-3 mr-5 mb-4 mt-3"
-                                value={loginUserState.user?.email}
+                                defaultValue={loginUserState.user?.email}
                             />
                         </div>
                         <div className="flex">
