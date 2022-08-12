@@ -49,8 +49,8 @@ const MyPage: CustomNextPage = () => {
     console.log(`userState in main user page : ${loginUserState.user?.profile.img}`);
 
     return (
-        <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <div className="mt-[8rem] flex w-[100%] items-center">
+        <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
+            <div className="mt-[5rem] flex w-[100%] items-center h-[calc(100vh-4rem)]">
                 <div className="grow">
                     <div className="flex mb-10">
                         <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
@@ -189,7 +189,7 @@ const MyPage: CustomNextPage = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 
