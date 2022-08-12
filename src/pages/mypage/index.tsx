@@ -1,7 +1,8 @@
 import { CustomNextPage } from '../../types/types';
 import { FiEdit } from 'react-icons/fi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
+import { IoCloseOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
@@ -44,10 +45,18 @@ const MyPage: CustomNextPage = () => {
     const [onMail, setOnMail] = useState<boolean>(false);
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
+    const [showCopied, setShowCopied] = useState<boolean>(false);
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    console.log(`userState in main user page : ${loginUserState.user?.profile?.img}`);
-    console.log(`경력은 어떻게 가나 : ${loginUserState.user?.profile?.career}`);
+
+    useEffect(() => {
+        if (showCopied) {
+            const popup = setTimeout(() => {
+                setShowCopied(false);
+            }, 1500);
+            return () => clearTimeout(popup);
+        }
+    }, [showCopied]);
 
     return (
         <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
@@ -100,6 +109,14 @@ const MyPage: CustomNextPage = () => {
                                             onMouseOut={() => {
                                                 setOnMail(false);
                                             }}
+                                            onClick={() => {
+                                                if (loginUserState.user?.email) {
+                                                    navigator.clipboard.writeText(loginUserState.user?.email);
+                                                    setShowCopied(true);
+                                                } else {
+                                                    console.log('복사할게 없음');
+                                                }
+                                            }}
                                         />
                                         {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
                                     </div>
@@ -146,7 +163,19 @@ const MyPage: CustomNextPage = () => {
                                     </div>
                                 </div>
                             </div>
+                            {showCopied ? (
+                                <div
+                                    className="flex items-center bg-[#29AAE4] rounded-md w-[100%] h-[2rem] text-center p-2 cursor-pointer"
+                                    onClick={() => {
+                                        setShowCopied(false);
+                                    }}
+                                >
+                                    <p className="grow">클립보드에 복사되었습니다</p>
+                                    <IoCloseOutline className="grow-0 cursor-pointer" />
+                                </div>
+                            ) : null}
                         </div>
+
                         <div className="w-[70%] h-[85vh] flex flex-col justify-end min-w-[25rem] max-w-[100rem]">
                             <div className="flex flex-col items-end m-4">
                                 {/* {onChat ? (
