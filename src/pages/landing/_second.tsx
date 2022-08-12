@@ -14,8 +14,8 @@ const SecondLanding = () => {
     return (
         <animated.div className="mt-[30rem] mb-0" style={{ ...componentAnimation }}>
             <div className="my-[10rem]">
-                <h3 className="text-center mb-7">후원</h3>
-                <img className="w-[90%] mx-auto" src="/mobile-company.svg" alt="company" />
+                <h3 className="text-center font-semibold text-xl mb-[5rem]">후원사</h3>
+                <img className="w-[90%] mx-auto" src="/companies-mobile.svg" alt="company" />
             </div>
             <Link href="/home">
                 <a>
