@@ -8,7 +8,13 @@ const LoginPage: CustomNextPage = () => {
 
     const handleCompanyLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        axiosInstance.post('/auth/local');
+        const formId = document.getElementById('formid') as HTMLInputElement;
+        const id = formId.value;
+
+        const formPw = document.getElementById('formpw') as HTMLInputElement;
+        const pw = formPw.value;
+
+        axiosInstance.post('/auth/local', { username: id, password: pw });
     };
 
     return (
@@ -44,8 +50,8 @@ const LoginPage: CustomNextPage = () => {
 
                     {/* 기업 로그인 섹션 */}
                     <form className={`w-full h-[10.375rem] flex flex-col items-center justify-center space-y-4 ${isParticipantMode ? 'hidden' : 'visible'}`} onSubmit={handleCompanyLogin}>
-                        <input type="text" name="username" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="아이디" />
-                        <input type="password" name="password" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="비밀번호" />
+                        <input type="text" name="username" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="아이디" id="formid" />
+                        <input type="password" name="password" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="비밀번호" id="formpw" />
                         <button type="submit" className="w-[20rem] h-12 bg-ourBlue text-white font-semibold rounded">
                             로그인
                         </button>
