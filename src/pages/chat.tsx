@@ -4,9 +4,11 @@ import { CustomNextPage } from '../types/types';
 import { ChatList, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
 import io from 'socket.io-client';
 import getConfig from 'next/config';
-import { Socket } from 'socket.io';
+import { ChatRoomType, ChatDataType } from '../interfaces/chat';
+import { axiosInstance } from '../hooks/queries';
 
 const { publicRuntimeConfig } = getConfig();
+const [chatRoomList, setChatRoomList] = useState<ChatRoomType[]>([]);
 
 const userList = [
     { name: '안수진', team: '해커톤 숨막혀요' },
@@ -60,13 +62,6 @@ const userList = [
     },
 ];
 
-interface ChatDataType {
-    room: string;
-    sender: 'user' | 'company';
-    when: Date;
-    msg: string;
-}
-
 const Chat: CustomNextPage = () => {
     //selectedUser는 채팅방리스트에서 선택된 유저이며,
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
@@ -77,6 +72,9 @@ const Chat: CustomNextPage = () => {
     let disconnectSocket;
 
     useEffect(() => {
+        //채팅방 리스트 받아오기
+        //axiosInstance.get('/chat').then(res => setChatRoomList(res));
+
         const socket = io(ENDPOINT);
 
         socket.on('connect', () => {
