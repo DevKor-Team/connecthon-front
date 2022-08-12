@@ -89,7 +89,7 @@ const MyPage: CustomNextPage = () => {
                                 </div>
 
                                 <h4 className="font-semibold my-2">SNS</h4>
-                                <div className="flex">
+                                <div className="flex items-center space-x-4">
                                     <div>
                                         <FiMail
                                             className="text-2xl cursor-pointer"
@@ -117,7 +117,7 @@ const MyPage: CustomNextPage = () => {
                                             </a>
                                         </Link>
 
-                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.65rem] drop-shadow-lg" /> : null}
+                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.8rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
                                         <Link href={loginUserState.user?.profile.link?.github ? `https://github.com/${loginUserState.user?.profile.link.github}` : ''}>
@@ -134,12 +134,12 @@ const MyPage: CustomNextPage = () => {
                                             </a>
                                         </Link>
 
-                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[5.8rem] drop-shadow-lg" /> : null}
+                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[6.2rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
                                         <Link href={loginUserState.user?.profile.link?.blog ? loginUserState.user?.profile.link.blog : ''}>
                                             <a>
-                                                <FiHome className="text-2xl cursor-pointer mx-2" />
+                                                <FiHome className="text-2xl cursor-pointer" />
                                             </a>
                                         </Link>
                                     </div>
