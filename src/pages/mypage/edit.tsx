@@ -55,6 +55,8 @@ const ProfileEdit = () => {
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
+        name: string;
+        email: string;
         team: string;
         github: string;
         blog: string;
@@ -78,6 +80,8 @@ const ProfileEdit = () => {
                 { ...loginUserState },
                 {
                     user: {
+                        name: data.name,
+                        email: data.email,
                         team: data.team,
                         profile: {
                             link: {
@@ -125,6 +129,7 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
+        console.log(`이미지는 저장을 할거고, ${loginUserState.user?.name}`);
         setLoginUserState(
             Object.assign(
                 { ...loginUserState },
@@ -193,10 +198,10 @@ const ProfileEdit = () => {
 
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <div className="bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">
+            <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex relative">
-                        <div className="flex flex-col justify-center items-center space-y-4 bg-[#FFFFFF] drop-shadow-lg shadow-blue-500/50 z-10 rounded-b-3xl rounded-t-md w-[35%] h-[20rem] pb-5">
+                    <div className="flex relative flex-col justify-center items-center md:flex-row">
+                        <div className="flex flex-col justify-center items-center space-y-4 bg-[#FFFFFF] drop-shadow-lg shadow-blue-500/50 z-10 rounded-b-3xl rounded-t-md w-[100%] mb-10 md:mb-0 md:w-[45%] lg:w-[35%] h-[20rem] pb-5">
                             <Dropzone
                                 onDrop={acceptedFiles => {
                                     setfile(URL.createObjectURL(acceptedFiles[0]));
@@ -206,8 +211,8 @@ const ProfileEdit = () => {
                                     <section>
                                         <div {...getRootProps()}>
                                             <input {...getInputProps()} />
-                                            {onProfileImage ? (
-                                                <div className="flex justify-center">
+                                            {onProfileImage || loginUserState.user?.profile?.img ? (
+                                                <div className="flex justify-center w-[100%] max-w-[30rem]">
                                                     <img src={loginUserState.user?.profile?.img} alt="user profile image" className="rounded-full w-[50%]" />
                                                 </div>
                                             ) : (
@@ -219,7 +224,7 @@ const ProfileEdit = () => {
                             </Dropzone>
                             <section className="text-sm">5MB 이하의 파일로 등록해주세요</section>
                             {Boolean(file) && onModal ? (
-                                <div className="flex flex-col justify-center items-center w-[50rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[30%] left-[50%] ">
+                                <div className="flex flex-col justify-center items-center w-[50%] sm:w-[40rem] md:w-[45rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[-15%] md:top-0 md:left-0">
                                     <AiOutlineClose
                                         size={18}
                                         className="cursor-pointer absolute top-5 right-5 opacity-50"
@@ -227,7 +232,7 @@ const ProfileEdit = () => {
                                             setOnModal(false);
                                         }}
                                     />
-                                    <div className="flex items-center justify-center mt-[3rem] mb-[3rem]">
+                                    <div className="flex flex-col sm:flex-row items-center justify-center mt-[3rem] mb-[3rem]">
                                         <ReactCrop
                                             crop={crop}
                                             onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -236,34 +241,40 @@ const ProfileEdit = () => {
                                             }}
                                             aspect={aspect}
                                             circularCrop={true}
-                                            className="overflow-hidden w-[15rem]"
+                                            className="overflow-hidden  sm:w-[15rem]"
                                         >
                                             <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
                                         </ReactCrop>
                                         <div>
-                                            <canvas ref={canvasRef} className="rounded-full w-[15rem] overflow-hidden mx-10"></canvas>
+                                            <canvas ref={canvasRef} className="rounded-full w-[50%] mx-auto sm:w-[15rem] mt-5 sm:mt-0 overflow-hidden sm:mx-10"></canvas>
                                         </div>
                                     </div>
-                                    <div className="flex justify-center">
-                                        <div className="bg-[#2087FF] w-[7rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
-                                            <p className="text-white text-center cursor-pointer">미리보기</p>
+                                    <div className="flex justify-center flex-col sm:flex-row">
+                                        <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
+                                            <p className="text-white md:text-md text-center cursor-pointer">미리보기</p>
                                         </div>
-                                        <div className="bg-[#2087FF] w-[7rem] p-2 mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
-                                            <p className="text-white text-center cursor-pointer">저장하기</p>
+                                        <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
+                                            <p className="text-white md:text-md text-center cursor-pointer">저장하기</p>
                                         </div>
                                     </div>
                                 </div>
                             ) : null}
                         </div>
-                        <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[80%] px-[4rem] h-[20rem] py-7 rounded-b-3xl rounded-t-md">
+                        <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[100%] md:w-[60%] lg:w-[80%] px-[4rem] h-[20rem] py-7 rounded-b-3xl rounded-t-md">
                             <label htmlFor="name">이름</label>
-                            <input type="text" value={`${loginUserState.user?.name}`} className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5" />
+                            <input
+                                {...register('name')}
+                                type="text"
+                                defaultValue={`${loginUserState.user?.name}`}
+                                placeholder="이름을 입력해주세요"
+                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
+                            />
                             <label htmlFor="position">직책</label>
                             <select
                                 {...register('position')}
                                 name="position"
                                 id="position"
-                                className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5"
+                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
                                 defaultValue={loginUserState?.user?.profile?.position}
                             >
                                 <option value="developer">개발자</option>
@@ -276,7 +287,7 @@ const ProfileEdit = () => {
                                 type="text"
                                 placeholder="팀명을 입력해주세요"
                                 defaultValue={loginUserState.user?.team}
-                                className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5"
+                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
                             />
                         </div>
                     </div>
@@ -289,25 +300,25 @@ const ProfileEdit = () => {
                             type="text"
                             placeholder="본인을 한 줄로 소개해주세요!"
                             defaultValue={loginUserState.user?.profile?.introduction}
-                            className="border-2 rounded-md w-[30rem] mt-2 mb-6 p-1.5 mx-[1rem]"
+                            className="border-2 rounded-md md:w-[30rem] mt-2 mb-6 p-1.5 mx-[1rem]"
                         />
                         <label htmlFor="univ" className="opacity-50 mx-[1rem]">
                             학력
                         </label>
-                        <div>
+                        <div className="flex flex-col md:flex-row">
                             <input
                                 {...register('university')}
                                 type="text"
                                 placeholder="재학 중인 학교명을 입력해주세요"
                                 defaultValue={loginUserState.user?.profile?.university}
-                                className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1.5 mr-7 mx-[1rem]"
+                                className="border-2 rounded-md md:w-[30%] mt-2 mb-6 p-1.5 md:mr-7 mx-[1rem]"
                             />
                             <input
                                 {...register('major')}
                                 type="text"
                                 placeholder="전공을 입력해주세요"
                                 defaultValue={loginUserState.user?.profile?.major}
-                                className="border-2 rounded-md w-[30%] mt-2 mb-6 p-1.5"
+                                className="border-2 rounded-md md:w-[30%] mt-2 mb-6 p-1.5 mx-[1rem] md:mx-0"
                             />
                         </div>
                         <label htmlFor="career" className="opacity-50 mx-[1rem]">
@@ -316,7 +327,13 @@ const ProfileEdit = () => {
                         {Array.from({ length: numCareerInput }).map((item, idx) => {
                             return (
                                 <div className="flex items-center">
-                                    <input {...register(`career.${idx}`)} type="text" placeholder="경력을 입력해주세요" className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]" />
+                                    <input
+                                        {...register(`career.${idx}`)}
+                                        defaultValue={loginUserState.user?.profile?.career && loginUserState.user?.profile?.career.length >= 1 ? loginUserState.user?.profile?.career[idx] : ''}
+                                        type="text"
+                                        placeholder="경력을 입력해주세요"
+                                        className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]"
+                                    />
                                     <AiOutlinePlusCircle
                                         onClick={() => {
                                             setNumCareerInput(numCareerInput + 1);
@@ -348,9 +365,11 @@ const ProfileEdit = () => {
                                 <p className="text-sm">Mail</p>
                             </div>
                             <input
+                                {...register('email')}
                                 type="text"
-                                className="border-2 bg-[#FFFFFF] rounded-lg w-[30%] h-[2.5rem] p-1.5 flex justify-start items-center ml-3 mr-5 mb-4 mt-3"
-                                value={loginUserState.user?.email}
+                                placeholder="이메일을 입력해주세요"
+                                className="border-2 bg-[#FFFFFF] rounded-lg w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] p-1.5 flex justify-start items-center ml-3 mr-5 mb-4 mt-3"
+                                defaultValue={loginUserState.user?.email}
                             />
                         </div>
                         <div className="flex">
@@ -363,7 +382,7 @@ const ProfileEdit = () => {
                                 type="text"
                                 placeholder="인스타그램 아이디를 입력해주세요!"
                                 defaultValue={loginUserState.user?.profile?.link?.instagram ? loginUserState.user.profile?.link.instagram : ''}
-                                className="border-2 rounded-md w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
+                                className="border-2 rounded-md w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
                             />
                         </div>
                         <div className="flex">
@@ -376,7 +395,7 @@ const ProfileEdit = () => {
                                 type="text"
                                 placeholder="Github 아이디를 입력해주세요!"
                                 defaultValue={loginUserState.user?.profile?.link?.github ? loginUserState.user.profile?.link.github : ''}
-                                className="border-2 rounded-md w-[30%] h-[2.5rem] mt-5 mb-5 p-1.5 ml-3 mr-5"
+                                className="border-2 rounded-md w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] mt-5 mb-5 p-1.5 ml-3 mr-5"
                             />
                         </div>
                         <div className="flex">
@@ -389,7 +408,7 @@ const ProfileEdit = () => {
                                 type="text"
                                 placeholder="개인 웹사이트의 URL을 입력해주세요!"
                                 defaultValue={loginUserState.user?.profile?.link?.blog ? loginUserState.user.profile?.link.blog : ''}
-                                className="border-2 rounded-md w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
+                                className="border-2 rounded-md w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
                             />
                         </div>
                     </div>
