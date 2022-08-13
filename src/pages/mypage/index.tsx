@@ -141,17 +141,18 @@ const MyPage: CustomNextPage = () => {
                                     </div>
                                 </div>
                             </div>
-                            {showCopied ? (
-                                <div
-                                    className="flex items-center bg-[#29AAE4] rounded-md w-[100%] h-[2rem] text-center p-2 cursor-pointer"
-                                    onClick={() => {
-                                        setShowCopied(false);
-                                    }}
-                                >
-                                    <p className="grow">클립보드에 복사되었습니다</p>
-                                    <IoCloseOutline className="grow-0 cursor-pointer" />
-                                </div>
-                            ) : null}
+
+                            <div
+                                className={`${
+                                    showCopied ? 'opacity-100' : 'opacity-0'
+                                } transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[100%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
+                                onClick={() => {
+                                    setShowCopied(false);
+                                }}
+                            >
+                                <p className="grow text-white">클립보드에 복사되었습니다</p>
+                                <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
+                            </div>
                         </div>
 
                         <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-[85vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
