@@ -1,108 +1,41 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Layout from '../../layouts/Layout';
-import Dropzone from 'react-dropzone';
+import { CustomNextPage } from '../../types/types';
+import { FiEdit } from 'react-icons/fi';
+import { useEffect, useState } from 'react';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
-import { AiOutlineMinusCircle, AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
-import { TbTrashOff } from 'react-icons/tb';
+import { IoCloseOutline } from 'react-icons/io5';
+import Link from 'next/link';
+import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
-import { SubmitHandler, useForm, useFieldArray, Controller } from 'react-hook-form';
-import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
-import useWindowSize from '../../hooks/useWindowSize';
-
-import 'react-image-crop/dist/ReactCrop.css';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 import { axiosInstance } from '../../hooks/queries';
 
-function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-    return centerCrop(
-        makeAspectCrop(
-            {
-                unit: '%',
-                width: 90,
-            },
-            aspect,
-            mediaWidth,
-            mediaHeight,
-        ),
-        mediaWidth,
-        mediaHeight,
-    );
-}
-
-const ProfileEdit = () => {
-    //로그인 Recoil State
-    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-
-    //라우터
+const MyPage: CustomNextPage = () => {
     const router = useRouter();
 
-    //파일
-    const [file, setfile] = useState<string>();
-
-    //모달
-    const [onModal, setOnModal] = useState<boolean>(false);
-
-    //경력(career) 관련
-    const [numCareerInput, setNumCareerInput] = useState<number>(1);
-
-    //img 관련
-    const aspect = 1;
-    const canvasRef = useRef<HTMLCanvasElement | null>(null);
-    const imgRef = useRef<HTMLImageElement>(null);
-    const [crop, setCrop] = useState<Crop>();
-    const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-    const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
-
-    //useForm에 최종적으로 들어갈 오브젝트타입
-    type FormValues = {
-        name: string;
-        email: string;
-        team: string;
-        github: string;
-        blog: string;
-        instagram: string;
-        introduction: string;
-        img: string;
-        position: string;
-        university: string;
-        major: string;
-        career: string[];
+    const Project: Project = {
+        id: 1,
+        team: 'Tiger',
+        title: '해커톤 웹 개발기',
+        content: '뎁코의 노예들 입니다.',
+        thumbnail: '/project-ex.svg',
     };
 
-    //react-hook-form
-    const { control, register, handleSubmit } = useForm<FormValues>({
-        mode: 'onSubmit',
-    });
+    const [onMail, setOnMail] = useState<boolean>(false);
+    const [onInstagram, setOnInstagram] = useState<boolean>(false);
+    const [onGithub, setOnGithub] = useState<boolean>(false);
+    const [showCopied, setShowCopied] = useState<boolean>(false);
 
-    const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        setLoginUserState(
-            Object.assign(
-                { ...loginUserState },
-                {
-                    user: {
-                        name: data.name,
-                        email: data.email,
-                        team: data.team,
-                        profile: {
-                            link: {
-                                github: data.github,
-                                blog: data.blog,
-                                instagram: data.instagram,
-                            },
-                            introduction: data.introduction,
-                            img: loginUserState.user?.profile?.img,
-                            position: data.position,
-                            university: data.university,
-                            major: data.major,
-                            career: data.career,
-                        },
-                    },
-                },
-            ),
-        );
-        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, loginUserState.user?.profile);
-    };
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
+    useEffect(() => {
+        if (showCopied) {
+            const popup = setTimeout(() => {
+                setShowCopied(false);
+            }, 1500);
+            return () => clearTimeout(popup);
+        }
+    }, [showCopied]);
 
     useEffect(() => {
         if (loginUserState.isLogin == false) {
@@ -112,329 +45,161 @@ const ProfileEdit = () => {
     }, []);
 
     useEffect(() => {
-        setOnModal(false);
-        if (loginUserState.user?.profile?.career) {
-            setNumCareerInput(loginUserState.user?.profile?.career.length);
-        } else {
-            setNumCareerInput(1);
+        async function fetchCompleteUserInfo() {
+            try {
+                const response = await axiosInstance.get(`/users/${loginUserState.user?.id}`);
+                setLoginUserState({
+                    isLogin: true,
+                    user: response.data,
+                });
+            } catch (e) {
+                console.log(e);
+            }
         }
     }, []);
-
-    useEffect(() => {
-        if (file) {
-            setOnModal(true);
-        } else {
-            setOnModal(false);
-        }
-    }, [file]);
-
-    function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
-        if (aspect) {
-            const { width, height } = e.currentTarget;
-            setCrop(centerAspectCrop(width, height, aspect));
-        }
-    }
-    const uploadProfileImage = async (blob: Blob | null) => {
-        if (!blob) return;
-        const url = URL.createObjectURL(blob);
-        console.log(`이미지는 저장을 할거고, ${loginUserState.user?.name}`);
-        setLoginUserState(
-            Object.assign(
-                { ...loginUserState },
-                {
-                    user: {
-                        profile: {
-                            img: url,
-                        },
-                    },
-                },
-            ),
-        );
-        //blob객체를 서버로 전송한다.
-        //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
-        axiosInstance.post('/image/profile', blob).then(res =>
-            setLoginUserState({
-                isLogin: true,
-                user: res.data,
-            }),
-        );
-
-        setOnModal(false);
-    };
-
-    const onPreview = () => {
-        createCanvas();
-    };
-
-    const onSave = () => {
-        if (!canvasRef.current) {
-            return alert('이미지 저장에 실패하였습니다.');
-        }
-        createCanvas();
-        console.log(canvasRef.current);
-        canvasRef.current.toBlob((blob: Blob | null) => uploadProfileImage(blob), 'image/*', 0.95);
-        setOnProfileImage(true);
-    };
-
-    const createCanvas = () => {
-        if (!completedCrop) {
-            return;
-        }
-        if (!canvasRef.current) {
-            return;
-        }
-        if (!imgRef.current) {
-            return;
-        }
-        const ctx = canvasRef.current.getContext('2d');
-        if (!ctx) return;
-
-        const crop = completedCrop;
-
-        const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
-        const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
-        const pixelRatio = window.devicePixelRatio;
-
-        canvasRef.current.width = crop.width * pixelRatio * scaleX;
-        canvasRef.current.height = crop?.height * pixelRatio * scaleY;
-
-        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-        ctx.imageSmoothingQuality = 'high';
-
-        ctx.drawImage(imgRef.current, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width * scaleX, crop.height * scaleY);
-    };
 
     if (loginUserState.isLogin == false) {
         return null;
     }
+
     return (
-        <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="flex relative flex-col justify-center items-center md:flex-row">
-                        <div className="flex flex-col justify-center items-center space-y-4 bg-[#FFFFFF] drop-shadow-lg shadow-blue-500/50 z-10 rounded-b-3xl rounded-t-md w-[100%] mb-10 md:mb-0 md:w-[45%] lg:w-[35%] h-[20rem] pb-5">
-                            <Dropzone
-                                onDrop={acceptedFiles => {
-                                    setfile(URL.createObjectURL(acceptedFiles[0]));
+        <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">
+            <div className="mt-[8rem] md:mt-[5rem] flex w-[100%] items-center md:h-[calc(100vh-4rem)]">
+                <div className="grow">
+                    <div className="flex mb-10 flex-col items-center md:flex-row">
+                        <div className="w-[80%] md:w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
+                            <div className="flex flex-col items-center">
+                                {loginUserState.user?.profile?.img ? (
+                                    <img src={loginUserState.user?.profile?.img} alt="my photo" className="rounded-full w-[50%] my-2" />
+                                ) : (
+                                    <img src="/profile-default.jpg" alt="default-profile" className="rounded-full w-[50%] my-2" />
+                                )}
+                                <div className="flex items-center my-2">
+                                    <h4 className={`text-${loginUserState.user?.profile?.position} mx-1`}>{loginUserState.user?.profile?.position}</h4>
+                                    <FiEdit
+                                        className="pb-[0.1rem] cursor-pointer"
+                                        onClick={() => {
+                                            router.push('/mypage/edit');
+                                        }}
+                                    />
+                                </div>
+                                <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name}`}</h3>
+                                <p className="mt-1 mb-5">{`TEAM ${loginUserState.user?.team}`}</p>
+                            </div>
+
+                            <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">
+                                <div className="my-4">
+                                    <h4 className="font-semibold">한 줄 소개</h4>
+                                    <p>{loginUserState.user?.profile?.introduction}</p>
+                                </div>
+                                <div className="my-4">
+                                    <h4 className="font-semibold">학력</h4>
+                                    <p>{`${loginUserState.user?.profile?.university} ${loginUserState.user?.profile?.major}`}</p>
+                                </div>
+                                <div className="my-4">
+                                    <h4 className="font-semibold mb-1">경력</h4>
+
+                                    <div>{loginUserState.user?.profile?.career ? loginUserState.user?.profile?.career.map(crr => <p>{crr}</p>) : null}</div>
+                                </div>
+
+                                <h4 className="font-semibold my-2">SNS</h4>
+                                <div className="flex items-center space-x-4">
+                                    <div>
+                                        <FiMail
+                                            className="text-2xl cursor-pointer"
+                                            onMouseOver={() => {
+                                                setOnMail(true);
+                                            }}
+                                            onMouseOut={() => {
+                                                setOnMail(false);
+                                            }}
+                                            onClick={() => {
+                                                if (loginUserState.user?.email) {
+                                                    navigator.clipboard.writeText(loginUserState.user?.email);
+                                                    setShowCopied(true);
+                                                } else {
+                                                    console.log('복사할게 없음');
+                                                }
+                                            }}
+                                        />
+                                        {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
+                                    </div>
+                                    <div className="mx-2">
+                                        <Link href={loginUserState.user?.profile?.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile?.link.instagram}` : ''}>
+                                            <a>
+                                                <FiInstagram
+                                                    className="text-2xl cursor-pointer"
+                                                    onMouseOver={() => {
+                                                        setOnInstagram(true);
+                                                    }}
+                                                    onMouseOut={() => {
+                                                        setOnInstagram(false);
+                                                    }}
+                                                />
+                                            </a>
+                                        </Link>
+
+                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.8rem] drop-shadow-lg" /> : null}
+                                    </div>
+                                    <div>
+                                        <Link href={loginUserState.user?.profile?.link?.github ? `https://github.com/${loginUserState.user?.profile?.link.github}` : ''}>
+                                            <a>
+                                                <FiGithub
+                                                    className="text-2xl cursor-pointer"
+                                                    onMouseOver={() => {
+                                                        setOnGithub(true);
+                                                    }}
+                                                    onMouseOut={() => {
+                                                        setOnGithub(false);
+                                                    }}
+                                                />
+                                            </a>
+                                        </Link>
+
+                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[6.2rem] drop-shadow-lg" /> : null}
+                                    </div>
+                                    <div>
+                                        <Link href={loginUserState.user?.profile?.link?.blog ? loginUserState.user?.profile?.link.blog : ''}>
+                                            <a>
+                                                <FiHome className="text-2xl cursor-pointer" />
+                                            </a>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                className={`${
+                                    showCopied ? 'opacity-100' : 'opacity-0'
+                                } transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[100%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
+                                onClick={() => {
+                                    setShowCopied(false);
                                 }}
                             >
-                                {({ getRootProps, getInputProps }) => (
-                                    <section>
-                                        <div {...getRootProps()}>
-                                            <input {...getInputProps()} />
-                                            {onProfileImage || loginUserState.user?.profile?.img ? (
-                                                <div className="flex justify-center w-[100%] max-w-[30rem]">
-                                                    <img src={loginUserState.user?.profile?.img} alt="user profile image" className="rounded-full w-[50%]" />
-                                                </div>
-                                            ) : (
-                                                <img src="/dragdrop.svg" alt="dragdrop" />
-                                            )}
-                                        </div>
-                                    </section>
-                                )}
-                            </Dropzone>
-                            <section className="text-sm">5MB 이하의 파일로 등록해주세요</section>
-                        </div>
-                        {Boolean(file) && onModal ? (
-                            <div className="flex flex-col justify-center items-center w-[18.75rem] sm:w-[40rem] md:w-[45rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-0 md:top-0 md:left-[50%] md:-translate-x-[50%] z-30">
-                                <AiOutlineClose
-                                    size={18}
-                                    className="cursor-pointer absolute top-5 right-5 opacity-50"
-                                    onClick={() => {
-                                        setOnModal(false);
-                                    }}
-                                />
-                                <div className="flex flex-col sm:flex-row items-center justify-center mt-[4rem] mb-[2rem] sm:mt-[3rem] sm:mb-[3rem]">
-                                    <ReactCrop
-                                        crop={crop}
-                                        onChange={(_, percentCrop) => setCrop(percentCrop)}
-                                        onComplete={c => {
-                                            setCompletedCrop(c);
-                                        }}
-                                        aspect={aspect}
-                                        circularCrop={true}
-                                        className="overflow-hidden w-[50%] sm:w-[15rem]"
-                                    >
-                                        <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
-                                    </ReactCrop>
-                                    <div>
-                                        <canvas ref={canvasRef} className="rounded-full w-[50%] mx-auto sm:w-[15rem] mt-5 sm:mt-0 overflow-hidden sm:mx-10"></canvas>
-                                    </div>
-                                </div>
-                                <div className="flex justify-center flex-row space-x-3 ">
-                                    <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
-                                        <p className="text-white md:text-md text-center cursor-pointer">미리보기</p>
-                                    </div>
-                                    <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onSave}>
-                                        <p className="text-white md:text-md text-center cursor-pointer">저장하기</p>
-                                    </div>
-                                </div>
+                                <p className="grow text-white">클립보드에 복사되었습니다</p>
+                                <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
                             </div>
-                        ) : null}
-                        <div className="flex flex-col drop-shadow-md bg-[#FFFFFF] w-[100%] md:w-[60%] lg:w-[80%] px-[4rem] h-[20rem] py-7 rounded-b-3xl rounded-t-md">
-                            <label htmlFor="name">이름</label>
-                            <input
-                                {...register('name')}
-                                type="text"
-                                defaultValue={`${loginUserState.user?.name}`}
-                                placeholder="이름을 입력해주세요"
-                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
-                            />
-                            <label htmlFor="position">직책</label>
-                            <select
-                                {...register('position')}
-                                name="position"
-                                id="position"
-                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
-                                defaultValue={loginUserState?.user?.profile?.position}
-                            >
-                                <option value="developer">개발자</option>
-                                <option value="planner">기획자</option>
-                                <option value="designer">디자이너</option>
-                            </select>
-                            <label htmlFor="teamName">소속 팀</label>
-                            <input
-                                {...register('team')}
-                                type="text"
-                                placeholder="팀명을 입력해주세요"
-                                defaultValue={loginUserState.user?.team}
-                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
-                            />
                         </div>
-                    </div>
-                    <div className="flex flex-col mt-[4rem] mb-[2rem] py-[3rem] px-[4rem] bg-[#FFFFFF] drop-shadow-lg rounded-[2rem]">
-                        <label htmlFor="teamIntro" className="opacity-50 px-[1rem]">
-                            한 줄 소개
-                        </label>
-                        <input
-                            {...register('introduction')}
-                            type="text"
-                            placeholder="본인을 한 줄로 소개해주세요!"
-                            defaultValue={loginUserState.user?.profile?.introduction}
-                            className="border-2 rounded-md md:w-[30rem] mt-2 mb-6 p-1.5 mx-[1rem]"
-                        />
-                        <label htmlFor="univ" className="opacity-50 mx-[1rem]">
-                            학력
-                        </label>
-                        <div className="flex flex-col md:flex-row">
-                            <input
-                                {...register('university')}
-                                type="text"
-                                placeholder="재학 중인 학교명을 입력해주세요"
-                                defaultValue={loginUserState.user?.profile?.university}
-                                className="border-2 rounded-md md:w-[30%] mt-2 mb-6 p-1.5 md:mr-7 mx-[1rem]"
-                            />
-                            <input
-                                {...register('major')}
-                                type="text"
-                                placeholder="전공을 입력해주세요"
-                                defaultValue={loginUserState.user?.profile?.major}
-                                className="border-2 rounded-md md:w-[30%] mt-2 mb-6 p-1.5 mx-[1rem] md:mx-0"
-                            />
-                        </div>
-                        <label htmlFor="career" className="opacity-50 mx-[1rem]">
-                            경력
-                        </label>
-                        {Array.from({ length: numCareerInput }).map((item, idx) => {
-                            return (
-                                <div className="flex items-center">
-                                    <input
-                                        {...register(`career.${idx}`)}
-                                        defaultValue={loginUserState.user?.profile?.career && loginUserState.user?.profile?.career.length >= 1 ? loginUserState.user?.profile?.career[idx] : ''}
-                                        type="text"
-                                        placeholder="경력을 입력해주세요"
-                                        className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]"
-                                    />
-                                    <AiOutlinePlusCircle
-                                        onClick={() => {
-                                            setNumCareerInput(numCareerInput + 1);
-                                        }}
-                                        className="fill-[#2087FF]"
-                                        size={24}
-                                    />
-                                    <TbTrashOff
-                                        onClick={() => {
-                                            if (numCareerInput === 1) {
-                                                return;
-                                            } else {
-                                                setNumCareerInput(numCareerInput - 1);
-                                            }
-                                        }}
-                                        className="stroke-[#c02224] mx-1"
-                                        size={24}
-                                    />
-                                </div>
-                            );
-                        })}
 
-                        <label htmlFor="sns" className="opacity-50 mx-[1rem] mt-4">
-                            SNS
-                        </label>
-                        <div className="flex mb-1">
-                            <div className="flex flex-col justify-center items-center mx-[1rem]">
-                                <FiMail size={`1.75rem`} />
-                                <p className="text-sm">Mail</p>
+                        <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-[85vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
+                            <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:h-[80vh] p-[1rem] mx-auto">
+                                <div className="grow p-3 md:p-0">
+                                    <h4 className="text-lg font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
+                                    <h2 className="text-[1.7rem] md:text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
+                                    <h3 className="text-lg tracking-normal">{Project.description}</h3>
+                                    <div className="flex justify-center mx-auto">
+                                        {/* <img src="/project-ex.svg" alt="project-example" className="absolute md:top-[-1rem] w-[80%] opacity-80" /> */}
+
+                                        <img src="/project-ex.svg" alt="project-example" className="w-[80%]" />
+                                    </div>
+                                </div>
                             </div>
-                            <input
-                                {...register('email')}
-                                type="text"
-                                placeholder="이메일을 입력해주세요"
-                                className="border-2 bg-[#FFFFFF] rounded-lg w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] p-1.5 flex justify-start items-center ml-3 mr-5 mb-4 mt-3"
-                                defaultValue={loginUserState.user?.email}
-                            />
-                        </div>
-                        <div className="flex">
-                            <div className="flex flex-col justify-center items-center mx-[0.2rem]">
-                                <FiInstagram size={`1.75rem`} />
-                                <p className="text-xs">Instagram</p>
-                            </div>
-                            <input
-                                {...register('instagram')}
-                                type="text"
-                                placeholder="인스타그램 아이디를 입력해주세요!"
-                                defaultValue={loginUserState.user?.profile?.link?.instagram ? loginUserState.user.profile?.link.instagram : ''}
-                                className="border-2 rounded-md w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
-                            />
-                        </div>
-                        <div className="flex">
-                            <div className="flex flex-col justify-center items-center mx-[0.5rem] mt-2">
-                                <FiGithub size={`1.75rem`} />
-                                <p className="text-sm">Github</p>
-                            </div>
-                            <input
-                                {...register('github')}
-                                type="text"
-                                placeholder="Github 아이디를 입력해주세요!"
-                                defaultValue={loginUserState.user?.profile?.link?.github ? loginUserState.user.profile?.link.github : ''}
-                                className="border-2 rounded-md w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] mt-5 mb-5 p-1.5 ml-3 mr-5"
-                            />
-                        </div>
-                        <div className="flex">
-                            <div className="flex flex-col justify-center items-center mx-[0.9rem]">
-                                <FiHome size={`1.75rem`} />
-                                <p className="text-sm">Blog</p>
-                            </div>
-                            <input
-                                {...register('blog')}
-                                type="text"
-                                placeholder="개인 웹사이트의 URL을 입력해주세요!"
-                                defaultValue={loginUserState.user?.profile?.link?.blog ? loginUserState.user.profile?.link.blog : ''}
-                                className="border-2 rounded-md w-[60%] sm:w-[50%] lg:w-[30%] h-[2.5rem] p-1.5 ml-3 mr-5"
-                            />
                         </div>
                     </div>
-                    <button
-                        className="w-[100%] bg-[#2087FF] rounded-full h-[3.6rem] text-white text-xl tracking-wider cursor-pointer mt-[6rem]"
-                        onClick={() => {
-                            router.push('/mypage');
-                        }}
-                    >
-                        SAVE
-                    </button>
-                </form>
+                </div>
             </div>
-        </div>
+        </main>
     );
 };
-ProfileEdit.Layout = Layout;
-export default ProfileEdit;
+
+export default MyPage;
