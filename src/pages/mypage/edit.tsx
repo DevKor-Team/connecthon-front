@@ -226,7 +226,7 @@ const ProfileEdit = () => {
                             <section className="text-sm">5MB 이하의 파일로 등록해주세요</section>
                         </div>
                         {Boolean(file) && onModal ? (
-                            <div className="flex flex-col justify-center items-center w-[50%] sm:w-[40rem] md:w-[45rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-[-15%] md:top-0 md:left-[50%] md:-translate-x-[50%] z-30">
+                            <div className="flex flex-col justify-center items-center w-[18.75rem] sm:w-[40rem] md:w-[45rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-0 md:top-0 md:left-[50%] md:-translate-x-[50%] z-30">
                                 <AiOutlineClose
                                     size={18}
                                     className="cursor-pointer absolute top-5 right-5 opacity-50"
@@ -234,7 +234,7 @@ const ProfileEdit = () => {
                                         setOnModal(false);
                                     }}
                                 />
-                                <div className="flex flex-col sm:flex-row items-center justify-center mt-[3rem] mb-[3rem]">
+                                <div className="flex flex-col sm:flex-row items-center justify-center mt-[4rem] mb-[2rem] sm:mt-[3rem] sm:mb-[3rem]">
                                     <ReactCrop
                                         crop={crop}
                                         onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -243,7 +243,7 @@ const ProfileEdit = () => {
                                         }}
                                         aspect={aspect}
                                         circularCrop={true}
-                                        className="overflow-hidden  sm:w-[15rem]"
+                                        className="overflow-hidden w-[50%] sm:w-[15rem]"
                                     >
                                         <img ref={imgRef} alt="Crop me" src={file} onLoad={onImageLoad} />
                                     </ReactCrop>
@@ -251,7 +251,7 @@ const ProfileEdit = () => {
                                         <canvas ref={canvasRef} className="rounded-full w-[50%] mx-auto sm:w-[15rem] mt-5 sm:mt-0 overflow-hidden sm:mx-10"></canvas>
                                     </div>
                                 </div>
-                                <div className="flex justify-center flex-col sm:flex-row">
+                                <div className="flex justify-center flex-row space-x-3 ">
                                     <div className="bg-[#2087FF] w-[100%] sm:w-[7rem] p-2 sm:mx-3 rounded-md text-[#FFF] mb-5" onClick={onPreview}>
                                         <p className="text-white md:text-md text-center cursor-pointer">미리보기</p>
                                     </div>
