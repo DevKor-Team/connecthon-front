@@ -101,8 +101,40 @@ const ProfileEdit = () => {
                 },
             ),
         );
-        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, loginUserState.user?.profile);
+        //프로필을 업데이트하고 그 응답으로 업데이트 된 완전한 유저 객체가 오므로,
+        //그 유저객체를 다시 loginUserState에 저장
+        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, loginUserState.user?.profile).then(res =>
+            setLoginUserState({
+                isLogin: true,
+                user: res.data,
+            }),
+        );
     };
+
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSessionUser();
+    }, []);
 
     useEffect(() => {
         if (loginUserState.isLogin == false) {
