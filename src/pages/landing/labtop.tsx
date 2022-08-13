@@ -61,7 +61,7 @@ const LabTopLanding = () => {
                 <Parallax opacity={[0.1, 1]} translateY={[-50, -50]} startScroll={1000} endScroll={1350}>
                     <div>
                         <h3 className="mb-[5rem] font-semibold text-3xl">후원사</h3>
-                        <img src="/companies.svg" alt="companies" />
+                        <img src="/sponsors.svg" alt="companies" />
 
                         <Link href="/home">
                             <a>
