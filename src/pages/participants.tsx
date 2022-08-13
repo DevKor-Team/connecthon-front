@@ -1,5 +1,9 @@
-const Participants = () => {
-    return alert('준비중입니다');
+import { useEffect } from 'react';
+
+const Participant = () => {
+    useEffect(() => {
+        return alert('준비중');
+    }, []);
 };
 
-export default Participants;
+export default Participant;
