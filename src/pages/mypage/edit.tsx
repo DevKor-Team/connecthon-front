@@ -101,7 +101,14 @@ const ProfileEdit = () => {
                 },
             ),
         );
-        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, loginUserState.user?.profile);
+        //프로필을 업데이트하고 그 응답으로 업데이트 된 완전한 유저 객체가 오므로,
+        //그 유저객체를 다시 loginUserState에 저장
+        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, loginUserState.user?.profile).then(res =>
+            setLoginUserState({
+                isLogin: true,
+                user: res.data,
+            }),
+        );
     };
 
     useEffect(() => {

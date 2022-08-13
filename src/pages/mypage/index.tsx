@@ -8,6 +8,7 @@ import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
+import { axiosInstance } from '../../hooks/queries';
 
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
@@ -42,6 +43,20 @@ const MyPage: CustomNextPage = () => {
             router.push('/login');
         }
     }, []);
+
+    // useEffect(() => {
+    //     async function fetchCompleteUserInfo() {
+    //         try {
+    //             const response = await axiosInstance.get(`/users/${loginUserState.user?.id}`);
+    //             setLoginUserState({
+    //                 isLogin: true,
+    //                 user: response.data,
+    //             });
+    //         } catch (e) {
+    //             console.log(e);
+    //         }
+    //     }
+    // }, []);
 
     if (loginUserState.isLogin == false) {
         return null;
