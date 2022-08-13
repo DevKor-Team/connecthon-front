@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
+
 const Chat = () => {
-    return alert('준비중입니다');
+    useEffect(() => {
+        return alert('준비중');
+    }, []);
 };
 
 export default Chat;
