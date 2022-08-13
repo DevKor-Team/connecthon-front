@@ -2,6 +2,10 @@ import BusinessSchool from './_business';
 import DevKor from './_devkor';
 import Dijo from './_designer';
 import useAutoScroll from '../../hooks/useAutoScroll';
+import { axiosInstance } from '../../hooks/queries';
+import { useRecoilState } from 'recoil';
+import { loginRecoilState } from '../../recoil/loginuser';
+import { useEffect } from 'react';
 
 const AboutUs = () => {
     const organizationTab = {
@@ -9,6 +13,34 @@ const AboutUs = () => {
         1: useAutoScroll(),
         2: useAutoScroll(),
     };
+
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSessionUser();
+    }, []);
+
     return (
         <>
             <div className="flex flex-col justify-center items-center pt-[8rem] relative ">

@@ -44,19 +44,30 @@ const MyPage: CustomNextPage = () => {
         }
     }, []);
 
-    // useEffect(() => {
-    //     async function fetchCompleteUserInfo() {
-    //         try {
-    //             const response = await axiosInstance.get(`/users/${loginUserState.user?.id}`);
-    //             setLoginUserState({
-    //                 isLogin: true,
-    //                 user: response.data,
-    //             });
-    //         } catch (e) {
-    //             console.log(e);
-    //         }
-    //     }
-    // }, []);
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSessionUser();
+    }, []);
 
     if (loginUserState.isLogin == false) {
         return null;

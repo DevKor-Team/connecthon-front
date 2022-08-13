@@ -112,6 +112,31 @@ const ProfileEdit = () => {
     };
 
     useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSessionUser();
+    }, []);
+
+    useEffect(() => {
         if (loginUserState.isLogin == false) {
             alert('로그인이 필요한 서비스입니다.');
             router.push('/login');
