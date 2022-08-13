@@ -7,7 +7,7 @@ interface Size {
 
 function useWindowSize(): Size {
     const [windowSize, setWindowSize] = useState<Size>({
-        width: 0,
+        width: 350,
         height: 0,
     });
     useEffect(() => {
