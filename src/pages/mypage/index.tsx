@@ -36,6 +36,17 @@ const MyPage: CustomNextPage = () => {
         }
     }, [showCopied]);
 
+    useEffect(() => {
+        if (loginUserState.isLogin == false) {
+            alert('로그인이 필요한 서비스입니다.');
+            router.push('/login');
+        }
+    }, []);
+
+    if (loginUserState.isLogin == false) {
+        return null;
+    }
+
     return (
         <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">
             <div className="mt-[8rem] md:mt-[5rem] flex w-[100%] items-center md:h-[calc(100vh-4rem)]">

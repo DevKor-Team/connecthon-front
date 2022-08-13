@@ -16,7 +16,7 @@ const handleGithubLogin = async () => {
     window.location.href = `https://${publicRuntimeConfig.ENDPOINT}/auth/github`;
 };
 
-const BtnCommonProperty = 'w-full sm:w-[20.625rem] h-[2.625rem] flex items-center justify-center rounded-xl px-5';
+const BtnCommonProperty = 'w-[20rem] sm:w-[20.625rem] h-[2.625rem] flex items-center justify-center rounded-xl px-5';
 
 const GithubLoginBtn = () => {
     return (

@@ -105,6 +105,13 @@ const ProfileEdit = () => {
     };
 
     useEffect(() => {
+        if (loginUserState.isLogin == false) {
+            alert('로그인이 필요한 서비스입니다.');
+            router.push('/login');
+        }
+    }, []);
+
+    useEffect(() => {
         setOnModal(false);
         if (loginUserState.user?.profile?.career) {
             setNumCareerInput(loginUserState.user?.profile?.career.length);
@@ -197,6 +204,9 @@ const ProfileEdit = () => {
         ctx.drawImage(imgRef.current, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width * scaleX, crop.height * scaleY);
     };
 
+    if (loginUserState.isLogin == false) {
+        return null;
+    }
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
             <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">

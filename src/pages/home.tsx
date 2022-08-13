@@ -310,7 +310,7 @@ function BottomBanner() {
                         <h1 className="text-ourWhite font-impact text-[1.688rem]">2022</h1>
                         <h1 className="text-ourWhite font-impact text-[1.688rem]">KU HACKATHON</h1>
                     </section>
-                    <HomeButton size="md" className="w-40 h-9 text-sm">
+                    <HomeButton size="md" className="w-[10.125rem] h-9 text-sm">
                         주관 소개 바로가기
                     </HomeButton>
                 </div>

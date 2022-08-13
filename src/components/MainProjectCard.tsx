@@ -69,8 +69,8 @@ function detachScaling(e: MouseEvent<HTMLDivElement>) {
 export default function MainProjectCard({ imgurl, title, team }: { imgurl?: string; title: string; team: string }) {
     return (
         <div className="transition-all ease-out duration-300 w-full md:w-1/3 rounded-xl" onMouseOver={e => attachScaling(e)} onMouseLeave={e => detachScaling(e)}>
-            <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl pointer-events-none">
-                <img src={imgurl} alt={title} />
+            <div className="overflow-hidden w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl pointer-events-none">
+                <img src={imgurl} alt={title} className="w-auto h-auto" />
             </div>
             <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around pointer-events-none">
                 <h1 className="font-bold text-lg sm:text-base lg:text-lg">{title}</h1>
