@@ -1,7 +1,8 @@
 import { CustomNextPage } from '../../types/types';
 import { FiEdit } from 'react-icons/fi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
+import { IoCloseOutline } from 'react-icons/io5';
 import Link from 'next/link';
 import { Project } from '../../interfaces/project';
 import { useRouter } from 'next/router';
@@ -10,28 +11,6 @@ import { loginRecoilState } from '../../recoil/loginuser';
 
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
-    // const UserProfile: User = {
-    //     type: 'user',
-    //     id: 1,
-    //     name: '안수진',
-    //     email: 'asj0816@korea.ac.kr',
-    //     teamName: 'Tiger',
-    //     profile: {
-    //         link: {
-    //             github: 'aiccuracy',
-    //             blog: 'www.hojins.life',
-    //             instagram: '@10issoojin_',
-    //         },
-    //         position: 'developer',
-    //         img: '/soojin.png',
-    //         introduction: '뎁코 화이팅',
-    //         university: '고려대학교',
-    //         major: '국제학부',
-    //         career: ['코르카 ML 엔지니어', 'DevKor 노예'],
-    //     },
-    //     provider: 'kakao',
-    //     isAdmin: true,
-    // };
 
     const Project: Project = {
         id: 1,
@@ -44,16 +23,25 @@ const MyPage: CustomNextPage = () => {
     const [onMail, setOnMail] = useState<boolean>(false);
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
+    const [showCopied, setShowCopied] = useState<boolean>(false);
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    console.log(`userState in main user page : ${loginUserState.user?.profile?.img}`);
+
+    useEffect(() => {
+        if (showCopied) {
+            const popup = setTimeout(() => {
+                setShowCopied(false);
+            }, 1500);
+            return () => clearTimeout(popup);
+        }
+    }, [showCopied]);
 
     return (
-        <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <div className="mt-[5rem] flex w-[100%] items-center h-[calc(100vh-4rem)]">
+        <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">
+            <div className="mt-[8rem] md:mt-[5rem] flex w-[100%] items-center md:h-[calc(100vh-4rem)]">
                 <div className="grow">
-                    <div className="flex mb-10">
-                        <div className="w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
+                    <div className="flex mb-10 flex-col items-center md:flex-row">
+                        <div className="w-[80%] md:w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                             <div className="flex flex-col items-center">
                                 {loginUserState.user?.profile?.img ? (
                                     <img src={loginUserState.user?.profile?.img} alt="my photo" className="rounded-full w-[50%] my-2" />
@@ -98,6 +86,14 @@ const MyPage: CustomNextPage = () => {
                                             }}
                                             onMouseOut={() => {
                                                 setOnMail(false);
+                                            }}
+                                            onClick={() => {
+                                                if (loginUserState.user?.email) {
+                                                    navigator.clipboard.writeText(loginUserState.user?.email);
+                                                    setShowCopied(true);
+                                                } else {
+                                                    console.log('복사할게 없음');
+                                                }
                                             }}
                                         />
                                         {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
@@ -145,40 +141,30 @@ const MyPage: CustomNextPage = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="w-[70%] h-[85vh] flex flex-col justify-end min-w-[25rem] max-w-[100rem]">
-                            <div className="flex flex-col items-end m-4">
-                                {/* {onChat ? (
-                                <BsFillChatLeftFill
-                                    style={{ fill: '#2087FF' }}
-                                    className="text-[1.5rem] cursor-pointer"
-                                    onMouseOver={() => {
-                                        setOnChat(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                        setOnChat(false);
-                                    }}
-                                />
-                            ) : (
-                                <BsChatLeft
-                                    style={{ fill: '#2087FF' }}
-                                    className="text-[1.5rem] cursor-pointer"
-                                    onMouseOver={() => {
-                                        setOnChat(true);
-                                    }}
-                                    onMouseLeave={() => {
-                                        setOnChat(false);
-                                    }}
-                                />
-                            )} */}
+
+                            <div
+                                className={`${
+                                    showCopied ? 'opacity-100' : 'opacity-0'
+                                } transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[100%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
+                                onClick={() => {
+                                    setShowCopied(false);
+                                }}
+                            >
+                                <p className="grow text-white">클립보드에 복사되었습니다</p>
+                                <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
                             </div>
-                            <div className="flex flex-col bg-ourWhite rounded-lg w-[100%] h-[80vh] p-8 ">
-                                <div className="grow">
+                        </div>
+
+                        <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-[85vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
+                            <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:h-[80vh] p-[1rem] mx-auto">
+                                <div className="grow p-3 md:p-0">
                                     <h4 className="text-lg font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
-                                    <h2 className="text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
+                                    <h2 className="text-[1.7rem] md:text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
                                     <h3 className="text-lg tracking-normal">{Project.description}</h3>
-                                    <div className="relative">
-                                        <img src="/project-ex.svg" alt="project-example" className="absolute top-[-1rem] w-[80%] opacity-80" />
+                                    <div className="flex justify-center mx-auto">
+                                        {/* <img src="/project-ex.svg" alt="project-example" className="absolute md:top-[-1rem] w-[80%] opacity-80" /> */}
+
+                                        <img src="/project-ex.svg" alt="project-example" className="w-[80%]" />
                                     </div>
                                 </div>
                             </div>

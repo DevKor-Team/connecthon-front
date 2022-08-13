@@ -19,7 +19,7 @@ const Home: CustomNextPage = () => {
                     if (response.data.type == 'user') {
                         setLoginUserData({
                             isLogin: true,
-                            user: { ...response.data, name: response.data.name.first + response.data.name.last },
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
                         });
                     } else if (response.data.type == 'company') {
                         setLoginUserData({
