@@ -24,18 +24,8 @@ const MyPage: CustomNextPage = () => {
     const [onMail, setOnMail] = useState<boolean>(false);
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
-    const [showCopied, setShowCopied] = useState<boolean>(false);
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-
-    useEffect(() => {
-        if (showCopied) {
-            const popup = setTimeout(() => {
-                setShowCopied(false);
-            }, 1500);
-            return () => clearTimeout(popup);
-        }
-    }, [showCopied]);
 
     useEffect(() => {
         const getSessionUser = async () => {
@@ -119,10 +109,9 @@ const MyPage: CustomNextPage = () => {
                                             }}
                                             onClick={() => {
                                                 if (loginUserState.user?.email) {
-                                                    navigator.clipboard.writeText(loginUserState.user?.email);
-                                                    setShowCopied(true);
+                                                    window.open(`mailto:${loginUserState.user?.email}`);
                                                 } else {
-                                                    console.log('복사할게 없음');
+                                                    alert('해당 참가자의 이메일 정보가 없어요!');
                                                 }
                                             }}
                                         />
@@ -169,17 +158,6 @@ const MyPage: CustomNextPage = () => {
                                             </a>
                                         </Link>
                                     </div>
-                                </div>
-                                <div
-                                    className={`${
-                                        showCopied ? 'opacity-100' : 'opacity-0'
-                                    } absolute bottom-3 left-7 transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[85%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
-                                    onClick={() => {
-                                        setShowCopied(false);
-                                    }}
-                                >
-                                    <p className="grow text-white">클립보드에 복사되었습니다</p>
-                                    <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
                                 </div>
                             </div>
                         </div>

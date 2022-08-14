@@ -45,22 +45,11 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                             className="cursor-pointer"
                             stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
                             onClick={() => {
-                                setShowCopied(true);
-                                navigator.clipboard.writeText('ku.hackerthon@gmail.com');
+                                window.open('mailto:ku.hackerthon@gmail.com');
                             }}
                         />
                         <SiNotion size={22} className="cursor-pointer" fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
                         <FiInstagram size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
-                        <div
-                            className={`${
-                                showCopied ? 'opacity-100' : 'opacity-0'
-                            } absolute left-[15rem] -bottom-3 left-[10rem] transition-all duration-400 flex items-center bg-ourBlack rounded-lg w-[20rem] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
-                            onClick={() => {
-                                setShowCopied(false);
-                            }}
-                        >
-                            <p className="grow text-ourWhite">클립보드에 복사되었습니다</p>
-                        </div>
                     </nav>
                 </section>
 
