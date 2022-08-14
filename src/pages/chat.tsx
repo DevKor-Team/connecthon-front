@@ -122,9 +122,9 @@ const Chat: CustomNextPage = () => {
     });
 
     return (
-        <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <main className="relative flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
-                {isModalOpen ? <UserListModal setIsModalOpen={setIsModalOpen} /> : null}
+        <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
+            {isModalOpen ? <UserListModal setIsModalOpen={setIsModalOpen} /> : null}
+            <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
                 <ChatList userList={userList} setIsModalOpen={setIsModalOpen}>
                     {userList.map(user => (
                         <ChatListItem key={user.name} username={user.name} team={user.team} setSelectedUser={setSelectedUser} />
