@@ -1,4 +1,3 @@
-import Layout from '../layouts/Layout';
 import { CustomNextPage } from '../types/types';
 import { GithubLoginBtn, GoogleLoginBtn, KakaoLoginBtn } from '../components/LoginButton';
 import React, { useState } from 'react';
@@ -7,9 +6,15 @@ import { axiosInstance } from '../hooks/queries';
 const LoginPage: CustomNextPage = () => {
     const [isParticipantMode, setParticipantMode] = useState(true);
 
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleCompanyLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        axiosInstance.post('/auth/local');
+        const formId = document.getElementById('formid') as HTMLInputElement;
+        const id = formId.value;
+
+        const formPw = document.getElementById('formpw') as HTMLInputElement;
+        const pw = formPw.value;
+
+        axiosInstance.post('/auth/local', { username: id, password: pw });
     };
 
     return (
@@ -44,9 +49,9 @@ const LoginPage: CustomNextPage = () => {
                     </div>
 
                     {/* 기업 로그인 섹션 */}
-                    <form className={`w-full h-[10.375rem] flex flex-col items-center justify-center space-y-4 ${isParticipantMode ? 'hidden' : 'visible'}`} onSubmit={handleFormSubmit}>
-                        <input type="text" name="username" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="아이디" />
-                        <input type="password" name="password" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="비밀번호" />
+                    <form className={`w-full h-[10.375rem] flex flex-col items-center justify-center space-y-4 ${isParticipantMode ? 'hidden' : 'visible'}`} onSubmit={handleCompanyLogin}>
+                        <input type="text" name="username" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="아이디" id="formid" />
+                        <input type="password" name="password" className="w-[20rem] h-12 bg-slate-100 px-4 rounded focus:outline-none" placeholder="비밀번호" id="formpw" />
                         <button type="submit" className="w-[20rem] h-12 bg-ourBlue text-white font-semibold rounded">
                             로그인
                         </button>
@@ -57,5 +62,4 @@ const LoginPage: CustomNextPage = () => {
     );
 };
 
-LoginPage.Layout = Layout;
 export default LoginPage;

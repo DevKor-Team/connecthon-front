@@ -17,7 +17,7 @@ function attachScaling(e: MouseEvent<HTMLDivElement>) {
     console.log('mouse over');
 
     //first child of the parent element
-    let currentChild = target.parentElement.firstChild;
+    let currentChild: HTMLDivElement = target.parentElement.firstChild as HTMLDivElement;
 
     //collecting siblings
     if (currentChild instanceof HTMLDivElement) {
@@ -26,7 +26,7 @@ function attachScaling(e: MouseEvent<HTMLDivElement>) {
                 siblings.push(currentChild);
             }
 
-            currentChild = currentChild.nextSibling;
+            currentChild = currentChild.nextSibling as HTMLDivElement;
         }
     }
     target.classList.add('sm:scale-110', 'sm:shadow-[7px_7px_18px_2px_rgba(0,0,0,0.1)]');
@@ -69,7 +69,9 @@ function detachScaling(e: MouseEvent<HTMLDivElement>) {
 export default function MainProjectCard({ imgurl, title, team }: { imgurl?: string; title: string; team: string }) {
     return (
         <div className="transition-all ease-out duration-300 w-full md:w-1/3 rounded-xl" onMouseOver={e => attachScaling(e)} onMouseLeave={e => detachScaling(e)}>
-            <div className="bg-sky-100 w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl pointer-events-none">프로젝트대표사진</div>
+            <div className="overflow-hidden w-full h-56 md:h-60 lg:h-64 xl:h-80 2xl:h-96 rounded-t-xl pointer-events-none">
+                <img src={imgurl} alt={title} className="w-auto h-auto" />
+            </div>
             <div className="bg-ourWhite w-full h-[5.5rem] px-10 lg:px-6 py-4 rounded-b-xl flex flex-col items-start justify-around pointer-events-none">
                 <h1 className="font-bold text-lg sm:text-base lg:text-lg">{title}</h1>
                 <h2 className="font-semibold text-base sm:text-sm lg:text-base">{team}</h2>
