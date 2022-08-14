@@ -107,7 +107,7 @@ const MyPage: CustomNextPage = () => {
                                 </div>
 
                                 <h4 className="font-semibold my-2">SNS</h4>
-                                <div className="flex items-center space-x-4">
+                                <div className="flex items-center space-x-4 relative">
                                     <div>
                                         <FiMail
                                             className="text-2xl cursor-pointer"
@@ -170,18 +170,17 @@ const MyPage: CustomNextPage = () => {
                                         </Link>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div
-                                className={`${
-                                    showCopied ? 'opacity-100' : 'opacity-0'
-                                } transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[100%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
-                                onClick={() => {
-                                    setShowCopied(false);
-                                }}
-                            >
-                                <p className="grow text-white">클립보드에 복사되었습니다</p>
-                                <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
+                                <div
+                                    className={`${
+                                        showCopied ? 'opacity-100' : 'opacity-0'
+                                    } absolute bottom-3 left-7 transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[85%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
+                                    onClick={() => {
+                                        setShowCopied(false);
+                                    }}
+                                >
+                                    <p className="grow text-white">클립보드에 복사되었습니다</p>
+                                    <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
+                                </div>
                             </div>
                         </div>
 
