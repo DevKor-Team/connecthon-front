@@ -76,39 +76,56 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        setLoginUserState(
-            Object.assign(
-                { ...loginUserState },
-                {
-                    user: {
-                        name: data.name,
-                        email: data.email,
-                        team: data.team,
-                        profile: {
-                            link: {
-                                github: data.github,
-                                blog: data.blog,
-                                instagram: data.instagram,
-                            },
-                            introduction: data.introduction,
-                            img: loginUserState.user?.profile?.img,
-                            position: data.position,
-                            university: data.university,
-                            major: data.major,
-                            career: data.career,
-                        },
-                    },
+        const updatedUser = {
+            type: loginUserState.user?.type,
+            name: data.name,
+            email: data.email,
+            team: data.team,
+            profile: {
+                link: {
+                    github: data.github,
+                    blog: data.blog,
+                    instagram: data.instagram,
                 },
-            ),
-        );
+                introduction: data.introduction,
+                img: loginUserState.user?.profile?.img,
+                position: data.position,
+                university: data.university,
+                major: data.major,
+                career: data.career,
+                _id: loginUserState.user?.profile?._id,
+            },
+            provider: loginUserState.user?.provider,
+            isAdmin: loginUserState.user?.isAdmin,
+            oauthid: loginUserState.user?.oauthid,
+        };
+
+        const updatedProfile = {
+            link: {
+                github: data.github,
+                blog: data.blog,
+                instagram: data.instagram,
+            },
+            introduction: data.introduction,
+            img: loginUserState.user?.profile?.img,
+            position: data.position,
+            university: data.university,
+            major: data.major,
+            career: data.career.slice(0, numCareerInput),
+            _id: loginUserState.user?.profile?._id,
+        };
+
+        //console.log(updatedUser);
+        // console.log('바뀐유저이름');
+        // console.log(data.name.substring(0, 1));
+        // console.log(data.name.substring(1));
+        setLoginUserState({
+            isLogin: true,
+            user: updatedUser,
+        });
         //프로필을 업데이트하고 그 응답으로 업데이트 된 완전한 유저 객체가 오므로,
         //그 유저객체를 다시 loginUserState에 저장
-        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, loginUserState.user?.profile).then(res =>
-            setLoginUserState({
-                isLogin: true,
-                user: res.data,
-            }),
-        );
+        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, { profile: updatedProfile, email: data.email, name: { first: data.name.substring(0, 1), last: data.name.substring(1) } });
     };
 
     useEffect(() => {
@@ -146,7 +163,9 @@ const ProfileEdit = () => {
     useEffect(() => {
         setOnModal(false);
         if (loginUserState.user?.profile?.career) {
-            setNumCareerInput(loginUserState.user?.profile?.career.length);
+            if (loginUserState.user?.profile?.career?.length >= 1) {
+                setNumCareerInput(loginUserState.user?.profile?.career.length);
+            }
         } else {
             setNumCareerInput(1);
         }
@@ -184,7 +203,9 @@ const ProfileEdit = () => {
         );
         //blob객체를 서버로 전송한다.
         //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
-        axiosInstance.post('/image/profile', blob).then(res =>
+        const data = new FormData();
+        data.append('image', blob);
+        axiosInstance.post('/image/profile', data).then(res =>
             setLoginUserState({
                 isLogin: true,
                 user: res.data,
@@ -239,6 +260,7 @@ const ProfileEdit = () => {
     if (loginUserState.isLogin == false) {
         return null;
     }
+    console.log(numCareerInput);
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
             <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">
@@ -369,10 +391,10 @@ const ProfileEdit = () => {
                         </label>
                         {Array.from({ length: numCareerInput }).map((item, idx) => {
                             return (
-                                <div className="flex items-center">
+                                <div className="flex items-center" key={idx}>
                                     <input
                                         {...register(`career.${idx}`)}
-                                        defaultValue={loginUserState.user?.profile?.career && loginUserState.user?.profile?.career.length >= 1 ? loginUserState.user?.profile?.career[idx] : ''}
+                                        defaultValue={loginUserState.user?.profile?.career && loginUserState.user?.profile?.career.length >= 1 ? loginUserState.user?.profile?.career[idx] : ' '}
                                         type="text"
                                         placeholder="경력을 입력해주세요"
                                         className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]"

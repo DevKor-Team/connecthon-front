@@ -105,11 +105,10 @@ const MyPage: CustomNextPage = () => {
                                 </div>
                                 <div className="my-4">
                                     <h4 className="font-semibold">학력</h4>
-                                    <p>{`${loginUserState.user?.profile?.university} ${loginUserState.user?.profile?.major}`}</p>
+                                    <p>{`${loginUserState.user?.profile?.university || ''} ${loginUserState.user?.profile?.major || ''}`}</p>
                                 </div>
                                 <div className="my-4">
                                     <h4 className="font-semibold mb-1">경력</h4>
-
                                     <div>{loginUserState.user?.profile?.career ? loginUserState.user?.profile?.career.map(crr => <p>{crr}</p>) : null}</div>
                                 </div>
 

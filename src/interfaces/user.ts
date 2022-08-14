@@ -2,7 +2,7 @@ import { PositionType } from './position.types';
 import { ProviderType } from './provider.types';
 
 export interface User {
-    type: string;
+    type?: string;
     id?: string;
     name: string;
     email?: string;
@@ -13,14 +13,15 @@ export interface User {
             blog?: string;
             instagram?: string;
         };
-        position?: PositionType;
-        img: string;
+        position?: string;
+        img?: string;
         introduction?: string;
         university?: string;
         major?: string;
-        career: string[];
+        career?: string[];
+        _id?: string;
     };
-    provider?: ProviderType;
+    provider?: string;
     isAdmin?: boolean;
-    oauthid: string;
+    oauthid?: string;
 }
