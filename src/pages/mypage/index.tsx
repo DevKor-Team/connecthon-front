@@ -38,13 +38,6 @@ const MyPage: CustomNextPage = () => {
     }, [showCopied]);
 
     useEffect(() => {
-        if (loginUserState.isLogin == false) {
-            alert('로그인이 필요한 서비스입니다.');
-            router.push('/login');
-        }
-    }, []);
-
-    useEffect(() => {
         const getSessionUser = async () => {
             try {
                 const response = await axiosInstance.get('/auth/user');
@@ -62,7 +55,8 @@ const MyPage: CustomNextPage = () => {
                     }
                 }
             } catch (err) {
-                console.log(err);
+                alert('로그인이 필요한 서비스입니다.');
+                router.push('/login');
             }
         };
 
