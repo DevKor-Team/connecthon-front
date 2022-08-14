@@ -76,30 +76,6 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        const updatedUser = {
-            type: loginUserState.user?.type,
-            name: data.name,
-            email: data.email,
-            team: data.team,
-            profile: {
-                link: {
-                    github: data.github,
-                    blog: data.blog,
-                    instagram: data.instagram,
-                },
-                introduction: data.introduction,
-                img: loginUserState.user?.profile?.img,
-                position: data.position,
-                university: data.university,
-                major: data.major,
-                career: data.career,
-                _id: loginUserState.user?.profile?._id,
-            },
-            provider: loginUserState.user?.provider,
-            isAdmin: loginUserState.user?.isAdmin,
-            oauthid: loginUserState.user?.oauthid,
-        };
-
         const updatedProfile = {
             link: {
                 github: data.github,
@@ -114,17 +90,6 @@ const ProfileEdit = () => {
             career: data.career.slice(0, numCareerInput),
             _id: loginUserState.user?.profile?._id,
         };
-
-        //console.log(updatedUser);
-        // console.log('바뀐유저이름');
-        // console.log(data.name.substring(0, 1));
-        // console.log(data.name.substring(1));
-        setLoginUserState({
-            isLogin: true,
-            user: updatedUser,
-        });
-        //프로필을 업데이트하고 그 응답으로 업데이트 된 완전한 유저 객체가 오므로,
-        //그 유저객체를 다시 loginUserState에 저장
         axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, { profile: updatedProfile, email: data.email, name: { first: data.name.substring(0, 1), last: data.name.substring(1) } });
     };
 
@@ -399,24 +364,28 @@ const ProfileEdit = () => {
                                         placeholder="경력을 입력해주세요"
                                         className="border-2 rounded-md w-[63%] mt-2 mb-2 p-1.5 mr-3 mx-[1rem]"
                                     />
-                                    <AiOutlinePlusCircle
-                                        onClick={() => {
-                                            setNumCareerInput(numCareerInput + 1);
-                                        }}
-                                        className="fill-[#2087FF]"
-                                        size={24}
-                                    />
-                                    <TbTrashOff
-                                        onClick={() => {
-                                            if (numCareerInput === 1) {
-                                                return;
-                                            } else {
-                                                setNumCareerInput(numCareerInput - 1);
-                                            }
-                                        }}
-                                        className="stroke-[#c02224] mx-1"
-                                        size={24}
-                                    />
+                                    {idx == numCareerInput - 1 ? (
+                                        <>
+                                            <AiOutlinePlusCircle
+                                                onClick={() => {
+                                                    setNumCareerInput(numCareerInput + 1);
+                                                }}
+                                                className="fill-[#2087FF]"
+                                                size={24}
+                                            />
+                                            <TbTrashOff
+                                                onClick={() => {
+                                                    if (numCareerInput === 1) {
+                                                        return;
+                                                    } else {
+                                                        setNumCareerInput(numCareerInput - 1);
+                                                    }
+                                                }}
+                                                className="stroke-[#c02224] mx-1"
+                                                size={24}
+                                            />
+                                        </>
+                                    ) : null}
                                 </div>
                             );
                         })}
