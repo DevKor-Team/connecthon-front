@@ -30,7 +30,7 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
     );
 }
 
-const ProfileEdit = () => {
+const TeamProfileEdit = () => {
     //로그인 Recoil State
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
@@ -459,5 +459,5 @@ const ProfileEdit = () => {
         </div>
     );
 };
-ProfileEdit.Layout = Layout;
-export default ProfileEdit;
+TeamProfileEdit.Layout = Layout;
+export default TeamProfileEdit;
