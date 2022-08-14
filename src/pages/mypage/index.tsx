@@ -186,8 +186,16 @@ const MyPage: CustomNextPage = () => {
 
                         <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-[85vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
                             <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:h-[80vh] p-[1rem] mx-auto">
-                                <div className="grow p-3 md:p-0">
-                                    <h4 className="text-lg font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
+                                <div className="grow p-3 md:pl-5 md:pt-5 md:pr-0 md:pb-0">
+                                    <h4 className="my-1 flex items-center space-x-2">
+                                        <p className="text-lg font-semibold">{`TEAM ${loginUserState.user?.team}`}</p>{' '}
+                                        <FiEdit
+                                            className="cursor-pointer"
+                                            onClick={() => {
+                                                router.push('/team/edit');
+                                            }}
+                                        />
+                                    </h4>
                                     <h2 className="text-[1.7rem] md:text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
                                     <h3 className="text-lg tracking-normal">{Project.description}</h3>
                                     <div className="flex justify-center mx-auto">
