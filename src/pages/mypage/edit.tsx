@@ -153,29 +153,13 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
-        console.log(`이미지는 저장을 할거고, ${loginUserState.user?.name}`);
-        setLoginUserState(
-            Object.assign(
-                { ...loginUserState },
-                {
-                    user: {
-                        profile: {
-                            img: url,
-                        },
-                    },
-                },
-            ),
-        );
+        console.log(`${loginUserState.user?.id}`);
+
         //blob객체를 서버로 전송한다.
         //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
         const data = new FormData();
         data.append('image', blob);
-        axiosInstance.post('/image/profile', data).then(res =>
-            setLoginUserState({
-                isLogin: true,
-                user: res.data,
-            }),
-        );
+        axiosInstance.post('/image/profile', data);
 
         setOnModal(false);
     };
