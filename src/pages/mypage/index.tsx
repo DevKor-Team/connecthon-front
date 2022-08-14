@@ -24,25 +24,8 @@ const MyPage: CustomNextPage = () => {
     const [onMail, setOnMail] = useState<boolean>(false);
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
-    const [showCopied, setShowCopied] = useState<boolean>(false);
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-
-    useEffect(() => {
-        if (showCopied) {
-            const popup = setTimeout(() => {
-                setShowCopied(false);
-            }, 1500);
-            return () => clearTimeout(popup);
-        }
-    }, [showCopied]);
-
-    useEffect(() => {
-        if (loginUserState.isLogin == false) {
-            alert('로그인이 필요한 서비스입니다.');
-            router.push('/login');
-        }
-    }, []);
 
     useEffect(() => {
         const getSessionUser = async () => {
@@ -62,7 +45,8 @@ const MyPage: CustomNextPage = () => {
                     }
                 }
             } catch (err) {
-                console.log(err);
+                alert('로그인이 필요한 서비스입니다.');
+                router.push('/login');
             }
         };
 
@@ -105,16 +89,15 @@ const MyPage: CustomNextPage = () => {
                                 </div>
                                 <div className="my-4">
                                     <h4 className="font-semibold">학력</h4>
-                                    <p>{`${loginUserState.user?.profile?.university} ${loginUserState.user?.profile?.major}`}</p>
+                                    <p>{`${loginUserState.user?.profile?.university || ''} ${loginUserState.user?.profile?.major || ''}`}</p>
                                 </div>
                                 <div className="my-4">
                                     <h4 className="font-semibold mb-1">경력</h4>
-
                                     <div>{loginUserState.user?.profile?.career ? loginUserState.user?.profile?.career.map(crr => <p>{crr}</p>) : null}</div>
                                 </div>
 
                                 <h4 className="font-semibold my-2">SNS</h4>
-                                <div className="flex items-center space-x-4">
+                                <div className="flex items-center space-x-4 relative">
                                     <div>
                                         <FiMail
                                             className="text-2xl cursor-pointer"
@@ -126,10 +109,9 @@ const MyPage: CustomNextPage = () => {
                                             }}
                                             onClick={() => {
                                                 if (loginUserState.user?.email) {
-                                                    navigator.clipboard.writeText(loginUserState.user?.email);
-                                                    setShowCopied(true);
+                                                    window.open(`mailto:${loginUserState.user?.email}`);
                                                 } else {
-                                                    console.log('복사할게 없음');
+                                                    alert('해당 참가자의 이메일 정보가 없어요!');
                                                 }
                                             }}
                                         />
@@ -178,24 +160,20 @@ const MyPage: CustomNextPage = () => {
                                     </div>
                                 </div>
                             </div>
-
-                            <div
-                                className={`${
-                                    showCopied ? 'opacity-100' : 'opacity-0'
-                                } transition-all duration-400 flex items-center bg-ourBlue rounded-lg w-[100%] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
-                                onClick={() => {
-                                    setShowCopied(false);
-                                }}
-                            >
-                                <p className="grow text-white">클립보드에 복사되었습니다</p>
-                                <IoCloseOutline className="grow-0 cursor-pointer" size={20} stroke="white" />
-                            </div>
                         </div>
 
                         <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-[85vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
                             <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:h-[80vh] p-[1rem] mx-auto">
-                                <div className="grow p-3 md:p-0">
-                                    <h4 className="text-lg font-semibold my-1">{`TEAM ${loginUserState.user?.team}`}</h4>
+                                <div className="grow p-3 md:pl-5 md:pt-5 md:pr-0 md:pb-0">
+                                    <h4 className="my-1 flex items-center space-x-2">
+                                        <p className="text-lg font-semibold">{`TEAM ${loginUserState.user?.team}`}</p>{' '}
+                                        <FiEdit
+                                            className="cursor-pointer"
+                                            onClick={() => {
+                                                router.push('/team/edit');
+                                            }}
+                                        />
+                                    </h4>
                                     <h2 className="text-[1.7rem] md:text-4xl tracking-wide font-bold my-2">{Project.title}</h2>
                                     <h3 className="text-lg tracking-normal">{Project.description}</h3>
                                     <div className="flex justify-center mx-auto">
