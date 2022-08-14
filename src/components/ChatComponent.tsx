@@ -5,7 +5,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import React, { useState, SetStateAction } from 'react';
 
 //채팅유저목록 Nav 컴포넌트
-function ChatList({ userList, children }: { userList: { name: string; team: string }[]; children: JSX.Element[] }) {
+function ChatList({ userList, setIsModalOpen, children }: { userList: { name: string; team: string }[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>>; children: JSX.Element[] }) {
     const [input, setInput] = useState<string>('');
     const [enterPressed, setEnterPressed] = useState<boolean>(false);
     const [searchResult, setSearchResult] = useState<Array<{ name: string; team: string }>>([]);
@@ -33,7 +33,9 @@ function ChatList({ userList, children }: { userList: { name: string; team: stri
         <section className="relative h-[90%] w-72 flex flex-col items-center justify-center mr-10 after:content-[' '] after:absolute after:-right-10 after:h-full after:w-[1px] after:bg-gray-200">
             <button className="w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50">
                 <ImPlus size={14} />
-                <span className="font-medium">New Conversation</span>
+                <span className="font-medium" onClick={() => setIsModalOpen(true)}>
+                    New Conversation
+                </span>
             </button>
             <h1 className="text-3xl font-bold self-start mb-4">Chats</h1>
             <div className="relative w-full mb-4">
