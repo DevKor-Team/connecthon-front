@@ -1,28 +1,66 @@
 import Link from 'next/link';
-import { FiPhoneCall, FiMail, FiInstagram } from 'react-icons/fi';
+import { FiMail, FiInstagram } from 'react-icons/fi';
 import { SiNotion } from 'react-icons/si';
+import { BsChat } from 'react-icons/bs';
 import { loginRecoilState } from '../recoil/loginuser';
 import { useRecoilState } from 'recoil';
+import { useState, useEffect } from 'react';
+import { IoCloseOutline } from 'react-icons/io5';
 
 function Footer({ theme }: { theme?: 'dark' | 'light' }) {
     const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
+    const [showCopied, setShowCopied] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (showCopied) {
+            const popup = setTimeout(() => {
+                setShowCopied(false);
+            }, 1500);
+            return () => clearTimeout(popup);
+        }
+    }, [showCopied]);
 
     return (
         <footer className={`w-screen px-4 md:px-16 lg:px-20 xl:px-[13.375rem] pt-10 pb-5 lg:py-8 ${theme == 'dark' ? 'bg-ourBlack' : 'bg-ourWhite'} border-t border-ourWhite`}>
             <div className="lg:pb-0 lg:h-36 lg:grid lg:grid-cols-9">
                 {/* 문의 영역 */}
                 <section
-                    className={`relative lg:col-span-6 flex flex-col h-full after:bottom-0 after:content-[' '] after:h-0.5 after:mt-4 lg:after:mt-6 after:w-full ${
+                    className={`lg:col-span-6 flex flex-col h-full after:bottom-0 after:content-[' '] after:h-0.5 after:mt-4 lg:after:mt-6 after:w-full ${
                         theme == 'dark' ? 'after:bg-ourWhite' : 'after:bg-ourGrey after:bg-opacity-25'
                     } after:rounded-full`}
                 >
                     <h1 className={`font-impact ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} mb-5 xl:mb-11 text-xl`}>KU HACKATHON</h1>
                     <h3 className={`font-bold text-sm lg:text-lg mb-5 xl:mb-3 ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'}`}>문의</h3>
-                    <nav className="flex space-x-6">
-                        <FiPhoneCall size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
-                        <FiMail size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
+                    <nav className="relative flex space-x-6 relative">
+                        <BsChat
+                            size={22}
+                            className="cursor-pointer"
+                            fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
+                            onClick={() => {
+                                window.open('https://desk.channel.io/#/channels/100056/team_chats/groups/185174', '_blank');
+                            }}
+                        />
+                        <FiMail
+                            size={22}
+                            className="cursor-pointer"
+                            stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
+                            onClick={() => {
+                                setShowCopied(true);
+                                navigator.clipboard.writeText('ku.hackerthon@gmail.com');
+                            }}
+                        />
                         <SiNotion size={22} className="cursor-pointer" fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
                         <FiInstagram size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
+                        <div
+                            className={`${
+                                showCopied ? 'opacity-100' : 'opacity-0'
+                            } absolute left-[15rem] -bottom-3 left-[10rem] transition-all duration-400 flex items-center bg-ourBlack rounded-lg w-[20rem] h-[3rem] text-center pl-2 pr-4 py-2 cursor-pointer`}
+                            onClick={() => {
+                                setShowCopied(false);
+                            }}
+                        >
+                            <p className="grow text-ourWhite">클립보드에 복사되었습니다</p>
+                        </div>
                     </nav>
                 </section>
 
