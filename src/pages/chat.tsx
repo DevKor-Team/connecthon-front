@@ -122,29 +122,30 @@ const Chat: CustomNextPage = () => {
     });
 
     return (
-        <main className="relative flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10">
-            {isModalOpen ? <UserListModal setIsModalOpen={setIsModalOpen} /> : null}
-            <ChatList userList={userList} setIsModalOpen={setIsModalOpen}>
-                {userList.map(user => (
-                    <ChatListItem key={user.name} username={user.name} team={user.team} setSelectedUser={setSelectedUser} />
-                ))}
-            </ChatList>
-            <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
-                <ChattingPartner selectedUser={selectedUser} />
-                <ChatBubbleContainer>
-                    <ChatBubble type="send">안수진~</ChatBubble>
-                    <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
-                    <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
-                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                    <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                    <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                </ChatBubbleContainer>
-            </div>
-        </main>
+        <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
+            <main className="relative flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
+                {isModalOpen ? <UserListModal setIsModalOpen={setIsModalOpen} /> : null}
+                <ChatList userList={userList} setIsModalOpen={setIsModalOpen}>
+                    {userList.map(user => (
+                        <ChatListItem key={user.name} username={user.name} team={user.team} setSelectedUser={setSelectedUser} />
+                    ))}
+                </ChatList>
+                <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
+                    <ChattingPartner selectedUser={selectedUser} />
+                    <ChatBubbleContainer>
+                        <ChatBubble type="send">안수진~</ChatBubble>
+                        <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
+                        <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
+                        <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                        <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                        <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                        <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                        <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                    </ChatBubbleContainer>
+                </div>
+            </main>
+        </div>
     );
 };
 
-Chat.Layout = Layout;
 export default Chat;
