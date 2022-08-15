@@ -53,6 +53,7 @@ const ProfileEdit = () => {
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
+    const [profileImgSrc, setProfileImgSrc] = useState<string>('');
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
@@ -76,6 +77,7 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
+        console.log(data.career.slice(0, numCareerInput));
         const updatedProfile = {
             link: {
                 github: data.github,
@@ -90,7 +92,12 @@ const ProfileEdit = () => {
             career: data.career.slice(0, numCareerInput),
             _id: loginUserState.user?.profile?._id,
         };
-        axiosInstance.put(`/users/${loginUserState.user?.id}/profile`, { profile: updatedProfile, email: data.email, name: { first: data.name.substring(0, 1), last: data.name.substring(1) } });
+        console.log(loginUserState.user?.id);
+        axiosInstance
+            .put(`/users/${loginUserState.user?.id}/profile`, { profile: updatedProfile, email: data.email, name: { first: data.name.substring(0, 1), last: data.name.substring(1) } })
+            .then(res => console.log(res.data));
+        alert('프로필이 수정되었습니다!');
+        console.log(loginUserState.user);
     };
 
     useEffect(() => {
@@ -111,18 +118,14 @@ const ProfileEdit = () => {
                     }
                 }
             } catch (err) {
-                console.log(err);
+                if (loginUserState.isLogin == false) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    router.push('/login');
+                }
             }
         };
 
         getSessionUser();
-    }, []);
-
-    useEffect(() => {
-        if (loginUserState.isLogin == false) {
-            alert('로그인이 필요한 서비스입니다.');
-            router.push('/login');
-        }
     }, []);
 
     useEffect(() => {
@@ -153,13 +156,53 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
-        console.log(`${loginUserState.user?.id}`);
+        // setLoginUserState(
+        //     Object.assign(
+        //         { ...loginUserState },
+        //         {
+        //             user: {
+        //                 profile: {
+        //                     img: url,
+        //                 },
+        //             },
+        //         },
+        //     ),
+        // );
+        console.log(url);
+        //console.log(`${loginUserState.user?.id}`);
 
         //blob객체를 서버로 전송한다.
         //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
         const data = new FormData();
         data.append('image', blob);
-        axiosInstance.post('/image/profile', data);
+        await axiosInstance.post('/image/profile', data).then(res => console.log(res.data));
+        alert('프로필 사진이 성공적으로 업데이트 되었습니다.');
+
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                if (loginUserState.isLogin == false) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    router.push('/login');
+                }
+            }
+        };
+
+        getSessionUser();
 
         setOnModal(false);
     };
@@ -209,7 +252,7 @@ const ProfileEdit = () => {
     if (loginUserState.isLogin == false) {
         return null;
     }
-    console.log(numCareerInput);
+    //console.log(numCareerInput);
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
             <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">
