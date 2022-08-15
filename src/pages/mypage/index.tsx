@@ -79,7 +79,7 @@ const MyPage: CustomNextPage = () => {
                                     />
                                 </div>
                                 <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name}`}</h3>
-                                <p className="mt-1 mb-5">{`TEAM ${loginUserState.user?.team}`}</p>
+                                <p className="mt-1 mb-5">{loginUserState.user?.team ? `TEAM ${loginUserState.user?.team}` : '팀명을 정해주세요'}</p>
                             </div>
 
                             <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">
@@ -166,7 +166,7 @@ const MyPage: CustomNextPage = () => {
                             <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:min-h-[46rem] md:h-[80vh] p-[1rem] mx-auto">
                                 <div className="grow p-3 md:pl-5 md:pt-5 md:pr-0 md:pb-0">
                                     <h4 className="my-1 flex items-center space-x-2">
-                                        <p className="text-lg font-semibold">{`TEAM ${loginUserState.user?.team}`}</p>{' '}
+                                        <p className="text-lg font-semibold">{loginUserState.user?.team ? `TEAM ${loginUserState.user?.team}` : '팀명을 정해주세요'}</p>{' '}
                                         <FiEdit
                                             className="cursor-pointer"
                                             onClick={() => {
