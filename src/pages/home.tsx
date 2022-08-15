@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import MainProjectCard from '../components/MainProjectCard';
 import HomeButton from '../components/HomeButton';
 import { Project } from '../interfaces/project';
+import { useRecoilState } from 'recoil';
+import { loginRecoilState } from '../recoil/loginuser';
+import { axiosInstance } from '../hooks/queries';
 
 const schedule = [
     {
@@ -336,6 +339,32 @@ function BottomBanner() {
 
 const Homepage: CustomNextPage = () => {
     const [firstScroll, setFirstScroll] = useState(false);
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        getSessionUser();
+    }, []);
 
     useEffect(() => {
         function titleScroll() {
