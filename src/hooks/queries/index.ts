@@ -1,9 +1,10 @@
 import axios from 'axios';
+import getConfig from 'next/config';
 
-const ENDPOINT = process.env.ENDPOINT as string;
+const { publicRuntimeConfig } = getConfig();
 
 export const axiosInstance = axios.create({
-    baseURL: ENDPOINT,
+    baseURL: '/',
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',

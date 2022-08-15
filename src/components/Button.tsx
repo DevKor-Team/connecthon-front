@@ -5,7 +5,7 @@ const sizes = {
 };
 
 export default function Button({ size, className, children }: { size: 'sm' | 'md' | 'lg'; className: string; children: string }) {
-    let btnSize = sizes[size];
+    const btnSize = sizes[size];
 
     return <button className={`font-medium ${btnSize} text-ourBlack bg-ourWhite hover:bg-ourBlack hover:text-ourWhite rounded-md ${className}`}>{children}</button>;
 }
