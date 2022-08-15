@@ -97,11 +97,7 @@ const Chat: CustomNextPage = () => {
 
         if (e.key == 'Enter') {
             setEnterPressed(true);
-            setSearchResult(
-                tempChatList.filter(room => {
-                    loginUserState.user?.type == 'company' ? room.userName.includes(keyword) : room.companyName.includes(keyword);
-                }),
-            );
+            setSearchResult(loginUserState.user?.type == 'company' ? tempChatList.filter(room => room.userName.includes(keyword)) : tempChatList.filter(room => room.companyName.includes(keyword)));
             setInput('');
             searchinput.blur();
         } else return;
@@ -136,51 +132,51 @@ const Chat: CustomNextPage = () => {
     // }, []);
 
     //로그인한 유저가 참여중인 모든 채팅방을 불러와서 저장한다.
-    useEffect(() => {
-        const fetchChatRooms = async () => {
-            try {
-                await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
-            } catch (err) {
-                console.log(err);
-            }
-        };
+    // useEffect(() => {
+    //     const fetchChatRooms = async () => {
+    //         try {
+    //             await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
+    //         } catch (err) {
+    //             console.log(err);
+    //         }
+    //     };
 
-        fetchChatRooms();
-    });
+    //     fetchChatRooms();
+    // });
 
     //소켓을 연결합니다.
-    useEffect(() => {
-        const socket = io(ENDPOINT);
+    // useEffect(() => {
+    //     const socket = io(ENDPOINT);
 
-        socket.on('connect', () => {
-            socket.emit('make session', {
-                uid: 'userid', //loginRecoilState 사용해서 넣기
-                userType: 'usertype', //마찬가지로 loginReocilState의 user의 type 넣기
-            });
-        });
+    //     socket.on('connect', () => {
+    //         socket.emit('make session', {
+    //             uid: 'userid', //loginRecoilState 사용해서 넣기
+    //             userType: 'usertype', //마찬가지로 loginReocilState의 user의 type 넣기
+    //         });
+    //     });
 
-        socket.on('error', () => {
-            //제대로 안 보내졌다고 띄워주세요.
-        });
+    //     socket.on('error', () => {
+    //         //제대로 안 보내졌다고 띄워주세요.
+    //     });
 
-        socket.on('receive', data => {
-            /*
-		    data = {
-			room: roomid,
-			sender: 'user'|'company',
-			when: Date, 
-			msg: string,
-		}
-		*/
-            //채팅 메세지 왔으니까 띄워주시면 될 듯
-            //data 구조 위와 동일, 서버에 메세지 보내는 event
-            sendMessage = data => {
-                socket.emit('send', data);
-            };
+    //     socket.on('receive', data => {
+    //         /*
+    // 	    data = {
+    // 		room: roomid,
+    // 		sender: 'user'|'company',
+    // 		when: Date,
+    // 		msg: string,
+    // 	}
+    // 	*/
+    //         //채팅 메세지 왔으니까 띄워주시면 될 듯
+    //         //data 구조 위와 동일, 서버에 메세지 보내는 event
+    //         sendMessage = data => {
+    //             socket.emit('send', data);
+    //         };
 
-            disconnectSocket = socket.disconnect;
-        });
-    });
+    //         disconnectSocket = socket.disconnect;
+    //     });
+    // });
 
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
