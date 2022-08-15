@@ -2,12 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../../layouts/Layout';
 import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
-import { AiOutlineMinusCircle, AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { TbTrashOff } from 'react-icons/tb';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm, useFieldArray, Controller } from 'react-hook-form';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
-import useWindowSize from '../../hooks/useWindowSize';
 
 import 'react-image-crop/dist/ReactCrop.css';
 import { useRecoilState } from 'recoil';
@@ -53,7 +52,6 @@ const ProfileEdit = () => {
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
-    const [profileImgSrc, setProfileImgSrc] = useState<string>('');
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
