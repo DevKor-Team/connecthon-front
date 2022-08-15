@@ -59,10 +59,10 @@ const MyPage: CustomNextPage = () => {
 
     return (
         <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">
-            <div className="mt-[8rem] md:mt-[5rem] flex w-[100%] items-center md:h-[calc(100vh-4rem)]">
+            <div className="mt-[8rem] md:mt-[5rem] flex w-[100%] items-center md:h-auto">
                 <div className="grow">
                     <div className="flex mb-10 flex-col items-center md:flex-row">
-                        <div className="w-[80%] md:w-[30%] rounded-[1.25rem] h-[85vh] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
+                        <div className="w-[80%] md:w-[30%] rounded-[1.25rem] min-h-[50rem] bg-ourWhite drop-shadow-lg p-[1rem] max-w-[25rem] z-10 min-w-[15rem]">
                             <div className="flex flex-col items-center">
                                 {loginUserState.user?.profile?.img ? (
                                     <img src={loginUserState.user?.profile?.img} alt="my photo" className="rounded-full w-[50%] my-2" />
@@ -162,8 +162,8 @@ const MyPage: CustomNextPage = () => {
                             </div>
                         </div>
 
-                        <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-[85vh] md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem]">
-                            <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:h-[80vh] p-[1rem] mx-auto">
+                        <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-auto md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem] self-end">
+                            <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:min-h-[46rem] md:h-[80vh] p-[1rem] mx-auto">
                                 <div className="grow p-3 md:pl-5 md:pt-5 md:pr-0 md:pb-0">
                                     <h4 className="my-1 flex items-center space-x-2">
                                         <p className="text-lg font-semibold">{`TEAM ${loginUserState.user?.team}`}</p>{' '}
@@ -179,7 +179,7 @@ const MyPage: CustomNextPage = () => {
                                     <div className="flex justify-center mx-auto">
                                         {/* <img src="/project-ex.svg" alt="project-example" className="absolute md:top-[-1rem] w-[80%] opacity-80" /> */}
 
-                                        <img src="/project-ex.svg" alt="project-example" className="w-[80%]" />
+                                        <img src="/project-ex.svg" alt="project-example" className="w-[80%] max-w-[33rem]" />
                                     </div>
                                 </div>
                             </div>
