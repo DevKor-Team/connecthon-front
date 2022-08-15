@@ -5,7 +5,7 @@ import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { TbTrashOff } from 'react-icons/tb';
 import { useRouter } from 'next/router';
-import { SubmitHandler, useForm, useFieldArray, Controller } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import ReactCrop, { centerCrop, makeAspectCrop, Crop, PixelCrop } from 'react-image-crop';
 
 import 'react-image-crop/dist/ReactCrop.css';
