@@ -12,6 +12,8 @@ import { axiosInstance } from '../hooks/queries';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../recoil/loginuser';
+import { User } from '../interfaces/user';
+import ChatModalUser from '../components/ChatModalUser';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -51,7 +53,20 @@ const tempChatList = [
     },
 ];
 
-function UserListModal({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<SetStateAction<boolean>> }) {
+function UserListModal({ chatRooms, setIsModalOpen }: { chatRooms: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>> }) {
+    const [userList, setUserList] = useState<Array<User>>([]);
+    useEffect(() => {
+        const fetchParticipants = async () => {
+            try {
+                await axiosInstance.get('/users').then(res => setUserList(res.data));
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchParticipants;
+    });
+
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center h-[100%] w-[100vw] bg-ourBlack bg-opacity-70">
             <div className="w-[50rem] h-[30rem] bg-white rounded-2xl drop-shadow-2xl p-8">
@@ -59,6 +74,21 @@ function UserListModal({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<SetS
                     <h1 className="font-bold text-2xl">UserList</h1>
                     <IoMdClose size={24} className="cursor-pointer" onClick={() => setIsModalOpen(false)} />
                 </section>
+                <ul className="w-full h-full flex flex-col justify-center items-start">
+                    {userList
+                        .filter(
+                            user =>
+                                function (user: User) {
+                                    chatRooms.forEach(room => {
+                                        if (room.userName == user.name) return false;
+                                        else return true;
+                                    });
+                                },
+                        )
+                        .map(user => (
+                            <ChatModalUser userInfo={user} />
+                        ))}
+                </ul>
             </div>
         </div>
     );
@@ -178,12 +208,13 @@ const Chat: CustomNextPage = () => {
     //     });
     // });
 
+    //TODO: 로그인 유저가 '참가자'이면 New Conversation 버튼 숨기기
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
-            {isModalOpen ? <UserListModal setIsModalOpen={setIsModalOpen} /> : null}
+            {isModalOpen ? <UserListModal chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
             <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
                 <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
-                    <button className="w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50" onClick={() => setIsModalOpen(true)}>
+                    <button className={`w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`} onClick={() => setIsModalOpen(true)}>
                         <ImPlus size={14} />
                         <span className="font-medium">New Conversation</span>
                     </button>
