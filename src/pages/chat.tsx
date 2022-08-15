@@ -1,64 +1,53 @@
-import Layout from '../layouts/Layout';
 import React, { useState, useEffect } from 'react';
+import { ImPlus } from 'react-icons/im';
+import { FiSearch } from 'react-icons/fi';
+import { HiOutlineRefresh } from 'react-icons/hi';
 import { CustomNextPage } from '../types/types';
-import { ChatList, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
+import { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
 import io from 'socket.io-client';
 import getConfig from 'next/config';
 import { IoMdClose } from 'react-icons/io';
 import { ChatRoomType, ChatDataType } from '../interfaces/chat';
 import { axiosInstance } from '../hooks/queries';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { loginRecoilState } from '../recoil/loginuser';
 
 const { publicRuntimeConfig } = getConfig();
 
-const userList = [
-    { name: '안수진', team: '해커톤 숨막혀요' },
+const tempChatList = [
     {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
+        id: '1',
+        user: 'user1',
+        userImg: 'https://picsum.photos/200',
+        userName: '안수진',
+        company: 'company1',
+        companyImg: 'https://picsum.photos/200',
+        companyName: '카카오',
+        lastMsg: '화이팅',
+        lastSend: new Date(),
     },
     {
-        name: '정호진',
-        team: 'TS 안 쓸건가요?',
+        id: '2',
+        user: 'user2',
+        userImg: 'https://picsum.photos/200',
+        userName: '노정훈',
+        company: 'company1',
+        companyImg: 'https://picsum.photos/200',
+        companyName: '토스',
+        lastMsg: '화이팅 해커톤',
+        lastSend: new Date(),
     },
     {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
-    },
-    {
-        name: '노정훈',
-        team: '풀스택 개발자 할거에오',
+        id: '3',
+        user: 'user3',
+        userImg: 'https://picsum.photos/200',
+        userName: '정호진',
+        company: 'company1',
+        companyImg: 'https://picsum.photos/200',
+        companyName: '네이버',
+        lastMsg: '화이팅 정호진 으아아아',
+        lastSend: new Date(),
     },
 ];
 
@@ -76,19 +65,91 @@ function UserListModal({ setIsModalOpen }: { setIsModalOpen: React.Dispatch<SetS
 }
 
 const Chat: CustomNextPage = () => {
-    //selectedUser는 채팅방리스트에서 선택된 유저이며,
+    //chatRooms: 사용자가 참여하고 있는 모든 채팅방 리스트
+    //selectedUser: ChatRooms 중에서 선택된 유저
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
     const [selectedUser, setSelectedUser] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const ENDPOINT = publicRuntimeConfig.ENDPOINT;
 
     let sendMessage;
     let disconnectSocket;
 
-    useEffect(() => {
-        //채팅방 리스트 받아오기
-        //axiosInstance.get('/chat').then(res => setChatRoomList(res));
+    const router = useRouter();
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
+    //채팅방 리스트 검색 관련
+    const [input, setInput] = useState<string>('');
+    const [enterPressed, setEnterPressed] = useState<boolean>(false);
+    const [searchResult, setSearchResult] = useState<ChatRoomType[]>([]);
+
+    //검색창 onChange Event Handler
+    function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+        const value = e.target.value;
+        setInput(value);
+    }
+
+    //검색창 입력에 대해서 해당 유저와의 채팅방 검색해주는 함수
+    function searchUser(e: React.KeyboardEvent<HTMLInputElement>) {
+        const keyword = input;
+        const searchinput = document.querySelector('#chat-search-input') as HTMLInputElement;
+
+        if (e.key == 'Enter') {
+            setEnterPressed(true);
+            setSearchResult(
+                tempChatList.filter(room => {
+                    loginUserState.user?.type == 'company' ? room.userName.includes(keyword) : room.companyName.includes(keyword);
+                }),
+            );
+            setInput('');
+            searchinput.blur();
+        } else return;
+    }
+
+    //가장 먼저 현재 접속한 유저 정보 받아서 Recoil State로 저장하기.
+    //로그인하지 않은 유저는 로그인 페이지로 돌려보냅니다.
+    // useEffect(() => {
+    //     const getSessionUser = async () => {
+    //         try {
+    //             const response = await axiosInstance.get('/auth/user');
+    //             if (response.status != 401) {
+    //                 if (response.data.type == 'user') {
+    //                     setLoginUserState({
+    //                         isLogin: true,
+    //                         user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+    //                     });
+    //                 } else if (response.data.type == 'company') {
+    //                     setLoginUserState({
+    //                         isLogin: true,
+    //                         user: response.data,
+    //                     });
+    //                 }
+    //             }
+    //         } catch (err) {
+    //             alert('로그인이 필요한 서비스입니다.');
+    //             router.push('/login');
+    //         }
+    //     };
+
+    //     getSessionUser();
+    // }, []);
+
+    //로그인한 유저가 참여중인 모든 채팅방을 불러와서 저장한다.
+    useEffect(() => {
+        const fetchChatRooms = async () => {
+            try {
+                await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchChatRooms();
+    });
+
+    //소켓을 연결합니다.
+    useEffect(() => {
         const socket = io(ENDPOINT);
 
         socket.on('connect', () => {
@@ -125,11 +186,39 @@ const Chat: CustomNextPage = () => {
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
             {isModalOpen ? <UserListModal setIsModalOpen={setIsModalOpen} /> : null}
             <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
-                <ChatList userList={userList} setIsModalOpen={setIsModalOpen}>
-                    {userList.map(user => (
-                        <ChatListItem key={user.name} username={user.name} team={user.team} setSelectedUser={setSelectedUser} />
-                    ))}
-                </ChatList>
+                <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
+                    <button className="w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50" onClick={() => setIsModalOpen(true)}>
+                        <ImPlus size={14} />
+                        <span className="font-medium">New Conversation</span>
+                    </button>
+                    <div className="self-start mb-4 flex space-x-3 items-center">
+                        <h1 className="text-3xl font-bold">Chats</h1>
+                        <span>
+                            <HiOutlineRefresh size={24} className="cursor-pointer" onClick={() => setEnterPressed(false)} title="Refresh Chat List" />
+                        </span>
+                    </div>
+                    <div className="relative w-full mb-4">
+                        <input
+                            placeholder="Search Here"
+                            className="h-12 w-full bg-gray-200 rounded-md px-4 focus:outline-none"
+                            value={input}
+                            onChange={onInputChange}
+                            onKeyDown={e => searchUser(e)}
+                            id="chat-search-input"
+                        />
+                        <span className="absolute top-3.5 right-4">
+                            <FiSearch size={24} />
+                        </span>
+                    </div>
+                    <ul className="w-full h-full flex flex-col items-start space-y-3 overflow-y-auto scrollbar">
+                        {/* {chatRooms.map(room => (
+                        <ChatListItem key={room.id} roomInfo={room} /> 
+                    ))} */}
+                        {(enterPressed ? searchResult : tempChatList).map(room => (
+                            <ChatListItem key={room.id} roomInfo={room} setSelectedUser={setSelectedUser} />
+                        ))}
+                    </ul>
+                </ChatNavSection>
                 <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
                     <ChattingPartner selectedUser={selectedUser} />
                     <ChatBubbleContainer>

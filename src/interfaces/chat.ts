@@ -1,7 +1,11 @@
 export interface ChatRoomType {
     id: string;
-    company: string;
     user: string;
+    userImg: string;
+    userName: string;
+    company: string;
+    companyImg: string;
+    companyName: string;
     lastMsg: string;
     lastSend: Date;
 }

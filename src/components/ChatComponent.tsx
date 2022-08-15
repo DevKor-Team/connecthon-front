@@ -1,55 +1,15 @@
-import { ImPlus } from 'react-icons/im';
-import { FiSearch } from 'react-icons/fi';
 import { HiArrowNarrowUp } from 'react-icons/hi';
 import { IoIosArrowForward } from 'react-icons/io';
 import React, { useState, SetStateAction } from 'react';
+import { ChatRoomType } from '../interfaces/chat';
+import { useRecoilState } from 'recoil';
+import { loginRecoilState } from '../recoil/loginuser';
 
 //채팅유저목록 Nav 컴포넌트
-function ChatList({ userList, setIsModalOpen, children }: { userList: { name: string; team: string }[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>>; children: JSX.Element[] }) {
-    const [input, setInput] = useState<string>('');
-    const [enterPressed, setEnterPressed] = useState<boolean>(false);
-    const [searchResult, setSearchResult] = useState<Array<{ name: string; team: string }>>([]);
-
-    //검색창 onChange Event Handler
-    function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const value = e.target.value;
-        setInput(value);
-    }
-
-    //검색창 입력에 대해서 해당 유저와의 채팅방 검색해주는 함수
-    function searchUser(e: React.KeyboardEvent<HTMLInputElement>) {
-        const keyword = input;
-        const searchinput = document.querySelector('#chat-search-input') as HTMLInputElement;
-
-        if (e.key == 'Enter') {
-            setEnterPressed(true);
-            setSearchResult(userList.filter(user => user.name.includes(keyword)));
-            setInput('');
-            searchinput.blur();
-        } else return;
-    }
-
+function ChatNavSection({ chatRoomList, setIsModalOpen, children }: { chatRoomList: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>>; children: JSX.Element[] }) {
     return (
         <section className="relative h-[90%] w-72 flex flex-col items-center justify-center mr-10 after:content-[' '] after:absolute after:-right-10 after:h-full after:w-[1px] after:bg-gray-200">
-            <button className="w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50" onClick={() => setIsModalOpen(true)}>
-                <ImPlus size={14} />
-                <span className="font-medium">New Conversation</span>
-            </button>
-            <h1 className="text-3xl font-bold self-start mb-4">Chats</h1>
-            <div className="relative w-full mb-4">
-                <input
-                    placeholder="Search Here"
-                    className="h-12 w-full bg-gray-200 rounded-md px-4 focus:outline-none"
-                    value={input}
-                    onChange={onInputChange}
-                    onKeyDown={e => searchUser(e)}
-                    id="chat-search-input"
-                />
-                <span className="absolute top-3.5 right-4">
-                    <FiSearch size={24} />
-                </span>
-            </div>
-            <ul className="w-full h-full flex flex-col items-start space-y-3 overflow-y-auto scrollbar">{children}</ul>
+            {children}
         </section>
     );
 }
@@ -71,21 +31,28 @@ function onChatPartnerSelect(e: React.MouseEvent<HTMLLIElement>) {
     selectedArrow?.classList.remove('opacity-0');
 }
 
-function ChatListItem({ username, team, setSelectedUser }: { username: string; team: string; setSelectedUser: React.Dispatch<SetStateAction<string>> }) {
+function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; setSelectedUser: React.Dispatch<SetStateAction<string>> }) {
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
+    //partnerName: 채팅 상대의 이름은 현재 사용자가 회사계정이면 참가자이름이고, 참가자계정이면 회사이름이다.
+    //partnerImg: 마찬가지의 매커니즘
+    const partnerName = loginUserState.user?.type == 'company' ? roomInfo.userName : roomInfo.companyName;
+    const partnerImg = loginUserState.user?.type == 'company' ? roomInfo.userImg : roomInfo.companyImg;
+
     return (
         <li
             className={`w-full min-h-[4rem] rounded-md px-3 flex items-center space-x-3 hover:bg-gray-200/50 hover:cursor-pointer`}
             onClick={() => {
                 onChatPartnerSelect;
-                setSelectedUser(username);
+                setSelectedUser(partnerName);
             }}
         >
             <div className="w-10 h-10 flex items-center rounded-full pointer-events-none">
-                <img src="/symbol-2d.svg" className="w-12 h-12" />
+                <img src={partnerImg} className="w-12 h-12 rounded-full" />
             </div>
             <div className="flex flex-col justify-between pointer-events-none w-8/12">
-                <span className="text-base font-semibold">{username}</span>
-                <span className="text-xs text-ourGrey">{team}</span>
+                <span className="text-base font-semibold">{partnerName}</span>
+                <span className="text-xs text-ourGrey">{roomInfo.lastMsg}</span>
             </div>
             <span className="arrow opacity-0">
                 <IoIosArrowForward size={20} />
@@ -144,4 +111,4 @@ function ChatBubble({ type, children }: BubbleType) {
     );
 }
 
-export { ChatList, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem };
+export { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem };
