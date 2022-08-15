@@ -48,7 +48,7 @@ function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; s
             }}
         >
             <div className="w-10 h-10 flex items-center rounded-full pointer-events-none">
-                <img src={partnerImg} className="w-12 h-12 rounded-full" />
+                <img src={partnerImg} className="w-9 h-9 overflow-hidden rounded-full" />
             </div>
             <div className="flex flex-col justify-between pointer-events-none w-8/12">
                 <span className="text-base font-semibold">{partnerName}</span>
