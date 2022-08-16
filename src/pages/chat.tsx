@@ -57,7 +57,7 @@ function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: Chat
     console.log(typeof userList);
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center h-[100%] w-[100vw] bg-ourBlack bg-opacity-70">
-            <div className="w-[30rem] h-[30rem] bg-white rounded-2xl drop-shadow-2xl p-8 flex flex-col space-y-6">
+            <div className="w-[21rem] sm:w-[30rem] h-[30rem] bg-white rounded-2xl drop-shadow-2xl p-8 flex flex-col space-y-6">
                 <section className="flex items-center justify-between">
                     <h1 className="font-bold text-2xl">UserList</h1>
                     <IoMdClose size={24} className="cursor-pointer" onClick={() => setIsModalOpen(false)} />
@@ -223,14 +223,9 @@ function Chat() {
             <main className="flex items-center h-[calc(100vh-5rem)] mt-20 md:space-x-10 ">
                 {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
-                    <button
-                        className={`${
-                            loginUserState.user?.level == 1 ? null : 'hidden'
-                        } w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue md:bg-gray-200/50 mb-8 md:hover:bg-gray-400/50`}
-                        onClick={() => setIsModalOpen(true)}
-                    >
-                        <ImPlus size={14} className="fill-white md:fill-black" />
-                        <span className="text-white md:text-black font-medium">New Conversation</span>
+                    <button className={`w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`} onClick={() => setIsModalOpen(true)}>
+                        <ImPlus size={14} fill="white" />
+                        <span className="text-white font-medium">New Conversation</span>
                     </button>
                     <div className="self-start mb-4 flex space-x-3 items-center">
                         <h1 className="text-3xl font-bold">Chats</h1>
