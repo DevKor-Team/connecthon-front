@@ -253,17 +253,23 @@ function Chat() {
                     </ul>
                 </ChatNavSection>
                 <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
-                    <ChattingPartner selectedUser={selectedUser} />
-                    <ChatBubbleContainer>
-                        <ChatBubble type="send">안수진~</ChatBubble>
-                        <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
-                        <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
-                        <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                        <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                        <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                        <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                        <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                    </ChatBubbleContainer>
+                    {selectedUser.name == '' ? (
+                        <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-xl">Chats 리스트에서 대화를 나눌 상대방을 선택해 주세요</div>
+                    ) : (
+                        <>
+                            <ChattingPartner selectedUser={selectedUser} />
+                            <ChatBubbleContainer>
+                                <ChatBubble type="send">안수진~</ChatBubble>
+                                <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
+                                <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
+                                <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                            </ChatBubbleContainer>
+                        </>
+                    )}
                 </div>
             </main>
         </div>
