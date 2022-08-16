@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../../layouts/Layout';
 import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
-import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlinePlusCircle, AiOutlineClose, AiOutlineConsoleSql } from 'react-icons/ai';
 import { TbTrashOff } from 'react-icons/tb';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -52,6 +52,7 @@ const ProfileEdit = () => {
     const [crop, setCrop] = useState<Crop>();
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
+    const teamId = loginUserState.user?.team?._id;
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
@@ -67,6 +68,7 @@ const ProfileEdit = () => {
         university: string;
         major: string;
         career: string[];
+        teamName: string;
     };
 
     //react-hook-form
@@ -75,7 +77,6 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        console.log(data.career.slice(0, numCareerInput));
         const updatedProfile = {
             link: {
                 github: data.github,
@@ -92,8 +93,22 @@ const ProfileEdit = () => {
         };
         console.log(loginUserState.user?.id);
         axiosInstance
-            .put(`/users/${loginUserState.user?.id}/profile`, { profile: updatedProfile, email: data.email, name: { first: data.name.substring(0, 1), last: data.name.substring(1) } })
+            .put(`/users/${loginUserState.user?.id}/profile`, {
+                profile: updatedProfile,
+                email: data.email,
+                name: { first: data.name.substring(0, 1), last: data.name.substring(1) },
+            })
             .then(res => console.log(res.data));
+
+        // 팀 이름을 받으면 이렇게 데이터를 전송할 거에요!
+        // axiosInstance
+        //     .put(`/teams/${data.teamName}/users`, {
+        //         data: {
+        //             users: loginUserState.user?.id,
+        //         },
+        //     })
+        //     .then(res => console.log(res.data));
+
         alert('프로필이 수정되었습니다!');
         console.log(loginUserState.user);
     };
@@ -154,20 +169,7 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
-        // setLoginUserState(
-        //     Object.assign(
-        //         { ...loginUserState },
-        //         {
-        //             user: {
-        //                 profile: {
-        //                     img: url,
-        //                 },
-        //             },
-        //         },
-        //     ),
-        // );
         console.log(url);
-        //console.log(`${loginUserState.user?.id}`);
 
         //blob객체를 서버로 전송한다.
         //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
@@ -337,13 +339,9 @@ const ProfileEdit = () => {
                                 <option value="designer">디자이너</option>
                             </select>
                             <label htmlFor="teamName">소속 팀</label>
-                            <input
-                                {...register('team')}
-                                type="text"
-                                placeholder="팀명을 입력해주세요"
-                                defaultValue={loginUserState.user?.team}
-                                className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5"
-                            />
+                            <select {...register('teamName')} name="teamName" id="teamName" defaultValue={loginUserState.user?.team?.name} className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5">
+                                <option value="">팀명은 곧 추가될 예정입니다</option>
+                            </select>
                         </div>
                     </div>
                     <div className="flex flex-col mt-[4rem] mb-[2rem] py-[3rem] px-[4rem] bg-[#FFFFFF] drop-shadow-lg rounded-[2rem]">

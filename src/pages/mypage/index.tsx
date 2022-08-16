@@ -13,14 +13,6 @@ import { axiosInstance } from '../../hooks/queries';
 const MyPage: CustomNextPage = () => {
     const router = useRouter();
 
-    const Project: Project = {
-        id: 1,
-        team: 'Tiger',
-        title: '해커톤 웹 개발기',
-        content: '뎁코의 노예들 입니다.',
-        thumbnail: '/project-ex.svg',
-    };
-
     const [onMail, setOnMail] = useState<boolean>(false);
     const [onInstagram, setOnInstagram] = useState<boolean>(false);
     const [onGithub, setOnGithub] = useState<boolean>(false);
@@ -79,7 +71,7 @@ const MyPage: CustomNextPage = () => {
                                     />
                                 </div>
                                 <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name}`}</h3>
-                                <p className="mt-1 mb-5">{loginUserState.user?.team ? `TEAM ${loginUserState.user?.team.name}` : '팀명을 정해주세요'}</p>
+                                <p className="mt-1 mb-5">{loginUserState.user?.team?.name ? `TEAM ${loginUserState.user?.team.name}` : '팀명을 정해주세요'}</p>
                             </div>
 
                             <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">
