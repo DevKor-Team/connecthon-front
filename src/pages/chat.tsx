@@ -97,7 +97,6 @@ function Chat() {
 
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    const [companyLevel, setCompanyLevel] = useState<number>(0);
 
     //New Conversation 클릭 시 넘겨줄 유저리스트
     const [userList, setUserList] = useState<ChatUser[]>([]);
@@ -220,7 +219,10 @@ function Chat() {
             {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
             <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
                 <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
-                    <button className={`w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`} onClick={() => setIsModalOpen(true)}>
+                    <button
+                        className={`${loginUserState.user.level == 1 ? null : 'hidden'} w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`}
+                        onClick={() => setIsModalOpen(true)}
+                    >
                         <ImPlus size={14} />
                         <span className="font-medium">New Conversation</span>
                     </button>
