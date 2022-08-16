@@ -15,7 +15,12 @@ const defaultValue = {
         id: '',
         name: '',
         email: '',
-        team: '',
+        team: {
+            name: '',
+            users: [],
+            image: '',
+            description: '',
+        },
         profile: {
             link: {
                 github: '',
