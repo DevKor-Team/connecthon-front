@@ -1,18 +1,21 @@
-import { User } from '../interfaces/user';
+import { ChatUser } from '../interfaces/chat';
 
-function ChatModalUser({ userInfo }: { userInfo: User }) {
+function ModalUser({ userInfo }: { userInfo: ChatUser }) {
     return (
-        <li className="w-full h-4 py-2 flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-full">
-                <img src={userInfo.profile?.img} className="w-3 h-3 rounded-full" />
+        <div className="w-full h-14 flex items-center space-x-6">
+            <div className="w-12 h-12 rounded-full flex items-center justify-center">
+                <img src={userInfo.profile?.img || `/profile-default.jpg`} className="w-11 h-11 rounded-full" />
             </div>
-            <div className="w-4 h-4 flex flex-col space-y-2">
-                <h3 className="font-bold">{userInfo.name}</h3>
-                <p className="text-ourGrey">{userInfo.team}</p>
+            <div className="w-52 h-12 flex flex-col justify-center space-y-[0.02rem]">
+                <h3 className="font-bold">
+                    {userInfo.name.first}
+                    {userInfo.name.last}
+                </h3>
+                <p className="text-ourGrey text-sm">{userInfo.team ? userInfo.team.name : '소속된 팀이 없습니다'}</p>
             </div>
-            <div className="w-3 h-3 rounded-2xl bg-ourBlue p-2 text-white">Contact</div>
-        </li>
+            <div className="w-20 h-8 rounded-2xl bg-ourBlue p-2 text-white text-sm flex justify-self-end items-center justify-center cursor-pointer">Contact</div>
+        </div>
     );
 }
 
-export default ChatModalUser;
+export default ModalUser;

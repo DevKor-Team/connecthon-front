@@ -13,7 +13,8 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../recoil/loginuser';
 import { User } from '../interfaces/user';
-import ChatModalUser from '../components/ChatModalUser';
+import ModalUser from '../components/ChatModalUser';
+import { ChatUser } from '../interfaces/chat';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -53,48 +54,36 @@ const tempChatList = [
     },
 ];
 
-function UserListModal({ chatRooms, setIsModalOpen }: { chatRooms: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>> }) {
-    const [userList, setUserList] = useState<Array<User>>([]);
-    useEffect(() => {
-        const fetchParticipants = async () => {
-            try {
-                await axiosInstance.get('/users').then(res => setUserList(res.data));
-            } catch (err) {
-                console.log(err);
-            }
-        };
-
-        fetchParticipants;
-    });
-
+function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: ChatUser[]; chatRooms: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>> }) {
+    console.log(typeof userList);
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center h-[100%] w-[100vw] bg-ourBlack bg-opacity-70">
-            <div className="w-[50rem] h-[30rem] bg-white rounded-2xl drop-shadow-2xl p-8">
+            <div className="w-[30rem] h-[30rem] bg-white rounded-2xl drop-shadow-2xl p-8 flex flex-col space-y-6">
                 <section className="flex items-center justify-between">
                     <h1 className="font-bold text-2xl">UserList</h1>
                     <IoMdClose size={24} className="cursor-pointer" onClick={() => setIsModalOpen(false)} />
                 </section>
-                <ul className="w-full h-full flex flex-col justify-center items-start">
-                    {userList
-                        .filter(
-                            user =>
-                                function (user: User) {
-                                    chatRooms.forEach(room => {
-                                        if (room.userName == user.name) return false;
-                                        else return true;
-                                    });
-                                },
-                        )
+                <section className="w-full h-[95%] flex flex-col space-y-6 items-start overflow-auto scrollbar">
+                    {userList.map(user => (
+                        <ModalUser key={user.id} userInfo={user} />
+                    ))}
+                    {/* {userList
+                        .filter(user => {
+                            chatRooms.forEach(room => {
+                                if (room.user == user.id) return false;
+                                else return true;
+                            });
+                        })
                         .map(user => (
-                            <ChatModalUser userInfo={user} />
-                        ))}
-                </ul>
+                            <ModalUser userInfo={user} />
+                        ))} */}
+                </section>
             </div>
         </div>
     );
 }
 
-const Chat: CustomNextPage = () => {
+function Chat() {
     //chatRooms: 사용자가 참여하고 있는 모든 채팅방 리스트
     //selectedUser: ChatRooms 중에서 선택된 유저
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
@@ -108,6 +97,10 @@ const Chat: CustomNextPage = () => {
 
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+    const [companyLevel, setCompanyLevel] = useState<number>(0);
+
+    //New Conversation 클릭 시 넘겨줄 유저리스트
+    const [userList, setUserList] = useState<ChatUser[]>([]);
 
     //채팅방 리스트 검색 관련
     const [input, setInput] = useState<string>('');
@@ -161,7 +154,7 @@ const Chat: CustomNextPage = () => {
     //     getSessionUser();
     // }, []);
 
-    //로그인한 유저가 참여중인 모든 채팅방을 불러와서 저장한다.
+    //로그인한 유저가 참여중인 모든 채팅방을 불러와서 저장합니다.
     // useEffect(() => {
     //     const fetchChatRooms = async () => {
     //         try {
@@ -172,7 +165,20 @@ const Chat: CustomNextPage = () => {
     //     };
 
     //     fetchChatRooms();
-    // });
+    // }, []);
+
+    //모든 참가자 리스트를 불러와서 저장합니다. (추후 New Conversation 모달에 전달할 배열)
+    useEffect(() => {
+        const fetchParticipants = async () => {
+            try {
+                await axiosInstance.get('/users').then(res => setUserList(res.data.data));
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        fetchParticipants();
+    }, []);
 
     //소켓을 연결합니다.
     // useEffect(() => {
@@ -206,12 +212,12 @@ const Chat: CustomNextPage = () => {
 
     //         disconnectSocket = socket.disconnect;
     //     });
-    // });
+    // }, []);
 
-    //TODO: 로그인 유저가 '참가자'이면 New Conversation 버튼 숨기기
+    //TODO: 로그인 유저가 '참가자'이면 New Conversation 버튼 숨기기, 회사의 후원금 레벨에 따라서도 숨기기
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
-            {isModalOpen ? <UserListModal chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
+            {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
             <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
                 <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button className={`w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`} onClick={() => setIsModalOpen(true)}>
@@ -262,6 +268,6 @@ const Chat: CustomNextPage = () => {
             </main>
         </div>
     );
-};
+}
 
 export default Chat;
