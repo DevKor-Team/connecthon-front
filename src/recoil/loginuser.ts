@@ -13,6 +13,7 @@ const defaultValue = {
         id: '',
         name: '',
         email: '',
+        level: 0,
         team: {
             _id: '',
             name: '',
