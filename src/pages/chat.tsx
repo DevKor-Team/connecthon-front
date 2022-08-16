@@ -139,33 +139,33 @@ function Chat() {
         } else return;
     }
 
-    //가장 먼저 현재 접속한 유저 정보 받아서 Recoil State로 저장하기.
-    //로그인하지 않은 유저는 로그인 페이지로 돌려보냅니다.
-    // useEffect(() => {
-    //     const getSessionUser = async () => {
-    //         try {
-    //             const response = await axiosInstance.get('/auth/user');
-    //             if (response.status != 401) {
-    //                 if (response.data.type == 'user') {
-    //                     setLoginUserState({
-    //                         isLogin: true,
-    //                         user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
-    //                     });
-    //                 } else if (response.data.type == 'company') {
-    //                     setLoginUserState({
-    //                         isLogin: true,
-    //                         user: response.data,
-    //                     });
-    //                 }
-    //             }
-    //         } catch (err) {
-    //             alert('로그인이 필요한 서비스입니다.');
-    //             router.push('/login');
-    //         }
-    //     };
+    // 가장 먼저 현재 접속한 유저 정보 받아서 Recoil State로 저장하기.
+    // 로그인하지 않은 유저는 로그인 페이지로 돌려보냅니다.
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                alert('로그인이 필요한 서비스입니다.');
+                router.push('/login');
+            }
+        };
 
-    //     getSessionUser();
-    // }, []);
+        getSessionUser();
+    }, []);
 
     //로그인한 유저가 참여중인 모든 채팅방을 불러와서 저장합니다.
     // useEffect(() => {
@@ -234,7 +234,7 @@ function Chat() {
                 {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
-                        className={`${loginUserState.user?.level == 1 ? null : 'hidden'} w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`}
+                        className={`${loginUserState.user?.level >= 1 ? null : 'hidden'} w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`}
                         onClick={() => setIsModalOpen(true)}
                     >
                         <ImPlus size={14} fill="white" />
