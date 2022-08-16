@@ -1,16 +1,36 @@
-import { ChatUser } from '../interfaces/chat';
+import { ChatRoomType, ChatUser } from '../interfaces/chat';
 import { BsFillChatRightFill } from 'react-icons/bs';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../recoil/loginuser';
 import { axiosInstance } from '../hooks/queries';
 import { SetStateAction } from 'react';
 
-function ModalUser({ userInfo, setIsModalOpen }: { userInfo: ChatUser; setIsModalOpen: React.Dispatch<SetStateAction<Boolean>> }) {
+function ModalUser({
+    userInfo,
+    setIsModalOpen,
+    setChatRooms,
+}: {
+    userInfo: ChatUser;
+    setIsModalOpen: React.Dispatch<SetStateAction<Boolean>>;
+    setChatRooms: React.Dispatch<SetStateAction<ChatRoomType[]>>;
+}) {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
     //어차피 이 함수를 쓸 수 있는 사용자는 회사 뿐이니, companyId에는 loginUserState.user.id를 넣어주면 된다!
     async function createChatRoom(companyId?: string, participantId?: string) {
-        await axiosInstance.post('/chat/create', { user: participantId, company: companyId });
+        try {
+            await axiosInstance.post('/chat/create', { user: participantId, company: companyId });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async function updateChatRoomList() {
+        try {
+            await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -29,6 +49,7 @@ function ModalUser({ userInfo, setIsModalOpen }: { userInfo: ChatUser; setIsModa
                 className="hidden sm:flex sm:w-20 h-8 rounded-2xl bg-ourBlue hover:bg-blue-600 p-2 text-white text-sm justify-self-end items-center justify-center cursor-pointer"
                 onClick={() => {
                     createChatRoom(loginUserState?.user?.id, userInfo.id);
+                    updateChatRoomList();
                     setIsModalOpen(false);
                 }}
             >
@@ -38,6 +59,7 @@ function ModalUser({ userInfo, setIsModalOpen }: { userInfo: ChatUser; setIsModa
                 className="sm:hidden cursor-pointer"
                 onClick={() => {
                     createChatRoom(loginUserState?.user?.id, userInfo.id);
+                    updateChatRoomList();
                     setIsModalOpen(false);
                 }}
             >

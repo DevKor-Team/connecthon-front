@@ -53,7 +53,17 @@ const tempChatList = [
     },
 ];
 
-function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: ChatUser[]; chatRooms: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<Boolean>> }) {
+function UserListModal({
+    userList,
+    chatRooms,
+    setIsModalOpen,
+    setChatRooms,
+}: {
+    userList: ChatUser[];
+    chatRooms: ChatRoomType[];
+    setIsModalOpen: React.Dispatch<SetStateAction<Boolean>>;
+    setChatRooms: React.Dispatch<SetStateAction<ChatRoomType[]>>;
+}) {
     console.log(typeof userList);
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center h-[100%] w-[100vw] bg-ourBlack bg-opacity-70">
@@ -64,7 +74,7 @@ function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: Chat
                 </section>
                 <section className="w-full h-[95%] flex flex-col space-y-6 items-start overflow-auto scrollbar">
                     {userList.map(user => (
-                        <ModalUser key={user.id} userInfo={user} setIsModalOpen={setIsModalOpen} />
+                        <ModalUser key={user.id} userInfo={user} setIsModalOpen={setIsModalOpen} setChatRooms={setChatRooms} />
                     ))}
                     {/* {userList
                         .filter(user => {
@@ -219,7 +229,7 @@ function Chat() {
 
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
-            {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
+            {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} setChatRooms={setChatRooms} /> : null}
             <main className="flex items-center h-[calc(100vh-5rem)] mt-20 md:space-x-10 ">
                 {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
