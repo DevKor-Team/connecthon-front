@@ -75,7 +75,7 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                                 theme == 'dark' ? 'after:bg-ourWhite' : 'after:bg-ourGrey after:bg-opacity-25'
                             } after:rounded-full lg:after:content-none`}
                         >
-                            <Link href="/homepage">
+                            <Link href="/home">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>HOME PAGE</span>
                             </Link>
                             <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
