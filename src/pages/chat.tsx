@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { ImPlus } from 'react-icons/im';
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlineRefresh } from 'react-icons/hi';
-import { CustomNextPage } from '../types/types';
 import { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
 import io from 'socket.io-client';
 import getConfig from 'next/config';
@@ -87,7 +86,7 @@ function Chat() {
     //chatRooms: 사용자가 참여하고 있는 모든 채팅방 리스트
     //selectedUser: ChatRooms 중에서 선택된 유저
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
-    const [selectedUser, setSelectedUser] = useState<string>('');
+    const [selectedUser, setSelectedUser] = useState<{ name: string; img: string }>({ name: '', img: '' });
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const ENDPOINT = publicRuntimeConfig.ENDPOINT;
@@ -213,14 +212,13 @@ function Chat() {
     //     });
     // }, []);
 
-    //TODO: 로그인 유저가 '참가자'이면 New Conversation 버튼 숨기기, 회사의 후원금 레벨에 따라서도 숨기기
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
             {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
             <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
                 <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
-                        className={`${loginUserState.user.level == 1 ? null : 'hidden'} w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`}
+                        className={`${loginUserState.user?.level == 1 ? null : 'hidden'} w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`}
                         onClick={() => setIsModalOpen(true)}
                     >
                         <ImPlus size={14} />

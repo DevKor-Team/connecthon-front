@@ -31,7 +31,7 @@ function onChatPartnerSelect(e: React.MouseEvent<HTMLLIElement>) {
     selectedArrow?.classList.remove('opacity-0');
 }
 
-function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; setSelectedUser: React.Dispatch<SetStateAction<string>> }) {
+function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; setSelectedUser: React.Dispatch<SetStateAction<{ name: string; img: string }>> }) {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
     //partnerName: 채팅 상대의 이름은 현재 사용자가 회사계정이면 참가자이름이고, 참가자계정이면 회사이름이다.
@@ -42,9 +42,9 @@ function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; s
     return (
         <li
             className={`w-full min-h-[4rem] rounded-md px-3 flex items-center space-x-3 hover:bg-gray-200/50 hover:cursor-pointer`}
-            onClick={() => {
-                onChatPartnerSelect;
-                setSelectedUser(partnerName);
+            onClick={e => {
+                onChatPartnerSelect(e);
+                setSelectedUser({ name: partnerName, img: partnerImg });
             }}
         >
             <div className="w-10 h-10 flex items-center rounded-full pointer-events-none">
@@ -62,13 +62,13 @@ function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; s
 }
 
 //채팅컨테이너 상단 유저 배지 컴포넌트
-function ChattingPartner({ selectedUser }: { selectedUser: string }) {
+function ChattingPartner({ selectedUser }: { selectedUser: { name: string; img: string } }) {
     return (
         <section className="w-full h-12 flex items-center pb-4 mb-4 space-x-5 border-b">
             <div className="w-12 h-12 rounded-full">
-                <img src="/symbol-2d.svg" className="w-12 h-12" />
+                <img src={selectedUser.img} className="w-12 h-12 rounded-full" />
             </div>
-            <div className="flex text-lg items-center font-semibold">{selectedUser}</div>
+            <div className="flex text-lg items-center font-semibold">{selectedUser.name}</div>
         </section>
     );
 }
