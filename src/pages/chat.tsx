@@ -48,7 +48,7 @@ const tempChatList = [
         company: 'company1',
         companyImg: 'https://picsum.photos/200',
         companyName: '네이버',
-        lastMsg: '화이팅 정호진 으아아아',
+        lastMsg: '화이팅 정호진 아아아ㅏㅇ아아아아아아아아아아아아아아아ㅏ앙아',
         lastSend: new Date(),
     },
 ];
@@ -92,6 +92,9 @@ function Chat() {
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const [messages, setMessages] = useState<MessageType[]>([]);
     const ENDPOINT = publicRuntimeConfig.ENDPOINT;
+
+    //모바일 화면일 때 채팅리스트/채팅방을 오가기 위한 상태
+    const [mobileChat, setMobileChat] = useState<Boolean>(false);
 
     let sendMessage;
     let disconnectSocket;
@@ -217,9 +220,9 @@ function Chat() {
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
             {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
-            <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
+            <main className="flex items-center h-[calc(100vh-5rem)] mt-20 md:space-x-10 ">
                 {/* 채팅방 리스트 섹션 */}
-                <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
+                <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
                         className={`${loginUserState.user?.level == 1 ? null : 'hidden'} w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`}
                         onClick={() => setIsModalOpen(true)}
@@ -251,18 +254,20 @@ function Chat() {
                         <ChatListItem key={room.id} roomInfo={room} /> 
                     ))} */}
                         {(enterPressed ? searchResult : tempChatList).map(room => (
-                            <ChatListItem key={room.id} roomInfo={room} setMessages={setMessages} setSelectedChatRoom={setSelectedChatRoom} />
+                            <ChatListItem key={room.id} roomInfo={room} setMobileChat={setMobileChat} setMessages={setMessages} setSelectedChatRoom={setSelectedChatRoom} />
                         ))}
                     </ul>
                 </ChatNavSection>
 
                 {/* 실제 채팅 내용이 오가는 채팅방 */}
-                <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
+                <div className={`${mobileChat ? 'flex flex-col' : 'hidden'} md:flex md:flex-col md:justify-center w-full h-full overflow-hidden box-border`}>
                     {selectedChatRoom.name == '' ? (
-                        <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-xl">Chats 리스트에서 대화를 나눌 상대방을 선택해 주세요</div>
+                        <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-base lg:text-xl">
+                            Chats 리스트에서 대화를 나눌 상대방을 선택해 주세요
+                        </div>
                     ) : (
                         <>
-                            <ChattingPartner selectedChatRoom={selectedChatRoom} />
+                            <ChattingPartner setMobileChat={setMobileChat} selectedChatRoom={selectedChatRoom} />
                             <ChatBubbleContainer>
                                 {messages.map(msg => (
                                     <ChatBubble key={msg.msg} type={msg.sender == loginUserState.user?.type ? 'send' : 'receive'}>
