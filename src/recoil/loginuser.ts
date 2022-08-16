@@ -1,7 +1,5 @@
 import { atom } from 'recoil';
 import { User } from '../interfaces/user';
-import { PositionType } from '../interfaces/position.types';
-import { ProviderType } from '../interfaces/provider.types';
 
 export interface LoginState {
     isLogin: boolean;
@@ -15,7 +13,14 @@ const defaultValue = {
         id: '',
         name: '',
         email: '',
-        team: '',
+        level: 0,
+        team: {
+            _id: '',
+            name: '',
+            users: [],
+            image: '',
+            description: '',
+        },
         profile: {
             link: {
                 github: '',

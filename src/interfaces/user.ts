@@ -6,7 +6,14 @@ export interface User {
     id?: string;
     name: string;
     email?: string;
-    team?: string;
+    level?: number;
+    team?: {
+        _id: string;
+        name: string;
+        users: string[];
+        image: string;
+        description: string;
+    };
     profile?: {
         link?: {
             github?: string;
