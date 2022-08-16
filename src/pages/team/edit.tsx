@@ -210,7 +210,7 @@ const ProfileEdit = () => {
                                     </section>
                                 )}
                             </Dropzone>
-                            <section className="text-sm">5MB 이하의 파일로 등록해주세요</section>
+                            <section className="text-sm">1MB 이하의 파일로 등록해주세요</section>
                         </div>
                         {Boolean(file) && onModal ? (
                             <div className="flex flex-col justify-center items-center w-[18.75rem] sm:w-[40rem] md:w-[45rem] overflow-hidden bg-ourWhite drop-shadow-xl rounded-md border absolute top-0 md:top-0 md:left-[50%] md:-translate-x-[50%] z-30">
