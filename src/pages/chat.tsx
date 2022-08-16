@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SetStateAction } from 'react';
 import { ImPlus } from 'react-icons/im';
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlineRefresh } from 'react-icons/hi';
@@ -6,7 +6,7 @@ import { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatL
 import io from 'socket.io-client';
 import getConfig from 'next/config';
 import { IoMdClose } from 'react-icons/io';
-import { ChatRoomType, ChatDataType } from '../interfaces/chat';
+import { ChatRoomType, ChatDataType, MessageType } from '../interfaces/chat';
 import { axiosInstance } from '../hooks/queries';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -84,11 +84,13 @@ function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: Chat
 
 function Chat() {
     //chatRooms: 사용자가 참여하고 있는 모든 채팅방 리스트
-    //selectedUser: ChatRooms 중에서 선택된 유저
+    //selectedChatRoom: ChatRooms 중에서 선택된 채팅방 => 채팅방 선택 시 해당 채팅방의 roomid, 상대방의 이름, 상대방의 프사가 저장됨.
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
-    const [selectedUser, setSelectedUser] = useState<{ name: string; img: string }>({ name: '', img: '' });
+    //messages: 선택된 채팅방의 모든 메시지들을 담은 배열. (ChatListItem에 전달된 room의 id를 이용하여 GET 해오는 구조)
+    const [selectedChatRoom, setSelectedChatRoom] = useState<{ roomid: string; name: string; img: string }>({ roomid: '', name: '', img: '' });
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
+    const [messages, setMessages] = useState<MessageType[]>([]);
     const ENDPOINT = publicRuntimeConfig.ENDPOINT;
 
     let sendMessage;
@@ -97,7 +99,7 @@ function Chat() {
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
-    //New Conversation 클릭 시 넘겨줄 유저리스트
+    //회사가 New Conversation 클릭 시 넘겨줄 유저리스트 (새롭게 채팅 할 유저를 찾는 데 사용)
     const [userList, setUserList] = useState<ChatUser[]>([]);
 
     //채팅방 리스트 검색 관련
@@ -249,19 +251,24 @@ function Chat() {
                         <ChatListItem key={room.id} roomInfo={room} /> 
                     ))} */}
                         {(enterPressed ? searchResult : tempChatList).map(room => (
-                            <ChatListItem key={room.id} roomInfo={room} setSelectedUser={setSelectedUser} />
+                            <ChatListItem key={room.id} roomInfo={room} setMessages={setMessages} setSelectedChatRoom={setSelectedChatRoom} />
                         ))}
                     </ul>
                 </ChatNavSection>
 
                 {/* 실제 채팅 내용이 오가는 채팅방 */}
                 <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
-                    {selectedUser.name == '' ? (
+                    {selectedChatRoom.name == '' ? (
                         <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-xl">Chats 리스트에서 대화를 나눌 상대방을 선택해 주세요</div>
                     ) : (
                         <>
-                            <ChattingPartner selectedUser={selectedUser} />
+                            <ChattingPartner selectedChatRoom={selectedChatRoom} />
                             <ChatBubbleContainer>
+                                {messages.map(msg => (
+                                    <ChatBubble key={msg.msg} type={msg.sender == loginUserState.user?.type ? 'send' : 'receive'}>
+                                        {msg.msg}
+                                    </ChatBubble>
+                                ))}
                                 <ChatBubble type="send">안수진~</ChatBubble>
                                 <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
                                 <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>

@@ -4,6 +4,8 @@ import React, { useState, SetStateAction } from 'react';
 import { ChatRoomType } from '../interfaces/chat';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../recoil/loginuser';
+import { axiosInstance } from '../hooks/queries';
+import { MessageType } from '../interfaces/chat';
 
 //채팅유저목록 Nav 컴포넌트
 function ChatNavSection({ chatRoomList, setIsModalOpen, children }: { chatRoomList: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>>; children: JSX.Element[] }) {
@@ -31,7 +33,15 @@ function onChatPartnerSelect(e: React.MouseEvent<HTMLLIElement>) {
     selectedArrow?.classList.remove('opacity-0');
 }
 
-function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; setSelectedUser: React.Dispatch<SetStateAction<{ name: string; img: string }>> }) {
+function ChatListItem({
+    roomInfo,
+    setMessages,
+    setSelectedChatRoom,
+}: {
+    roomInfo: ChatRoomType;
+    setMessages: React.Dispatch<SetStateAction<MessageType[]>>;
+    setSelectedChatRoom: React.Dispatch<SetStateAction<{ roomid: string; name: string; img: string }>>;
+}) {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
     //partnerName: 채팅 상대의 이름은 현재 사용자가 회사계정이면 참가자이름이고, 참가자계정이면 회사이름이다.
@@ -39,12 +49,18 @@ function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; s
     const partnerName = loginUserState.user?.type == 'company' ? roomInfo.userName : roomInfo.companyName;
     const partnerImg = loginUserState.user?.type == 'company' ? roomInfo.userImg : roomInfo.companyImg;
 
+    async function fetchMessages(roomid: string) {
+        const response = await axiosInstance.get(`/chat/${roomid}`);
+        setMessages(response.data.data.msgs);
+    }
+
     return (
         <li
             className={`w-full min-h-[4rem] rounded-md px-3 flex items-center space-x-3 hover:bg-gray-200/50 hover:cursor-pointer`}
             onClick={e => {
                 onChatPartnerSelect(e);
-                setSelectedUser({ name: partnerName, img: partnerImg });
+                setSelectedChatRoom({ roomid: roomInfo.id, name: partnerName, img: partnerImg });
+                fetchMessages(roomInfo.id);
             }}
         >
             <div className="w-10 h-10 flex items-center rounded-full pointer-events-none">
@@ -62,19 +78,19 @@ function ChatListItem({ roomInfo, setSelectedUser }: { roomInfo: ChatRoomType; s
 }
 
 //채팅컨테이너 상단 유저 배지 컴포넌트
-function ChattingPartner({ selectedUser }: { selectedUser: { name: string; img: string } }) {
+function ChattingPartner({ selectedChatRoom }: { selectedChatRoom: { roomid: string; name: string; img: string } }) {
     return (
         <section className="w-full h-12 flex items-center pb-4 mb-4 space-x-5 border-b">
             <div className="w-12 h-12 rounded-full">
-                <img src={selectedUser.img} className="w-12 h-12 rounded-full" />
+                <img src={selectedChatRoom.img} className="w-12 h-12 rounded-full" />
             </div>
-            <div className="flex text-lg items-center font-semibold">{selectedUser.name}</div>
+            <div className="flex text-lg items-center font-semibold">{selectedChatRoom.name}</div>
         </section>
     );
 }
 
 // 채팅내용 컨테이너 컴포넌트
-function ChatBubbleContainer({ children }: { children: JSX.Element | JSX.Element[] }) {
+function ChatBubbleContainer({ children }) {
     return (
         <section className="relative w-full h-5/6 pb-14 min-w-[24rem] flex flex-col bg-white overflow-hidden box-border">
             <div className="h-full flex flex-col overflow-y-scroll scrollbar">{children}</div>

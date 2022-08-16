@@ -12,6 +12,12 @@ export interface ChatRoomType {
     lastSend: Date;
 }
 
+export interface MessageType {
+    sender: 'user' | 'company';
+    when: Date;
+    msg: string;
+}
+
 export interface ChatDataType {
     room: string;
     sender: 'user' | 'company';
