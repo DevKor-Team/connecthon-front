@@ -65,13 +65,13 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
         }
     }
 
-    // async function handleLogOut() {
-    //     await axiosInstance.get('/auth/logout');
-    //     setLoginUserData({
-    //         isLogin: false,
-    //         user: null,
-    //     });
-    // }
+    async function handleLogOut() {
+        await axiosInstance.get('/auth/logout');
+        setLoginUserData({
+            isLogin: false,
+            user: null,
+        });
+    }
 
     return (
         <>
@@ -102,7 +102,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                     <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
-                    {/* {loginUserData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null} */}
+                    {loginUserData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null}
                 </div>
             </header>
         </>
