@@ -216,6 +216,7 @@ function Chat() {
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
             {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} /> : null}
             <main className="flex items-center h-64 md:h-[calc(100vh-5rem)] mt-20 space-x-10 ">
+                {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
                         className={`${loginUserState.user?.level == 1 ? null : 'hidden'} w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`}
@@ -239,7 +240,7 @@ function Chat() {
                             onKeyDown={e => searchUser(e)}
                             id="chat-search-input"
                         />
-                        <span className="absolute top-3.5 right-4">
+                        <span className="absolute top-3 right-4">
                             <FiSearch size={24} />
                         </span>
                     </div>
@@ -252,6 +253,8 @@ function Chat() {
                         ))}
                     </ul>
                 </ChatNavSection>
+
+                {/* 실제 채팅 내용이 오가는 채팅방 */}
                 <div className="flex flex-col justify-center w-full h-full overflow-hidden box-border">
                     {selectedUser.name == '' ? (
                         <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-xl">Chats 리스트에서 대화를 나눌 상대방을 선택해 주세요</div>
