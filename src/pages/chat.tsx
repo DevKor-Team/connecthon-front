@@ -53,7 +53,7 @@ const tempChatList = [
     },
 ];
 
-function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: ChatUser[]; chatRooms: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<boolean>> }) {
+function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: ChatUser[]; chatRooms: ChatRoomType[]; setIsModalOpen: React.Dispatch<SetStateAction<Boolean>> }) {
     console.log(typeof userList);
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center h-[100%] w-[100vw] bg-ourBlack bg-opacity-70">
@@ -64,7 +64,7 @@ function UserListModal({ userList, chatRooms, setIsModalOpen }: { userList: Chat
                 </section>
                 <section className="w-full h-[95%] flex flex-col space-y-6 items-start overflow-auto scrollbar">
                     {userList.map(user => (
-                        <ModalUser key={user.id} userInfo={user} />
+                        <ModalUser key={user.id} userInfo={user} setIsModalOpen={setIsModalOpen} />
                     ))}
                     {/* {userList
                         .filter(user => {
@@ -88,7 +88,7 @@ function Chat() {
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
     //messages: 선택된 채팅방의 모든 메시지들을 담은 배열. (ChatListItem에 전달된 room의 id를 이용하여 GET 해오는 구조)
     const [selectedChatRoom, setSelectedChatRoom] = useState<{ roomid: string; name: string; img: string }>({ roomid: '', name: '', img: '' });
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const [messages, setMessages] = useState<MessageType[]>([]);
     const ENDPOINT = publicRuntimeConfig.ENDPOINT;
@@ -107,7 +107,7 @@ function Chat() {
 
     //채팅방 리스트 검색 관련
     const [input, setInput] = useState<string>('');
-    const [enterPressed, setEnterPressed] = useState<boolean>(false);
+    const [enterPressed, setEnterPressed] = useState<Boolean>(false);
     const [searchResult, setSearchResult] = useState<ChatRoomType[]>([]);
 
     //검색창 onChange Event Handler

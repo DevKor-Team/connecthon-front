@@ -17,7 +17,7 @@ function ChatNavSection({
 }: {
     mobileChat: Boolean;
     chatRoomList: ChatRoomType[];
-    setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
+    setIsModalOpen: React.Dispatch<SetStateAction<Boolean>>;
     children: JSX.Element[];
 }) {
     return (
