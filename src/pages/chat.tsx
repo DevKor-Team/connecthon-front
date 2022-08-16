@@ -224,11 +224,13 @@ function Chat() {
                 {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
-                        className={`${loginUserState.user?.level == 1 ? null : 'hidden'} w-full rounded-md flex justify-center space-x-8 items-center bg-gray-200/50 h-16 mb-8 hover:bg-gray-400/50`}
+                        className={`${
+                            loginUserState.user?.level == 1 ? null : 'hidden'
+                        } w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue md:bg-gray-200/50 mb-8 md:hover:bg-gray-400/50`}
                         onClick={() => setIsModalOpen(true)}
                     >
-                        <ImPlus size={14} />
-                        <span className="font-medium">New Conversation</span>
+                        <ImPlus size={14} className="fill-white md:fill-black" />
+                        <span className="text-white md:text-black font-medium">New Conversation</span>
                     </button>
                     <div className="self-start mb-4 flex space-x-3 items-center">
                         <h1 className="text-3xl font-bold">Chats</h1>
