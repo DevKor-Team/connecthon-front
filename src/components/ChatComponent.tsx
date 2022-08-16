@@ -81,8 +81,8 @@ function ChatListItem({
                 setMobileChat(true);
             }}
         >
-            <div className="w-9 h-9 lg:w-10 lg:h-10 flex items-center rounded-full pointer-events-none">
-                <img src={partnerImg} className="w-9 h-9 overflow-hidden rounded-full" />
+            <div className="w-9 h-9 lg:min-w-[2.5rem] lg:h-10 flex items-center rounded-full pointer-events-none">
+                <img src={partnerImg} className="min-w-[2.25rem] h-9 overflow-hidden rounded-full" />
             </div>
             <div className="flex flex-col justify-between pointer-events-none w-6/12 lg:w-8/12">
                 <span className="text-base font-semibold">{partnerName}</span>
