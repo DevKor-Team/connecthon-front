@@ -14,7 +14,7 @@ function ModalUser({ userInfo }: { userInfo: ChatUser }) {
                 </h3>
                 <p className="text-ourGrey text-xs sm:text-sm">{userInfo.team ? userInfo.team.name : '소속된 팀이 없습니다'}</p>
             </div>
-            <div className="hidden sm:flex sm:w-20 h-8 rounded-2xl bg-ourBlue p-2 text-white text-sm justify-self-end items-center justify-center cursor-pointer">Contact</div>
+            <div className="hidden sm:flex sm:w-20 h-8 rounded-2xl bg-ourBlue hover:bg-blue-600 p-2 text-white text-sm justify-self-end items-center justify-center cursor-pointer">Contact</div>
             <div className="sm:hidden cursor-pointer">
                 <BsFillChatRightFill fill="#2087FF" size={20} />
             </div>
