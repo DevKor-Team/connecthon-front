@@ -40,7 +40,7 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/participants">PARTICIPANTS</Link>
                         </li>
                         <li onClick={closeMenu}>
-                            <Link href={`${loginUserData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
+                            <Link href={`${loginUserData.isLogin ? '/chatting' : '/login'}`}>CHAT</Link>
                         </li>
                     </ul>
                 </div>
@@ -93,7 +93,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/participants">PARTICIPANTS</Link>
                         </li>
                         <li>
-                            <Link href={`${loginUserData.isLogin ? '/chat' : '/login'}`}>CHAT</Link>
+                            <Link href={`${loginUserData.isLogin ? '/chatting' : '/login'}`}>CHAT</Link>
                         </li>
                     </ul>
                 </div>
