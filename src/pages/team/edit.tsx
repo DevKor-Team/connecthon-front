@@ -63,14 +63,12 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        axiosInstance
-            .put(`/teams/${teamId}`, {
-                data: {
-                    description: data.description,
-                    image: data.thumbnail,
-                },
-            })
-            .then(res => console.log(res.data));
+        axiosInstance.put(`/teams/${teamId}`, {
+            data: {
+                description: data.description,
+                image: data.thumbnail,
+            },
+        });
         alert('팀 프로필이 수정되었습니다!');
     };
 
@@ -102,13 +100,12 @@ const ProfileEdit = () => {
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
         const url = URL.createObjectURL(blob);
-        console.log(url);
 
         //blob객체를 서버로 전송한다.
         //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
         const data = new FormData();
         data.append('image', blob);
-        await axiosInstance.post(`/image/team/${teamId}`, data).then(res => console.log(res.data));
+        await axiosInstance.post(`/image/team/${teamId}`, data);
         alert('팀 프로필 사진이 성공적으로 업데이트 되었습니다.');
 
         const getSessionUser = async () => {
@@ -149,8 +146,6 @@ const ProfileEdit = () => {
             return alert('이미지 저장에 실패하였습니다. 다시 시도해주세요.');
         }
         createCanvas();
-        console.log(`칸바스 레프 `);
-        console.log(canvasRef.current);
         canvasRef.current.toBlob((blob: Blob | null) => uploadProfileImage(blob), 'image/*', 0.95);
 
         setOnProfileImage(true);
