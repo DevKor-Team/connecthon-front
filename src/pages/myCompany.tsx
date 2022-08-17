@@ -32,7 +32,11 @@ function myCompany() {
         getSessionUser();
     }, []);
 
-    <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">영역</main>;
+    if (loginUserState.isLogin == false) {
+        return null;
+    }
+
+    return <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">영역</main>;
 }
 
 export default myCompany;
