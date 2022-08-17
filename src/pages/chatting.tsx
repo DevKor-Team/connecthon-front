@@ -142,7 +142,11 @@ function Chat() {
 
         if (e.key == 'Enter') {
             setEnterPressed(true);
-            setSearchResult(loginUserState.user?.type == 'company' ? tempChatList.filter(room => room.userName.includes(keyword)) : tempChatList.filter(room => room.companyName.includes(keyword)));
+            setSearchResult(
+                loginUserState.user?.type == 'company'
+                    ? tempChatList.filter(room => (room.userName.first + room.userName.last).includes(keyword))
+                    : tempChatList.filter(room => room.companyName.includes(keyword)),
+            );
             setInput('');
             searchinput.blur();
         } else return;
