@@ -87,7 +87,8 @@ const ProjectDetail = () => {
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
     const userId = '62f61fe97ca40fbab4511c95';
     const teamId = '62fa4a28c4dd47bee8327262';
-    const teamMember = [];
+    const teamMember: { name: string; userImage: string; position: string }[] = [];
+    const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
 
     const getProject = async () => {
         const res = await axiosInstance.get(`/project/${teamId}`);
@@ -109,6 +110,7 @@ const ProjectDetail = () => {
                 const userRes = await axiosInstance.get(`/users/${user}`);
                 teamMember.push({ name: userRes.data.name, userImage: userRes.data.profile.img, position: userRes.data.profile.position });
             });
+            setTeamMembers(teamMember);
         } else return;
     };
 
@@ -137,9 +139,9 @@ const ProjectDetail = () => {
                 <div className="w-[100%] border-b rounded-md">
                     <div className="h-[4rem] bg-ourWhite flex">
                         <div className="grow flex px-3">
-                            <h4 className="py-6 text-md font-semibold">TEAM 승우네</h4>
+                            <h4 className="py-4 text-2xl font-semibold">TEAM 승우네</h4>
                         </div>
-                        <div className="pt-5 px-3 text-xl tracking-wide font-bold">Title Example</div>
+                        <div className="py-6 px-3 text-md tracking-wide font-light">2022 KU Hackathon</div>
                     </div>
                     <div className="h-full break-words px-3 pb-10">
                         <Viewer resultContent={projectContent} />
@@ -159,7 +161,7 @@ const ProjectDetail = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D]">
+            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[15%]">
                 <div className="flex flex-col">
                     {onLiked ? (
                         <AiFillHeart
@@ -186,56 +188,20 @@ const ProjectDetail = () => {
                     <p className="text-white text-sm text-center">{projectNumLiked}</p>
                 </div>
                 <div className="my-10 mx-3 flex md:flex-col md:ml-2 md:mr-4">
-                    <div className="md:flex md:my-3">
-                        <img src="/devkors/an.png" alt="an" className="rounded-full px-2 md:w-[3rem]" />
-                        <div className="flex justify-center items-center md:flex-col md:items-start">
-                            <p className="text-developer">DEVELOPER</p>
-                            <div className="md:flex md:items-center md:justify-start">
-                                <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">안수진</p>
-                                <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
+                    {teamMembers?.map(memb => {
+                        return (
+                            <div className="md:flex md:my-3">
+                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 md:w-[3rem]" />
+                                <div className="flex justify-center items-center md:flex-col md:items-start">
+                                    <p className="text-developer">{memb.position}</p>
+                                    <div className="md:flex md:items-center md:justify-start">
+                                        <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">{memb.name}</p>
+                                        <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="md:flex md:my-3">
-                        <img src="/devkors/an.png" alt="an" className="rounded-full px-2 md:w-[3rem]" />
-                        <div className="flex justify-center items-center md:flex-col md:items-start">
-                            <p className="text-developer">DEVELOPER</p>
-                            <div className="md:flex md:items-center md:justify-start">
-                                <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">안수진</p>
-                                <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="md:flex md:my-3">
-                        <img src="/devkors/an.png" alt="an" className="rounded-full px-2 md:w-[3rem]" />
-                        <div className="flex justify-center items-center md:flex-col md:items-start">
-                            <p className="text-developer">DEVELOPER</p>
-                            <div className="md:flex md:items-center md:justify-start">
-                                <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">안수진</p>
-                                <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="md:flex md:my-3">
-                        <img src="/devkors/an.png" alt="an" className="rounded-full px-2 md:w-[3rem]" />
-                        <div className="flex justify-center items-center md:flex-col md:items-start">
-                            <p className="text-developer">DEVELOPER</p>
-                            <div className="md:flex md:items-center md:justify-start">
-                                <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">안수진</p>
-                                <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="md:flex md:my-3">
-                        <img src="/devkors/an.png" alt="an" className="rounded-full px-2 md:w-[3rem]" />
-                        <div className="flex justify-center items-center md:flex-col md:items-start">
-                            <p className="text-developer">DEVELOPER</p>
-                            <div className="md:flex md:items-center md:justify-start">
-                                <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">안수진</p>
-                                <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
-                            </div>
-                        </div>
-                    </div>
+                        );
+                    })}
                 </div>
             </div>
 
