@@ -92,7 +92,7 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/home">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>HOME PAGE</span>
                             </Link>
-                            <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
+                            <Link href={`${loginUserData.isLogin ? (loginUserData.user?.type == 'user' ? '/mypage' : '/myCompany') : '/login'}`}>
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>MY PAGE</span>
                             </Link>
                             <span className="hidden lg:inline-block font-semibold text-ourBlack invisible">BLANK</span>
