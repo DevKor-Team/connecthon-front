@@ -108,7 +108,7 @@ const MyPage: CustomNextPage = () => {
                                                 }
                                             }}
                                         />
-                                        {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
+                                        {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute -left-3 w-[3rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div className="mx-2">
                                         <Link href={loginUserState.user?.profile?.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile?.link.instagram}` : ''}>
@@ -125,7 +125,7 @@ const MyPage: CustomNextPage = () => {
                                             </a>
                                         </Link>
 
-                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.8rem] drop-shadow-lg" /> : null}
+                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-2.5 drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
                                         <Link href={loginUserState.user?.profile?.link?.github ? `https://github.com/${loginUserState.user?.profile?.link.github}` : ''}>
@@ -142,7 +142,7 @@ const MyPage: CustomNextPage = () => {
                                             </a>
                                         </Link>
 
-                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[6.2rem] drop-shadow-lg" /> : null}
+                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[4rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
                                         <Link href={loginUserState.user?.profile?.link?.blog ? loginUserState.user?.profile?.link.blog : ''}>
