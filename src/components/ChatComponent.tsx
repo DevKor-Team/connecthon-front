@@ -66,9 +66,17 @@ function ChatListItem({
     const partnerName = loginUserState.user?.type == 'company' ? roomInfo.userName.first + roomInfo.userName.last : roomInfo.companyName;
     const partnerImg = loginUserState.user?.type == 'company' ? roomInfo.userImg || '/profile-default.jpg' : roomInfo.companyImg || '/profile-default.jpg';
 
-    async function fetchMessages(roomid: string) {
-        const response = await axiosInstance.get(`/chat/${roomid}`);
-        setMessages(response.data.data.msgs);
+    //1초마다 새로운 메시지들을 fetch해주며, 스크롤을 맨 밑으로 내려준다.
+    function fetchMessages(roomid: string) {
+        setTimeout(() => {
+            axiosInstance
+                .get(`/chat/${roomid}`)
+                .then(res => setMessages(res.data.data.msgs))
+                .then(() => {
+                    const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
+                    chatDiv.scrollTop = chatDiv.scrollHeight;
+                });
+        }, 1000);
     }
 
     return (
@@ -111,13 +119,59 @@ function ChattingPartner({ setMobileChat, selectedChatRoom }: { setMobileChat: R
 }
 
 // 채팅내용 컨테이너 컴포넌트
-function ChatBubbleContainer({ children }: { children: JSX.Element | JSX.Element[] }) {
+function ChatBubbleContainer({
+    selectedChatRoom,
+    setMessages,
+    children,
+}: {
+    selectedChatRoom: { roomid: string; name: string; img: string };
+    setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
+    children: JSX.Element | JSX.Element[];
+}) {
+    const [chatInput, setChatInput] = useState<string>();
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
+    function handleMessage(e: React.ChangeEvent<HTMLInputElement>) {
+        setChatInput(e.target.value);
+    }
+
+    //채팅 보내는 함수. 채팅 보내고 나면 기존 chatInput은 비워준다.
+    //또한, 채팅을 담은 div의 스크롤을 맨 밑으로 내려준다.
+    async function sendMessage() {
+        await axiosInstance
+            .post('/chat/send', {
+                room: selectedChatRoom.roomid,
+                msg: chatInput,
+                sender: loginUserState.user?.type,
+            })
+            .then(res => {
+                setMessages(res.data.data.msgs);
+            })
+            .then(() => {
+                setChatInput('');
+            })
+            .then(() => {
+                const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
+                chatDiv.scrollTop = chatDiv.scrollHeight;
+            });
+    }
+
     return (
         <section className="relative min-w-[20.5rem] w-full h-[91%] md:h-5/6 pb-14 min-w-[24rem] flex flex-col bg-white overflow-hidden box-border">
-            <div className="h-full min-w-[20.5rem] w-full flex flex-col overflow-y-scroll scrollbar">{children}</div>
+            <div className="h-full min-w-[20.5rem] w-full flex flex-col overflow-y-scroll scrollbar" id="chatdiv">
+                {children}
+            </div>
             <div className="absolute bottom-0 min-w-[20.5rem] w-full flex items-center bg-white">
-                <input className="min-w-[20.5rem] w-full h-14 rounded-full bg-gray-200/50 focus:outline-none px-6" placeholder="Type Message Here!" />
-                <span className="absolute bottom-[50%] translate-y-[50%] right-3.5 rounded-full w-8 h-8 bg-[#0b93f6] flex items-center justify-center">
+                <input
+                    className="min-w-[20.5rem] w-full h-14 rounded-full bg-gray-200/50 focus:outline-none px-6"
+                    placeholder="Type Message Here!"
+                    value={chatInput}
+                    onChange={e => handleMessage(e)}
+                    onKeyDown={e => {
+                        if (e.key == 'Enter') sendMessage();
+                    }}
+                />
+                <span className="absolute bottom-[50%] translate-y-[50%] right-3.5 rounded-full w-8 h-8 bg-[#0b93f6] flex items-center justify-center" onClick={sendMessage}>
                     <HiArrowNarrowUp fill="white" />
                 </span>
             </div>

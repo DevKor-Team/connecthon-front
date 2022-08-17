@@ -3,7 +3,6 @@ import { ImPlus } from 'react-icons/im';
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
-import getConfig from 'next/config';
 import { IoMdClose } from 'react-icons/io';
 import { ChatRoomType, ChatDataType, MessageType } from '../interfaces/chat';
 import { axiosInstance } from '../hooks/queries';
@@ -13,8 +12,6 @@ import { loginRecoilState } from '../recoil/loginuser';
 import { User } from '../interfaces/user';
 import ModalUser from '../components/ChatModalUser';
 import { ChatUser } from '../interfaces/chat';
-
-const { publicRuntimeConfig } = getConfig();
 
 const tempChatList = [
     {
@@ -109,13 +106,9 @@ function Chat() {
     const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const [messages, setMessages] = useState<MessageType[]>([]);
-    const ENDPOINT = publicRuntimeConfig.ENDPOINT;
 
     //모바일 화면일 때 채팅리스트/채팅방을 오가기 위한 상태
     const [mobileChat, setMobileChat] = useState<Boolean>(false);
-
-    let sendMessage;
-    let disconnectSocket;
 
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
@@ -258,21 +251,24 @@ function Chat() {
                     ) : (
                         <>
                             <ChattingPartner setMobileChat={setMobileChat} selectedChatRoom={selectedChatRoom} />
-                            <ChatBubbleContainer>
+                            <ChatBubbleContainer selectedChatRoom={selectedChatRoom} setMessages={setMessages}>
                                 <>
-                                    {messages.map(msg => (
-                                        <ChatBubble key={msg.msg} type={msg.sender == loginUserState.user?.type ? 'send' : 'receive'}>
-                                            {msg.msg}
-                                        </ChatBubble>
-                                    ))}
-                                    <ChatBubble type="send">안수진~</ChatBubble>
+                                    {messages
+                                        .slice(0)
+                                        .reverse()
+                                        .map(msg => (
+                                            <ChatBubble key={msg.msg} type={msg.sender == loginUserState.user?.type ? 'send' : 'receive'}>
+                                                {msg.msg}
+                                            </ChatBubble>
+                                        ))}
+                                    {/* <ChatBubble type="send">안수진~</ChatBubble>
                                     <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
                                     <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
                                     <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
                                     <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
                                     <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
                                     <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble> */}
                                 </>
                             </ChatBubbleContainer>
                         </>
