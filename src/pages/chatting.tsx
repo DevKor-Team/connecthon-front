@@ -168,17 +168,17 @@ function Chat() {
     }, []);
 
     //로그인한 유저가 참여중인 모든 채팅방을 불러와서 저장합니다.
-    // useEffect(() => {
-    //     const fetchChatRooms = async () => {
-    //         try {
-    //             await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     };
+    useEffect(() => {
+        const fetchChatRooms = async () => {
+            try {
+                await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
+            } catch (err) {
+                console.log(err);
+            }
+        };
 
-    //     fetchChatRooms();
-    // }, []);
+        fetchChatRooms();
+    }, []);
 
     //모든 참가자 리스트를 불러와서 저장합니다. (추후 New Conversation 모달에 전달할 배열)
     useEffect(() => {
