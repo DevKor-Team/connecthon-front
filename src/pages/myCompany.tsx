@@ -36,7 +36,11 @@ function myCompany() {
         return null;
     }
 
-    return <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">영역</main>;
+    return (
+        <main className="md:px-16 lg:px-20 xl:px-[13.375rem]">
+            <h1 className="font-bold text-lg">참가자들에게 기업에 대해서 소개해주세요!</h1>
+        </main>
+    );
 }
 
 export default myCompany;

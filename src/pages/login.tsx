@@ -14,7 +14,11 @@ const LoginPage: CustomNextPage = () => {
         const formPw = document.getElementById('formpw') as HTMLInputElement;
         const pw = formPw.value;
 
-        axiosInstance.post('/auth/local', { username: id, password: pw });
+        axiosInstance.post('/auth/local', { username: id, password: pw }).then(res => {
+            if (res.status == 302) {
+                window.location.href = 'https://connecthon.com';
+            }
+        });
     };
 
     return (
