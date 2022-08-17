@@ -3,7 +3,6 @@ import { ImPlus } from 'react-icons/im';
 import { FiSearch } from 'react-icons/fi';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
-import io from 'socket.io-client';
 import getConfig from 'next/config';
 import { IoMdClose } from 'react-icons/io';
 import { ChatRoomType, ChatDataType, MessageType } from '../interfaces/chat';
@@ -205,40 +204,6 @@ function Chat() {
 
         fetchParticipants();
     }, []);
-
-    //소켓을 연결합니다.
-    // useEffect(() => {
-    //     const socket = io(ENDPOINT);
-
-    //     socket.on('connect', () => {
-    //         socket.emit('make session', {
-    //             uid: 'userid', //loginRecoilState 사용해서 넣기
-    //             userType: 'usertype', //마찬가지로 loginReocilState의 user의 type 넣기
-    //         });
-    //     });
-
-    //     socket.on('error', () => {
-    //         //제대로 안 보내졌다고 띄워주세요.
-    //     });
-
-    //     socket.on('receive', data => {
-    //         /*
-    // 	    data = {
-    // 		room: roomid,
-    // 		sender: 'user'|'company',
-    // 		when: Date,
-    // 		msg: string,
-    // 	}
-    // 	*/
-    //         //채팅 메세지 왔으니까 띄워주시면 될 듯
-    //         //data 구조 위와 동일, 서버에 메세지 보내는 event
-    //         sendMessage = data => {
-    //             socket.emit('send', data);
-    //         };
-
-    //         disconnectSocket = socket.disconnect;
-    //     });
-    // }, []);
 
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
