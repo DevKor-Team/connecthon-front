@@ -64,7 +64,7 @@ function ChatListItem({
     //partnerName: 채팅 상대의 이름은 현재 사용자가 회사계정이면 참가자이름이고, 참가자계정이면 회사이름이다.
     //partnerImg: 마찬가지의 매커니즘
     const partnerName = loginUserState.user?.type == 'company' ? roomInfo.userName.first + roomInfo.userName.last : roomInfo.companyName;
-    const partnerImg = loginUserState.user?.type == 'company' ? roomInfo.userImg : roomInfo.companyImg;
+    const partnerImg = loginUserState.user?.type == 'company' ? roomInfo.userImg || '/profile-default.jpg' : roomInfo.companyImg || '/profile-default.jpg';
 
     async function fetchMessages(roomid: string) {
         const response = await axiosInstance.get(`/chat/${roomid}`);
@@ -81,8 +81,8 @@ function ChatListItem({
                 setMobileChat(true);
             }}
         >
-            <div className="w-9 h-9 lg:min-w-[2.5rem] lg:h-10 flex items-center rounded-full pointer-events-none">
-                <img src={partnerImg} className="min-w-[2.25rem] h-9 overflow-hidden rounded-full" />
+            <div className="w-10 h-10 lg:min-w-[2.5rem] lg:h-10 flex items-center rounded-full pointer-events-none">
+                <img src={partnerImg} className="min-w-10 h-10 overflow-hidden rounded-full" />
             </div>
             <div className="flex flex-col justify-between pointer-events-none w-6/12 lg:w-8/12 max-w-[8.25rem]">
                 <span className="text-base font-semibold">{partnerName}</span>
