@@ -22,7 +22,10 @@ const tempChatList = [
         id: '1',
         user: 'user1',
         userImg: 'https://picsum.photos/200',
-        userName: '안수진',
+        userName: {
+            first: '안',
+            last: '수진',
+        },
         company: 'company1',
         companyImg: 'https://picsum.photos/200',
         companyName: '카카오',
@@ -33,7 +36,10 @@ const tempChatList = [
         id: '2',
         user: 'user2',
         userImg: 'https://picsum.photos/200',
-        userName: '노정훈',
+        userName: {
+            first: '노',
+            last: '정훈',
+        },
         company: 'company1',
         companyImg: 'https://picsum.photos/200',
         companyName: '토스',
@@ -44,7 +50,10 @@ const tempChatList = [
         id: '3',
         user: 'user3',
         userImg: 'https://picsum.photos/200',
-        userName: '정호진',
+        userName: {
+            first: '정',
+            last: '호진',
+        },
         company: 'company1',
         companyImg: 'https://picsum.photos/200',
         companyName: '네이버',
@@ -171,7 +180,7 @@ function Chat() {
     useEffect(() => {
         const fetchChatRooms = async () => {
             try {
-                await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
+                await axiosInstance.get('/chat').then(res => setChatRooms(res.data.data));
             } catch (err) {
                 console.log(err);
             }
@@ -234,7 +243,7 @@ function Chat() {
                 {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
-                        className={`${loginUserState.user?.level >= 1 ? null : 'hidden'} w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`}
+                        className={`${loginUserState.user?.level >= 1 ? '' : 'hidden'} w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`}
                         onClick={() => setIsModalOpen(true)}
                     >
                         <ImPlus size={14} fill="white" />
@@ -263,7 +272,7 @@ function Chat() {
                         {/* {chatRooms.map(room => (
                         <ChatListItem key={room.id} roomInfo={room} /> 
                     ))} */}
-                        {(enterPressed ? searchResult : tempChatList).map(room => (
+                        {(enterPressed ? searchResult : chatRooms).map(room => (
                             <ChatListItem key={room.id} roomInfo={room} setMobileChat={setMobileChat} setMessages={setMessages} setSelectedChatRoom={setSelectedChatRoom} />
                         ))}
                     </ul>

@@ -27,7 +27,7 @@ function ModalUser({
 
     async function updateChatRoomList() {
         try {
-            await axiosInstance.get('/chat').then(res => setChatRooms(res.data));
+            await axiosInstance.get('/chat').then(res => setChatRooms(res.data.data));
         } catch (e) {
             console.log(e);
         }

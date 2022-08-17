@@ -24,7 +24,7 @@ function ChatNavSection({
         <section
             className={`relative h-[95%] md:h-[90%] ${
                 mobileChat ? 'hidden' : 'w-full'
-            } md:w-60 md:flex flex-col items-center justify-center md:mr-10 md:after:content-[' '] md:after:absolute md:after:-right-10 md:after:h-full md:after:w-[1px] md:after:bg-gray-200`}
+            } md:w-60 md:min-w-[15rem] md:flex flex-col items-center justify-center md:mr-10 md:after:content-[' '] md:after:absolute md:after:-right-10 md:after:h-full md:after:w-[1px] md:after:bg-gray-200`}
         >
             {children}
         </section>
@@ -63,7 +63,7 @@ function ChatListItem({
 
     //partnerName: 채팅 상대의 이름은 현재 사용자가 회사계정이면 참가자이름이고, 참가자계정이면 회사이름이다.
     //partnerImg: 마찬가지의 매커니즘
-    const partnerName = loginUserState.user?.type == 'company' ? roomInfo.userName : roomInfo.companyName;
+    const partnerName = loginUserState.user?.type == 'company' ? roomInfo.userName.first + roomInfo.userName.last : roomInfo.companyName;
     const partnerImg = loginUserState.user?.type == 'company' ? roomInfo.userImg : roomInfo.companyImg;
 
     async function fetchMessages(roomid: string) {

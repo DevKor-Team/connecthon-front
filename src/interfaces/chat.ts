@@ -4,7 +4,10 @@ export interface ChatRoomType {
     id: string;
     user: string;
     userImg: string;
-    userName: string;
+    userName: {
+        first: string;
+        last: string;
+    };
     company: string;
     companyImg: string;
     companyName: string;
