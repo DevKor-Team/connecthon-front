@@ -6,10 +6,10 @@ import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 import { axiosInstance } from '../../hooks/queries';
-import { useRef } from 'react';
 import { TechStack } from '../../interfaces/techStack';
+import { NextPage } from 'next';
 
-const Writer = dynamic(() => import('../../components/Editor'), { ssr: false });
+const TextEditor = dynamic(() => import('../../components/Editor'), { ssr: false });
 
 const TechStackMapping = [
     {
@@ -49,7 +49,7 @@ const TechStackMapping = [
     },
 ];
 
-const ProjectEdit = () => {
+const ProjectEdit: NextPage = () => {
     const [input, setInput] = useState<string>();
     const [enterPressed, setEnterPressed] = useState<boolean>(false);
     const [searchStack, setSearchStack] = useState<{ name: string; nameKo: string; image: string }[]>();
@@ -112,17 +112,17 @@ const ProjectEdit = () => {
             setContents(res.data.data.content);
         });
     }, []);
-    const editorRef = useRef(null);
 
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] mb-10 flex justify-center">
             <div className="w-[70%] h-[100%] mr-2 border-4 border-blue-100 ">
-                <Writer editorRef={editorRef} prevContent={contents} />
+                <TextEditor contents={contents} setContents={setContents} />
+
                 <div className="flex justify-end mx-5 my-2">
                     <button
                         className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2"
                         onClick={() => {
-                            tempSave(editorRef.current?.getInstance().getMarkdown());
+                            tempSave(contents);
                         }}
                     >
                         임시 저장
@@ -130,7 +130,7 @@ const ProjectEdit = () => {
                     <button
                         className="border-2 border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold"
                         onClick={() => {
-                            finalSave(editorRef.current?.getInstance().getMarkdown());
+                            finalSave(contents);
                             router.push(`/projects/main`);
                         }}
                     >
@@ -159,7 +159,7 @@ const ProjectEdit = () => {
                         <div className="flex flex-wrap">
                             {labels?.slice(0, -1).map(x => (
                                 <div className="flex justify-center items-center mx-1 bg-[#2087FF] rounded-xl px-3 py-1 my-1 ">
-                                    <Tag label={x} onRemove={onRemove} stacks={techStacks} setStacks={setTechStacks} />
+                                    <Tag label={x} onRemove={onRemove} />
                                 </div>
                             ))}
                         </div>
