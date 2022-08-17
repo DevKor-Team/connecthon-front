@@ -247,7 +247,9 @@ function Chat() {
                 {/* 채팅방 리스트 섹션 */}
                 <ChatNavSection mobileChat={mobileChat} chatRoomList={chatRooms} setIsModalOpen={setIsModalOpen}>
                     <button
-                        className={`${loginUserState.user?.level >= 1 ? '' : 'hidden'} w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`}
+                        className={`${
+                            loginUserState.user?.level ? (loginUserState.user.level >= 1 ? '' : 'hidden') : 'hidden'
+                        } w-full h-12 md:h-16 rounded-md flex justify-center space-x-8 items-center bg-ourBlue hover:bg-blue-600 mb-8`}
                         onClick={() => setIsModalOpen(true)}
                     >
                         <ImPlus size={14} fill="white" />
