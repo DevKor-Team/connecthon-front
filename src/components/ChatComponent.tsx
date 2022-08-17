@@ -111,7 +111,7 @@ function ChattingPartner({ setMobileChat, selectedChatRoom }: { setMobileChat: R
 }
 
 // 채팅내용 컨테이너 컴포넌트
-function ChatBubbleContainer({ children }) {
+function ChatBubbleContainer({ children }: { children: JSX.Element | JSX.Element[] }) {
     return (
         <section className="relative min-w-[20.5rem] w-full h-[91%] md:h-5/6 pb-14 min-w-[24rem] flex flex-col bg-white overflow-hidden box-border">
             <div className="h-full min-w-[20.5rem] w-full flex flex-col overflow-y-scroll scrollbar">{children}</div>

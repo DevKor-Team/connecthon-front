@@ -259,19 +259,21 @@ function Chat() {
                         <>
                             <ChattingPartner setMobileChat={setMobileChat} selectedChatRoom={selectedChatRoom} />
                             <ChatBubbleContainer>
-                                {messages.map(msg => (
-                                    <ChatBubble key={msg.msg} type={msg.sender == loginUserState.user?.type ? 'send' : 'receive'}>
-                                        {msg.msg}
-                                    </ChatBubble>
-                                ))}
-                                <ChatBubble type="send">안수진~</ChatBubble>
-                                <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
-                                <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
-                                <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                                <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                                <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                                <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
-                                <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                <>
+                                    {messages.map(msg => (
+                                        <ChatBubble key={msg.msg} type={msg.sender == loginUserState.user?.type ? 'send' : 'receive'}>
+                                            {msg.msg}
+                                        </ChatBubble>
+                                    ))}
+                                    <ChatBubble type="send">안수진~</ChatBubble>
+                                    <ChatBubble type="receive">헐 머야 대박!</ChatBubble>
+                                    <ChatBubble type="send">이거봐봐~ 아이폰메세지 따라했다!</ChatBubble>
+                                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                    <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                    <ChatBubble type="send">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                    <ChatBubble type="receive">역시.. TF팀으로 잘 데려왔따ㅠㅠ LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!LGTM!</ChatBubble>
+                                </>
                             </ChatBubbleContainer>
                         </>
                     )}
