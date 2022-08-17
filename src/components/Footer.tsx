@@ -48,8 +48,22 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                                 window.open('mailto:ku.hackerthon@gmail.com');
                             }}
                         />
-                        <SiNotion size={22} className="cursor-pointer" fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
-                        <FiInstagram size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
+                        <SiNotion
+                            size={22}
+                            className="cursor-pointer"
+                            fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
+                            onClick={() => {
+                                window.open('https://devkor.notion.site/devkor/054540123d094bbdbc0cc4d9462c5350', '_blank');
+                            }}
+                        />
+                        <FiInstagram
+                            size={22}
+                            className="cursor-pointer"
+                            stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
+                            onClick={() => {
+                                window.open('https://www.instagram.com/ku_hackathon/', '_blank');
+                            }}
+                        />
                     </nav>
                 </section>
 
