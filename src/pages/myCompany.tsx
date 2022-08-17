@@ -9,21 +9,19 @@ function myCompany() {
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
+    //경력(career) 관련
+    const [numCareerInput, setNumCareerInput] = useState<number>(1);
+
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
         name: string;
-        email: string;
-        team: string;
         github: string;
         blog: string;
         instagram: string;
         introduction: string;
-        img: string;
-        position: string;
         university: string;
         major: string;
         career: string[];
-        teamName: string;
     };
 
     //react-hook-form
@@ -67,14 +65,14 @@ function myCompany() {
                     <h1 className="text-[1.35rem] leading-[1.55rem] md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">우수한 인재도 발굴해보세요!</h1>
                 </section>
                 <section className="flex flex-col justify-center items-start mb-12 md:mb-8">
-                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">입력하신 정보는 본 사이트 랜딩페이지에서 기업 로고를</p>
-                    <p className="text-xs md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">클릭했을 시 모달창으로 보여집니다.</p>
+                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">입력하신 정보는 본 사이트 랜딩페이지에서 기업 로고를</p>
+                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">클릭했을 시 모달창으로 보여집니다.</p>
                 </section>
                 <form>
                     <div className="w-full flex flex-col space-y-[3rem] md:flex-row md:space-y-0 items-center">
-                        <section className="w-full md:min-w-[20rem] md:w-[20rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[3rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] md:drop-shadow-[0px_0px_18px_rgba(32,135,255,0.1)]">
-                            <div className="w-[11rem] h-[11rem] md:w-[15rem] md:h-[15rem]">
-                                <img className="w-[11rem] h-[11rem] md:w-[15rem] md:h-[15rem]" src="/profile-default.jpg" />
+                        <section className="w-full lg:min-w-[23rem] md:w-[23rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[3rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] md:drop-shadow-[0px_0px_15px_rgba(32,135,255,0.15)]">
+                            <div className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]">
+                                <img className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]" src="/profile-default.jpg" />
                             </div>
                             <input
                                 {...register('name')}
@@ -84,7 +82,53 @@ function myCompany() {
                                 className="border-2 rounded-md w-[15rem] mt-2 mb-6 p-1.5"
                             />
                         </section>
-                        <section className="w-full h-[33rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] md:filter-none"></section>
+                        <section className="w-full h-[33rem] p-10 md:px-16 md:py-10 flex flex-col space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] md:filter-none">
+                            <div className="flex flex-col">
+                                <label htmlFor="introduction" className="font-bold text-lg">
+                                    한 줄 소개
+                                </label>
+                                <input
+                                    {...register('introduction')}
+                                    type="text"
+                                    placeholder="기업을 한 줄로 소개해주세요!"
+                                    defaultValue={loginUserState.user?.profile?.introduction}
+                                    className="border-2 rounded-md md:w-[31.25rem] mt-2 p-1.5"
+                                />
+                            </div>
+                            <div className="flex flex-col">
+                                <label htmlFor="recruiting" className="font-bold text-lg">
+                                    채용중인 포지션 (최대 2개)
+                                </label>
+                                <div className="flex flex-col space-y-3 md:flex-row md:space-x-1 md:items-center md:space-y-0 mt-2">
+                                    <input
+                                        {...register('university')}
+                                        type="text"
+                                        placeholder="포지션을 입력해주세요!"
+                                        defaultValue={loginUserState.user?.profile?.university}
+                                        className="border-2 rounded-md md:w-[15rem] h-[2.5rem] p-1.5 mr-[1rem]"
+                                    />
+                                    <input
+                                        {...register('major')}
+                                        type="text"
+                                        placeholder="포지션을 입력해주세요!"
+                                        defaultValue={loginUserState.user?.profile?.major}
+                                        className="border-2 rounded-md md:w-[15rem] h-[2.5rem] p-1.5 mr-[1rem]"
+                                    />
+                                </div>
+                            </div>
+                            <div className="flex flex-col">
+                                <label htmlFor="rightppl" className="font-bold text-lg">
+                                    추구하는 인재상 (최대 3개)
+                                </label>
+                                <input
+                                    {...register('career')}
+                                    type="text"
+                                    placeholder="추구하는 인재상을 입력해주세요!"
+                                    defaultValue={loginUserState.user?.profile?.introduction}
+                                    className="border-2 rounded-md md:w-[31.25rem] mt-2 p-1.5"
+                                />
+                            </div>
+                        </section>
                     </div>
                 </form>
             </div>
