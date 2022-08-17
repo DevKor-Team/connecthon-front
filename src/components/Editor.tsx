@@ -33,7 +33,19 @@ const TextEditor: NextPage<IEditor> = ({ contents, setContents }) => {
         }
     }, []);
 
-    return <ToastEditor initialEditType="markdown" ref={editorRef} previewStyle="vertical" plugins={plugins} height="auto" initialValue={contents} onChange={onChangeEditor} />;
+    return (
+        <ToastEditor
+            initialEditType="markdown"
+            ref={editorRef}
+            previewStyle="vertical"
+            plugins={plugins}
+            height="auto"
+            initialValue={contents}
+            onChange={onChangeEditor}
+            hideModeSwitch={true}
+            usageStatistics={true}
+        />
+    );
 };
 
 export default TextEditor;
