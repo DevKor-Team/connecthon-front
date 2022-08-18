@@ -93,7 +93,7 @@ function myCompany() {
                 </section>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full flex flex-col space-y-[3rem] lg:flex-row lg:space-y-0 items-center">
-                        <section className="w-full lg:min-w-[23rem] lg:w-[23rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] lg:drop-shadow-[0px_0px_15px_rgba(32,135,255,0.15)]">
+                        <section className="w-full lg:min-w-[23rem] lg:w-[23rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] lg:drop-shadow-[0px_0px_15px_rgba(32,135,255,0.15)] z-20">
                             <div className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]">
                                 <img className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]" src="/profile-default.jpg" />
                             </div>
@@ -114,7 +114,7 @@ function myCompany() {
                                 />
                             </div>
                         </section>
-                        <section className="w-full relative h-[33rem] pl-10 pr-10 py-10 md:pr-0 lg:px-10 xl:px-16 md:py-10 flex flex-col space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] lg:filter-none">
+                        <section className="w-full relative h-[33rem] pl-10 pr-10 py-10 md:pr-0 lg:px-10 xl:px-16 md:py-10 flex flex-col space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] ">
                             <div className="flex flex-col">
                                 <label htmlFor="introduction" className="font-bold text-lg">
                                     한 줄 소개
