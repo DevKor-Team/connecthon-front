@@ -42,15 +42,6 @@ function myCompany() {
             })
             .then(res => console.log(res.data));
 
-        // 팀 이름을 받으면 이렇게 데이터를 전송할 거에요!
-        // axiosInstance
-        //     .put(`/teams/${data.teamName}/users`, {
-        //         data: {
-        //             users: loginUserState.user?.id,
-        //         },
-        //     })
-        //     .then(res => console.log(res.data));
-
         alert('프로필이 수정되었습니다!');
         console.log(loginUserState.user);
     };
@@ -87,6 +78,17 @@ function myCompany() {
     // if (loginUserState.isLogin == false) {
     //     return null;
     // }
+
+    //처음에 경력창 인풋 개수를 섧정해주어야 함.
+    useEffect(() => {
+        if (loginUserState.user?.profile?.career) {
+            if (loginUserState.user?.profile?.career?.length >= 1) {
+                setNumCareerInput(loginUserState.user?.profile?.career.length);
+            }
+        } else {
+            setNumCareerInput(1);
+        }
+    }, []);
 
     return (
         <main className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] bg-white md:bg-ourWhite mb-8 md:mb-0">
