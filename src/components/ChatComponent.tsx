@@ -68,7 +68,7 @@ function ChatListItem({
 
     //1초마다 새로운 메시지들을 fetch해주며, 스크롤을 맨 밑으로 내려준다.
     function fetchMessages(roomid: string) {
-        setTimeout(() => {
+        setInterval(() => {
             axiosInstance
                 .get(`/chat/${roomid}`)
                 .then(res => setMessages(res.data.data.msgs))
