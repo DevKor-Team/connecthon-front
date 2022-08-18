@@ -46,6 +46,7 @@ function Enterprise() {
                             <a
                                 className="rounded-md w-[15rem] mt-2 mb-6 p-1.5 text-center bg-ourBlack cursor-pointer text-white flex items-center justify-center space-x-2"
                                 href={`https://www.instagram.com/${company?.profile?.link?.instagram}`}
+                                target="_blank"
                             >
                                 <FiInstagram stroke="white" size={20} /> <span className="text-white">Visit Instagram</span>
                             </a>
@@ -59,8 +60,8 @@ function Enterprise() {
                         <div className="flex flex-col">
                             <h4 className="font-bold text-xl break-words">💡저희는 아래와 같은 포지션을 찾고 있어요!</h4>
                             <div className="flex flex-col space-y-3 md:flex-row md:space-x-1 md:items-center md:space-y-0 mt-2">
-                                <span className="border-2 rounded-md w-full md:w-[15rem] h-[2.5rem] p-1.5 mr-[1rem]">{company?.profile?.university}</span>
-                                <span className="border-2 rounded-md w-full md:w-[15rem] h-[2.5rem] p-1.5 mr-[1rem]">{company?.profile?.major}</span>
+                                <span className="border-2 rounded-md w-full md:w-[15rem] h-[2.5rem] p-1.5 mr-[1rem]">{company?.profile?.university || '-'}</span>
+                                <span className="border-2 rounded-md w-full md:w-[15rem] h-[2.5rem] p-1.5 mr-[1rem]">{company?.profile?.major || '-'}</span>
                             </div>
                         </div>
                         <div className="flex flex-col">
