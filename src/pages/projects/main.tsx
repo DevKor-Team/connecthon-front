@@ -8,12 +8,6 @@ import { loginRecoilState } from '../../recoil/loginuser';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
 
-// interface Members {
-//     name: string;
-//     imagePath: string;
-//     position: string;
-// }
-
 const TechStackMapping = [
     {
         name: 'photoshop',
@@ -52,30 +46,6 @@ const TechStackMapping = [
     },
 ];
 
-// const MemberDisplay: React.FC = () => {
-//     return (
-//         <div>
-//             {memberList.map(member => {
-//                 return (
-//                     <div className="flex justify-center items-center pl-5">
-//                         <img src={member.imagePath} alt={member.name} className="rounded-full h-[3rem] w-auto mx-2" />
-//                         <div className="my-3 mx-0">
-//                             {member.position == 'DEVELOPER' ? (
-//                                 <h4 className="text-[#F6CC00] text-[0.9rem] text-start">DEVELOPER</h4>
-//                             ) : member.position == 'DESIGNER' ? (
-//                                 <h4 className="text-[#29AAE4] text-md text-start">DESIGNER</h4>
-//                             ) : (
-//                                 <h4 className="text-[#FF2528] text-[1.12rem] text-start">PLANNER</h4>
-//                             )}
-//                             <h4 className="text-[#F8F8F8] opacity-40">{member.name}</h4>
-//                         </div>
-//                     </div>
-//                 );
-//             })}
-//         </div>
-//     );
-// };
-
 const ProjectDetail = () => {
     // const [tools, setTools] = useState<{ name: string; nameKo: string; image: string }[]>();
     const tools: { name: string; nameKo: string; image: string }[] = [];
@@ -85,8 +55,8 @@ const ProjectDetail = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    const userId = '62f61fe97ca40fbab4511c95';
-    const teamId = '62fa4a28c4dd47bee8327262';
+    const userId = loginUserState.user?.id;
+    const teamId = loginUserState.user?.team?._id;
     const teamMember: { name: string; userImage: string; position: string }[] = [];
     const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
 
@@ -121,7 +91,6 @@ const ProjectDetail = () => {
         projectStack?.slice(0, -1).map(x => {
             tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
         });
-        console.log(`근본적으로 project stack : ${projectStack}`);
         setUsedStack(tools);
     }, []);
 

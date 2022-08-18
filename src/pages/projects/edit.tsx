@@ -50,19 +50,18 @@ const TechStackMapping = [
 ];
 
 const ProjectEdit: NextPage = () => {
+    const router = useRouter();
+    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [input, setInput] = useState<string>();
     const [enterPressed, setEnterPressed] = useState<boolean>(false);
     const [searchStack, setSearchStack] = useState<{ name: string; nameKo: string; image: string }[]>();
     const [labels, setLabels] = useState<Array<string>>(['']);
-    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    const [techStacks, setTechStacks] = useState<TechStack[]>();
-    const [contents, setContents] = useState<string>('프로젝트 내용을 입력해주세요');
-    const teamId = '62fa4a28c4dd47bee8327262';
-    const router = useRouter();
 
-    useEffect(() => {
-        setTechStacks([TechStack.photoshop, TechStack.illustrator, TechStack.indesign, TechStack.adobexd, TechStack.figma, TechStack.zeplin, TechStack.protopie]);
-    }, []);
+    const [contents, setContents] = useState<string>('프로젝트 내용을 입력해주세요');
+    const [stacks, setStacks] = useState<string[]>();
+    const [techStacks, setTechStacks] = useState<TechStack[]>();
+
+    const teamId = loginUserState.user?.team?._id;
 
     const onRemove = (selectedLabel: string) => {
         setLabels(labels.filter(label => label !== selectedLabel));
@@ -87,7 +86,7 @@ const ProjectEdit: NextPage = () => {
     }
     const tempSave = (projectContent: string) => {
         axiosInstance
-            .put(`/temp/update/62fa4a28c4dd47bee8327262`, {
+            .put(`/temp/update/${teamId}`, {
                 change: {
                     content: projectContent,
                     stack: labels,
@@ -98,7 +97,7 @@ const ProjectEdit: NextPage = () => {
 
     const finalSave = (projectContent: string) => {
         axiosInstance
-            .put(`/project/update/62fa4a28c4dd47bee8327262`, {
+            .put(`/project/update/${teamId}`, {
                 change: {
                     content: projectContent,
                     stack: labels,
@@ -108,11 +107,12 @@ const ProjectEdit: NextPage = () => {
     };
 
     useEffect(() => {
-        axiosInstance.get(`/temp/${teamId}`).then(res => {
+        setTechStacks([TechStack.photoshop, TechStack.illustrator, TechStack.indesign, TechStack.adobexd, TechStack.figma, TechStack.zeplin, TechStack.protopie]);
+        axiosInstance.get(`/project/${teamId}`).then(res => {
             setContents(res.data.data.content);
+            setStacks(res.data.data.stacks);
         });
     }, []);
-
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] mb-10 flex justify-center">
             <div className="w-[70%] h-[100%] mr-2 border-4 border-blue-100 ">
@@ -123,6 +123,7 @@ const ProjectEdit: NextPage = () => {
                         className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2"
                         onClick={() => {
                             tempSave(contents);
+                            alert('임시 저장되었습니다!');
                         }}
                     >
                         임시 저장
