@@ -88,8 +88,8 @@ function myCompany() {
                     <h1 className="text-[1.35rem] leading-[1.55rem] md:leading-[2.813rem] md:text-[2.125rem] font-extrabold">우수한 인재도 발굴해보세요!</h1>
                 </section>
                 <section className="flex flex-col justify-center items-start mb-12 md:mb-8">
-                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">입력하신 정보는 본 사이트 랜딩페이지에서 기업 로고를</p>
-                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">클릭했을 시 모달창으로 보여집니다.</p>
+                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">입력하신 정보는 본 사이트 랜딩페이지에서 기업 로고 클릭 시</p>
+                    <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">해당 정보가 가공된 페이지로 이동되어 보여집니다. </p>
                 </section>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full flex flex-col space-y-[3rem] lg:flex-row lg:space-y-0 items-center">
