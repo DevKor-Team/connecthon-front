@@ -85,7 +85,6 @@ const ProjectEdit: NextPage = () => {
     const tempSave = (projectContent: string) => {
         axiosInstance
             .put(`/temp/update/${teamId}`, {
-
                 change: {
                     content: projectContent,
                     stack: labels,
