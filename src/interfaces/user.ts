@@ -5,6 +5,8 @@ export interface User {
     type?: string;
     id?: string;
     name: string;
+    logo?: string;
+    alias?: string;
     email?: string;
     level?: number;
     team?: {
