@@ -95,7 +95,7 @@ function myCompany() {
                     <div className="w-full flex flex-col space-y-[3rem] lg:flex-row lg:space-y-0 items-center">
                         <section className="w-full lg:min-w-[23rem] lg:w-[23rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] lg:drop-shadow-[0px_0px_15px_rgba(32,135,255,0.15)] z-20">
                             <div className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]">
-                                <img className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]" src={`${loginUserState.user?.logo || '/profile-default.jpg'}`} />
+                                <img className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem] rounded-xl" src={`${loginUserState.user?.logo || '/profile-default.jpg'}`} />
                             </div>
                             <div className="flex flex-col space-y-2">
                                 <input
@@ -109,7 +109,7 @@ function myCompany() {
                                     {...register('instagram')}
                                     type="text"
                                     defaultValue={`${loginUserState.user?.profile?.link?.instagram}`}
-                                    placeholder="인스타그램 아이디를 입력해주세요"
+                                    placeholder="(@ 제외) 인스타그램 아이디를 입력해주세요"
                                     className="border-2 rounded-md w-[15rem] mt-2 mb-6 p-1.5"
                                 />
                             </div>
