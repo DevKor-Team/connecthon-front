@@ -11,11 +11,18 @@ import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import { NextPage } from 'next';
 import React, { useEffect } from 'react';
 import { useRef } from 'react';
+import { axiosInstance } from '../hooks/queries';
 
 interface IEditor {
     contents: string;
     setContents: React.Dispatch<React.SetStateAction<string>>;
 }
+
+type HookCallback = (url: string, text?: string) => void;
+
+export type HookMap = {
+    addImageBlobHook?: (blob: Blob | File, callback: HookCallback) => void;
+};
 
 const TextEditor: NextPage<IEditor> = ({ contents, setContents }) => {
     const editorRef = useRef<ToastEditor>(null);
@@ -44,6 +51,15 @@ const TextEditor: NextPage<IEditor> = ({ contents, setContents }) => {
             onChange={onChangeEditor}
             hideModeSwitch={true}
             usageStatistics={true}
+            hooks={{
+                addImageBlobHook: async (blob, callback) => {
+                    const data = new FormData();
+                    data.append('image', blob);
+                    const res = await axiosInstance.post(`/image`, data);
+                    const imgUrl = res.data.url;
+                    callback(imgUrl, 'description');
+                },
+            }}
         />
     );
 };
