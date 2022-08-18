@@ -48,8 +48,22 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                                 window.open('mailto:ku.hackerthon@gmail.com');
                             }}
                         />
-                        <SiNotion size={22} className="cursor-pointer" fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
-                        <FiInstagram size={22} className="cursor-pointer" stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`} />
+                        <SiNotion
+                            size={22}
+                            className="cursor-pointer"
+                            fill={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
+                            onClick={() => {
+                                window.open('https://devkor.notion.site/devkor/054540123d094bbdbc0cc4d9462c5350', '_blank');
+                            }}
+                        />
+                        <FiInstagram
+                            size={22}
+                            className="cursor-pointer"
+                            stroke={`${theme == 'dark' ? '#F8F8F8' : 'black'}`}
+                            onClick={() => {
+                                window.open('https://www.instagram.com/ku_hackathon/', '_blank');
+                            }}
+                        />
                     </nav>
                 </section>
 
@@ -78,7 +92,7 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/home">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>HOME PAGE</span>
                             </Link>
-                            <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
+                            <Link href={`${loginUserData.isLogin ? (loginUserData.user?.type == 'user' ? '/mypage' : '/myCompany') : '/login'}`}>
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>MY PAGE</span>
                             </Link>
                             <span className="hidden lg:inline-block font-semibold text-ourBlack invisible">BLANK</span>

@@ -30,10 +30,8 @@ const MyPage: CustomNextPage = () => {
                             user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
                         });
                     } else if (response.data.type == 'company') {
-                        setLoginUserState({
-                            isLogin: true,
-                            user: response.data,
-                        });
+                        alert('참가자 계정만 접근 가능한 페이지입니다.');
+                        router.back();
                     }
                 }
             } catch (err) {
@@ -104,52 +102,63 @@ const MyPage: CustomNextPage = () => {
                                                 if (loginUserState.user?.email) {
                                                     window.open(`mailto:${loginUserState.user?.email}`);
                                                 } else {
-                                                    alert('해당 참가자의 이메일 정보가 없어요!');
+                                                    alert('해당 참가자의 이메일 정보가 없습니다!');
                                                 }
                                             }}
                                         />
-                                        {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute left-6 w-[3rem] drop-shadow-lg" /> : null}
+                                        {onMail ? <img src="/mail-text.svg" alt="mail-text" className="absolute -left-3 w-[3rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div className="mx-2">
-                                        <Link href={loginUserState.user?.profile?.link?.instagram ? `https://www.instagram.com/${loginUserState.user?.profile?.link.instagram}` : ''}>
-                                            <a>
-                                                <FiInstagram
-                                                    className="text-2xl cursor-pointer"
-                                                    onMouseOver={() => {
-                                                        setOnInstagram(true);
-                                                    }}
-                                                    onMouseOut={() => {
-                                                        setOnInstagram(false);
-                                                    }}
-                                                />
-                                            </a>
-                                        </Link>
+                                        <FiInstagram
+                                            className="text-2xl cursor-pointer"
+                                            onMouseOver={() => {
+                                                setOnInstagram(true);
+                                            }}
+                                            onMouseOut={() => {
+                                                setOnInstagram(false);
+                                            }}
+                                            onClick={() => {
+                                                if (loginUserState.user?.profile?.link?.instagram) {
+                                                    window.open(`https://instagram.com/${loginUserState.user?.profile?.link?.instagram}`);
+                                                } else {
+                                                    alert('해당 참가자의 인스타그램 계정 정보가 없습니다!');
+                                                }
+                                            }}
+                                        />
 
-                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-[2.8rem] drop-shadow-lg" /> : null}
+                                        {onInstagram ? <img src="/instagram-text.svg" alt="mail-text" className="absolute left-2.5 drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
-                                        <Link href={loginUserState.user?.profile?.link?.github ? `https://github.com/${loginUserState.user?.profile?.link.github}` : ''}>
-                                            <a>
-                                                <FiGithub
-                                                    className="text-2xl cursor-pointer"
-                                                    onMouseOver={() => {
-                                                        setOnGithub(true);
-                                                    }}
-                                                    onMouseOut={() => {
-                                                        setOnGithub(false);
-                                                    }}
-                                                />
-                                            </a>
-                                        </Link>
+                                        <FiGithub
+                                            className="text-2xl cursor-pointer"
+                                            onMouseOver={() => {
+                                                setOnGithub(true);
+                                            }}
+                                            onMouseOut={() => {
+                                                setOnGithub(false);
+                                            }}
+                                            onClick={() => {
+                                                if (loginUserState.user?.profile?.link?.github) {
+                                                    window.open(`https://github.com/${loginUserState.user?.profile?.link.github}`);
+                                                } else {
+                                                    alert('해당 참가자의 Github 계정 정보가 없습니다!');
+                                                }
+                                            }}
+                                        />
 
-                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[6.2rem] drop-shadow-lg" /> : null}
+                                        {onGithub ? <img src="/github-text.svg" alt="github-text" className="absolute left-[4rem] drop-shadow-lg" /> : null}
                                     </div>
                                     <div>
-                                        <Link href={loginUserState.user?.profile?.link?.blog ? loginUserState.user?.profile?.link.blog : ''}>
-                                            <a>
-                                                <FiHome className="text-2xl cursor-pointer" />
-                                            </a>
-                                        </Link>
+                                        <FiHome
+                                            className="text-2xl cursor-pointer"
+                                            onClick={() => {
+                                                if (loginUserState.user?.profile?.link?.blog) {
+                                                    window.open(`${loginUserState.user?.profile?.link?.blog}`);
+                                                } else {
+                                                    alert('해당 참가자의 블로그 정보가 없습니다!');
+                                                }
+                                            }}
+                                        />
                                     </div>
                                 </div>
                             </div>

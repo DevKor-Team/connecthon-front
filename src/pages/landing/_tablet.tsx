@@ -1,8 +1,24 @@
 import { Parallax } from 'react-scroll-parallax';
 import Button from '../../components/Button';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { axiosInstance } from '../../hooks/queries';
+import { Company } from '../../interfaces/company';
 
 const TabletLanding = () => {
+    const [companyList, setCompanyList] = useState<Company[]>([]);
+    useEffect(() => {
+        async function fetchCompanies() {
+            try {
+                await axiosInstance.get('/companies').then(res => setCompanyList(res.data.data));
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        fetchCompanies();
+    }, []);
+
     return (
         <div>
             <div className="w-[100%] h-[45rem]">
@@ -61,7 +77,17 @@ const TabletLanding = () => {
                 <Parallax opacity={[0.1, 1]} translateY={[-50, -50]} startScroll={900} endScroll={1200}>
                     <div>
                         <h3 className="mb-[5rem] font-semibold text-3xl">후원사</h3>
-                        <img src="/sponsors.svg" alt="companies" />
+                        <div className="w-full grid grid-cols-5 grid-flow-row gap-8">
+                            {companyList
+                                .filter(comp => !comp.alias?.includes('devkor'))
+                                .map(comp => (
+                                    <Link href={`/enterprise/${comp.id}`}>
+                                        <div className="h-[5rem] flex items-center justify-center">
+                                            <img src={`${comp.logo}`} className="cursor-pointer" />
+                                        </div>
+                                    </Link>
+                                ))}
+                        </div>
 
                         <Link href="/home">
                             <a>

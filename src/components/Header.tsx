@@ -99,7 +99,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                 </div>
 
                 <div className="flex items-center space-x-3 md:space-x-6 font-light cursor-pointer md:mr-12 lg:mr-16">
-                    <Link href={`${loginUserData.isLogin ? '/mypage' : '/login'}`}>
+                    <Link href={`${loginUserData.isLogin ? (loginUserData.user?.type == 'user' ? '/mypage' : '/myCompany') : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
                     {/* {loginUserData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null} */}
