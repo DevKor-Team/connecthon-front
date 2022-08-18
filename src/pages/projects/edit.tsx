@@ -56,13 +56,11 @@ const ProjectEdit: NextPage = () => {
     const [enterPressed, setEnterPressed] = useState<boolean>(false);
     const [searchStack, setSearchStack] = useState<{ name: string; nameKo: string; image: string }[]>();
     const [labels, setLabels] = useState<Array<string>>(['']);
-
     const [contents, setContents] = useState<string>('프로젝트 내용을 입력해주세요');
     const [stacks, setStacks] = useState<string[]>();
     const [techStacks, setTechStacks] = useState<TechStack[]>();
 
     const teamId = loginUserState.user?.team?._id;
-
     const onRemove = (selectedLabel: string) => {
         setLabels(labels.filter(label => label !== selectedLabel));
     };
@@ -87,6 +85,7 @@ const ProjectEdit: NextPage = () => {
     const tempSave = (projectContent: string) => {
         axiosInstance
             .put(`/temp/update/${teamId}`, {
+
                 change: {
                     content: projectContent,
                     stack: labels,

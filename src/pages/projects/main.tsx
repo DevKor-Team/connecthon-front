@@ -7,7 +7,6 @@ import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
-
 const TechStackMapping = [
     {
         name: 'photoshop',
@@ -45,7 +44,6 @@ const TechStackMapping = [
         image: '/stacks/protopie.svg',
     },
 ];
-
 const ProjectDetail = () => {
     // const [tools, setTools] = useState<{ name: string; nameKo: string; image: string }[]>();
     const tools: { name: string; nameKo: string; image: string }[] = [];
