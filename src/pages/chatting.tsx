@@ -214,6 +214,11 @@ function Chat() {
         return () => clearInterval(interval);
     }, [selectedChatRoom]);
 
+    useEffect(() => {
+        const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
+        chatDiv.scrollTop = chatDiv?.scrollHeight;
+    }, [messages]);
+
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem] relative">
             {isModalOpen ? <UserListModal userList={userList} chatRooms={chatRooms} setIsModalOpen={setIsModalOpen} setChatRooms={setChatRooms} /> : null}
@@ -266,7 +271,7 @@ function Chat() {
                 {/* 실제 채팅 내용이 오가는 채팅방 */}
                 <div className={`${mobileChat ? 'flex flex-col' : 'hidden'} md:flex md:flex-col md:justify-center w-full h-full overflow-hidden box-border`}>
                     {selectedChatRoom.name == '' ? (
-                        <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-base lg:text-xl">
+                        <div className="w-full h-[90%] flex justify-center items-center bg-ourWhite rounded-2xl font-base text-base lg:text-xl" id="chatdiv">
                             Chats 리스트에서 대화를 나눌 상대방을 선택해 주세요
                         </div>
                     ) : (
