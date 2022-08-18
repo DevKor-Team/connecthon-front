@@ -176,14 +176,20 @@ function Chat() {
     useEffect(() => {
         const fetchChatRooms = async () => {
             try {
-                await axiosInstance.get('/chat').then(res => setChatRooms(res.data.data));
+                await axiosInstance.get('/chat').then(res => {
+                    if (JSON.stringify(chatRooms) == JSON.stringify(res.data.data)) {
+                        return;
+                    } else {
+                        setChatRooms(res.data.data);
+                    }
+                });
             } catch (err) {
                 console.log(err);
             }
         };
 
         fetchChatRooms();
-    }, []);
+    }, [chatRooms]);
 
     //모든 참가자 리스트를 불러와서 저장합니다. (추후 New Conversation 모달에 전달할 배열)
     useEffect(() => {
