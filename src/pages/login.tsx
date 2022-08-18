@@ -6,7 +6,7 @@ import { axiosInstance } from '../hooks/queries';
 const LoginPage: CustomNextPage = () => {
     const [isParticipantMode, setParticipantMode] = useState(true);
 
-    const handleCompanyLogin = (e: React.FormEvent) => {
+    const handleCompanyLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         const formId = document.getElementById('formid') as HTMLInputElement;
         const id = formId.value;
@@ -14,7 +14,15 @@ const LoginPage: CustomNextPage = () => {
         const formPw = document.getElementById('formpw') as HTMLInputElement;
         const pw = formPw.value;
 
-        axiosInstance.post('/auth/local', { username: id, password: pw });
+        try {
+            await axiosInstance.post('/auth/local', { username: id, password: pw }).then(res => {
+                if (res.status == 302) {
+                    window.location.href = 'https://connecthon.com';
+                }
+            });
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (

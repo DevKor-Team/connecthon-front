@@ -12,6 +12,8 @@ const defaultValue = {
         type: 'user',
         id: '',
         name: '',
+        alias: '',
+        logo: '',
         email: '',
         level: 0,
         team: {
