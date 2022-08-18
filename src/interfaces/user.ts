@@ -1,6 +1,3 @@
-import { PositionType } from './position.types';
-import { ProviderType } from './provider.types';
-
 export interface User {
     type?: string;
     id?: string;
