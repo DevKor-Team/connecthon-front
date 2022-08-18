@@ -51,33 +51,33 @@ function myCompany() {
         mode: 'onSubmit',
     });
 
-    // useEffect(() => {
-    //     const getSessionUser = async () => {
-    //         try {
-    //             const response = await axiosInstance.get('/auth/user');
-    //             if (response.status != 401) {
-    //                 if (response.data.type == 'user') {
-    //                     alert('기업 계정만 접근 가능한 페이지입니다.');
-    //                     router.back();
-    //                 } else if (response.data.type == 'company') {
-    //                     setLoginUserState({
-    //                         isLogin: true,
-    //                         user: response.data,
-    //                     });
-    //                 }
-    //             }
-    //         } catch (err) {
-    //             alert('로그인이 필요한 서비스입니다.');
-    //             router.push('/login');
-    //         }
-    //     };
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        alert('기업 계정만 접근 가능한 페이지입니다.');
+                        router.back();
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                alert('로그인이 필요한 서비스입니다.');
+                router.push('/login');
+            }
+        };
 
-    //     getSessionUser();
-    // }, []);
+        getSessionUser();
+    }, []);
 
-    // if (loginUserState.isLogin == false) {
-    //     return null;
-    // }
+    if (loginUserState.isLogin == false) {
+        return null;
+    }
 
     //처음에 경력창 인풋 개수를 섧정해주어야 함.
     useEffect(() => {
