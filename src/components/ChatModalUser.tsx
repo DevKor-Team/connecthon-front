@@ -21,7 +21,7 @@ function ModalUser({
         try {
             await axiosInstance.post('/chat/create', { user: participantId, company: companyId });
         } catch (e) {
-            console.log(e);
+            alert('해당 참가자와의 채팅방이 이미 존재합니다!');
         }
     }
 

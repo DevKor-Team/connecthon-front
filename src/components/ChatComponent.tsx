@@ -1,7 +1,7 @@
 import { HiArrowNarrowUp } from 'react-icons/hi';
 import { GrPrevious } from 'react-icons/gr';
 import { IoIosArrowForward } from 'react-icons/io';
-import React, { useState, SetStateAction } from 'react';
+import React, { useState, SetStateAction, useEffect } from 'react';
 import { ChatRoomType } from '../interfaces/chat';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../recoil/loginuser';
@@ -53,12 +53,14 @@ function ChatListItem({
     messages,
     setMobileChat,
     setMessages,
+    selectedChatRoom,
     setSelectedChatRoom,
 }: {
     roomInfo: ChatRoomType;
     messages: MessageType[];
     setMobileChat: React.Dispatch<SetStateAction<Boolean>>;
     setMessages: React.Dispatch<SetStateAction<MessageType[]>>;
+    selectedChatRoom: { roomid: string; name: string; img: string };
     setSelectedChatRoom: React.Dispatch<SetStateAction<{ roomid: string; name: string; img: string }>>;
 }) {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
@@ -74,16 +76,13 @@ function ChatListItem({
         const interv = setInterval(async () => {
             await axiosInstance.get(`/chat/${roomid}`).then(res => {
                 if (JSON.stringify(messages[0]) == JSON.stringify(res.data.data.msgs[0])) {
-                    console.log(JSON.stringify(messages[0]));
-                    console.log(JSON.stringify(res.data.data.msgs[0]));
+                    // console.log(JSON.stringify(messages[0]));
+                    // console.log(JSON.stringify(res.data.data.msgs[0]));
                     return;
                 } else {
-                    setMessages(prev => res.data.data.msgs);
-                    console.log('내리겠습니다~');
-                    console.log(JSON.stringify(messages[0]));
-                    console.log(JSON.stringify(res.data.data.msgs[0]));
-                    const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
-                    chatDiv.scrollTop = chatDiv.scrollHeight;
+                    setMessages(res.data.data.msgs);
+                    // const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
+                    // chatDiv.scrollTop = chatDiv.scrollHeight;
                 }
             });
         }, 1000);
@@ -95,10 +94,10 @@ function ChatListItem({
         <li
             className={`w-full min-h-[4rem] rounded-md px-3 flex items-center space-x-3 hover:bg-gray-200/50 hover:cursor-pointer`}
             onClick={e => {
-                clearInterval(intervariable);
+                //clearInterval(intervariable);
                 onChatPartnerSelect(e);
                 setSelectedChatRoom({ roomid: roomInfo.id, name: partnerName, img: partnerImg });
-                fetchMessages(roomInfo.id);
+                //fetchMessages(roomInfo.id);
                 setMobileChat(true);
             }}
             onBlur={() => clearInterval(intervariable)}
