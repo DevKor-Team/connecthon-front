@@ -50,16 +50,19 @@ function onChatPartnerSelect(e: React.MouseEvent<HTMLLIElement>) {
 
 function ChatListItem({
     roomInfo,
+    messages,
     setMobileChat,
     setMessages,
     setSelectedChatRoom,
 }: {
     roomInfo: ChatRoomType;
+    messages: MessageType[];
     setMobileChat: React.Dispatch<SetStateAction<Boolean>>;
     setMessages: React.Dispatch<SetStateAction<MessageType[]>>;
     setSelectedChatRoom: React.Dispatch<SetStateAction<{ roomid: string; name: string; img: string }>>;
 }) {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+    const [intervariable, setIntervariable] = useState<NodeJS.Timer>();
 
     //partnerName: 채팅 상대의 이름은 현재 사용자가 회사계정이면 참가자이름이고, 참가자계정이면 회사이름이다.
     //partnerImg: 마찬가지의 매커니즘
@@ -68,26 +71,37 @@ function ChatListItem({
 
     //1초마다 새로운 메시지들을 fetch해주며, 스크롤을 맨 밑으로 내려준다.
     function fetchMessages(roomid: string) {
-        setInterval(() => {
-            axiosInstance
-                .get(`/chat/${roomid}`)
-                .then(res => setMessages(res.data.data.msgs))
-                .then(() => {
+        const interv = setInterval(async () => {
+            await axiosInstance.get(`/chat/${roomid}`).then(res => {
+                if (JSON.stringify(messages[0]) == JSON.stringify(res.data.data.msgs[0])) {
+                    console.log(JSON.stringify(messages[0]));
+                    console.log(JSON.stringify(res.data.data.msgs[0]));
+                    return;
+                } else {
+                    setMessages(prev => res.data.data.msgs);
+                    console.log('내리겠습니다~');
+                    console.log(JSON.stringify(messages[0]));
+                    console.log(JSON.stringify(res.data.data.msgs[0]));
                     const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
                     chatDiv.scrollTop = chatDiv.scrollHeight;
-                });
+                }
+            });
         }, 1000);
+
+        setIntervariable(interv);
     }
 
     return (
         <li
             className={`w-full min-h-[4rem] rounded-md px-3 flex items-center space-x-3 hover:bg-gray-200/50 hover:cursor-pointer`}
             onClick={e => {
+                clearInterval(intervariable);
                 onChatPartnerSelect(e);
                 setSelectedChatRoom({ roomid: roomInfo.id, name: partnerName, img: partnerImg });
                 fetchMessages(roomInfo.id);
                 setMobileChat(true);
             }}
+            onBlur={() => clearInterval(intervariable)}
         >
             <div className="w-10 h-10 lg:min-w-[2.5rem] lg:h-10 flex items-center rounded-full pointer-events-none">
                 <img src={partnerImg} className="min-w-10 h-10 overflow-hidden rounded-full" />
@@ -158,7 +172,7 @@ function ChatBubbleContainer({
 
     return (
         <section className="relative min-w-[20.5rem] w-full h-[91%] md:h-5/6 pb-14 min-w-[24rem] flex flex-col bg-white overflow-hidden box-border">
-            <div className="h-full min-w-[20.5rem] w-full flex flex-col overflow-y-scroll scrollbar" id="chatdiv">
+            <div className="h-full min-w-[20.5rem] w-full flex flex-col overflow-y-auto scroll-smooth scrollbar" id="chatdiv">
                 {children}
             </div>
             <div className="absolute bottom-0 min-w-[20.5rem] w-full flex items-center bg-white">
