@@ -7,8 +7,40 @@ const nextConfig = {
     async rewrites() {
         return [
             {
-                source: '/:path*',
-                destination: `https://${process.env.ENDPOINT}/:path*`,
+                source: '/users/:path*',
+                destination: `https://${process.env.ENDPOINT}/users/:path*`,
+            },
+            {
+                source: '/companies/:path*',
+                destination: `https://${process.env.ENDPOINT}/companies/:path*`,
+            },
+            {
+                source: '/auth/:path*',
+                destination: `https://${process.env.ENDPOINT}/auth/:path*`,
+            },
+            {
+                source: '/teams/:path*',
+                destination: `https://${process.env.ENDPOINT}/teams/:path*`,
+            },
+            {
+                source: '/project/:path*',
+                destination: `https://${process.env.ENDPOINT}/project/:path*`,
+            },
+            {
+                source: '/temp/:path*',
+                destination: `https://${process.env.ENDPOINT}/temp/:path*`,
+            },
+            {
+                source: '/image/:path*',
+                destination: `https://${process.env.ENDPOINT}/image/:path*`,
+            },
+            {
+                source: '/project/:path*',
+                destination: `https://${process.env.ENDPOINT}/project/:path*`,
+            },
+            {
+                source: '/chat/:path*',
+                destination: `https://${process.env.ENDPOINT}/chat/:path*`,
             },
         ];
     },
