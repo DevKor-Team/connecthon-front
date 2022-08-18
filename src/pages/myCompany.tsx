@@ -69,8 +69,8 @@ function myCompany() {
                     <p className="text-sm md:leading-[1.438rem] md:text-[0.938rem] text-ourGrey font-medium">클릭했을 시 모달창으로 보여집니다.</p>
                 </section>
                 <form>
-                    <div className="w-full flex flex-col space-y-[3rem] md:flex-row md:space-y-0 items-center">
-                        <section className="w-full lg:min-w-[23rem] md:w-[23rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[3rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] md:drop-shadow-[0px_0px_15px_rgba(32,135,255,0.15)]">
+                    <div className="w-full flex flex-col space-y-[3rem] lg:flex-row lg:space-y-0 items-center">
+                        <section className="w-full lg:min-w-[23rem] lg:w-[23rem] h-[22rem] md:h-[33rem] flex flex-col justify-center items-center space-y-[3rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] lg:drop-shadow-[0px_0px_15px_rgba(32,135,255,0.15)]">
                             <div className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]">
                                 <img className="w-[11rem] h-[11rem] lg:w-[15rem] lg:h-[15rem]" src="/profile-default.jpg" />
                             </div>
@@ -82,7 +82,7 @@ function myCompany() {
                                 className="border-2 rounded-md w-[15rem] mt-2 mb-6 p-1.5"
                             />
                         </section>
-                        <section className="w-full h-[33rem] p-10 md:px-16 md:py-10 flex flex-col space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] md:filter-none">
+                        <section className="w-full h-[33rem] p-10 md:px-16 md:py-10 flex flex-col space-y-[2rem] bg-white rounded-2xl drop-shadow-[0px_0px_12px_rgba(32,135,255,0.1)] lg:filter-none">
                             <div className="flex flex-col">
                                 <label htmlFor="introduction" className="font-bold text-lg">
                                     한 줄 소개
