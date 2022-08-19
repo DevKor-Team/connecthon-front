@@ -60,6 +60,7 @@ const ProjectDetail = () => {
     const teamMember: { name: string; userImage: string; position: string }[] = [];
     const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
     const [project, setProject] = useRecoilState(projectRecoilState);
+    const [teamName, setTeamName] = useState<string>();
 
     const getProject = async () => {
         const res = await axiosInstance.get(`/project/${loginUserState.user?.team?._id}`);
@@ -79,7 +80,7 @@ const ProjectDetail = () => {
 
     const getTeamMember = async () => {
         const res = await axiosInstance.get(`/teams/${loginUserState.user?.team?._id}`);
-
+        setTeamName(res.data.data.name);
         if (res.data.users) {
             res.data.users.map(async (user: string) => {
                 const userRes = await axiosInstance.get(`/users/${user}`);
@@ -157,7 +158,7 @@ const ProjectDetail = () => {
                 <div className="w-[100%] border-b rounded-md">
                     <div className="h-[4rem] bg-ourWhite flex">
                         <div className="grow flex px-3">
-                            <h4 className="py-4 text-2xl font-semibold">TEAM 승우네</h4>
+                            <h4 className="py-4 text-2xl font-semibold">{`TEAM ${teamName}`}</h4>
                         </div>
                         <BiEditAlt
                             className="text-2xl my-5 mx-4"
