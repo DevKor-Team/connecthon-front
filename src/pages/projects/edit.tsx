@@ -8,6 +8,7 @@ import { loginRecoilState } from '../../recoil/loginuser';
 import { axiosInstance } from '../../hooks/queries';
 import { TechStack } from '../../interfaces/techStack';
 import { NextPage } from 'next';
+import { projectRecoilState } from '../../recoil/project';
 
 const TextEditor = dynamic(() => import('../../components/Editor'), { ssr: false });
 
@@ -59,6 +60,7 @@ const ProjectEdit: NextPage = () => {
     const [contents, setContents] = useState<string>('프로젝트 내용을 입력해주세요');
     const [stacks, setStacks] = useState<string[]>();
     const [techStacks, setTechStacks] = useState<TechStack[]>();
+    const [project, setProject] = useRecoilState(projectRecoilState);
 
     // const teamId = loginUserState.user?.team?._id;
     const onRemove = (selectedLabel: string) => {
@@ -82,26 +84,28 @@ const ProjectEdit: NextPage = () => {
             setSearchStack(TechStackMapping);
         }
     }
-    const tempSave = (projectContent: string) => {
-        axiosInstance
-            .put(`/temp/update/${loginUserState.user?.team?._id}`, {
-                change: {
-                    content: projectContent,
-                    stack: labels,
-                },
-            })
-            .then(res => console.log(res.data));
+    const tempSave = async (projectContent: string) => {
+        const res = await axiosInstance.put(`/temp/update/${loginUserState.user?.team?._id}`, {
+            change: {
+                content: projectContent,
+                stack: labels,
+            },
+        });
+        console.log(`temp save 내용 확인 : ${res.data.data.content}`);
+        setContents(res.data.data.content);
+        setLabels(res.data.data.stack);
     };
 
-    const finalSave = (projectContent: string) => {
-        axiosInstance
-            .put(`/project/update/${loginUserState.user?.team?._id}`, {
-                change: {
-                    content: projectContent,
-                    stack: labels,
-                },
-            })
-            .then(res => console.log(res.data));
+    const finalSave = async (projectContent: string) => {
+        const res = await axiosInstance.put(`/project/update/${loginUserState.user?.team?._id}`, {
+            change: {
+                content: projectContent,
+                stack: labels,
+            },
+        });
+        console.log(`final save 확인 : ${res.data.data.content}`);
+        setContents(res.data.data.content);
+        setLabels(res.data.data.labels);
     };
 
     useEffect(() => {
@@ -125,18 +129,34 @@ const ProjectEdit: NextPage = () => {
             }
         };
 
-        getSessionUser();
-
-        setTechStacks([TechStack.photoshop, TechStack.illustrator, TechStack.indesign, TechStack.adobexd, TechStack.figma, TechStack.zeplin, TechStack.protopie]);
-        axiosInstance.get(`/project/${loginUserState.user?.team?._id}`).then(res => {
+        const getInitialProject = async () => {
+            const res = await axiosInstance.get(`/project/${loginUserState.user?.team?._id}`);
+            console.log(`project 받아온거 체크 : ${res.data.data.content}`);
             setContents(res.data.data.content);
             setLabels(res.data.data.stack);
-        });
+            setProject({
+                content: res.data.data.content,
+                stack: res.data.data.stack,
+            });
+            console.log(`recoil project state 확인 : ${res.data.data.content}`);
+        };
+
+        getSessionUser();
+        console.log(`로그인 유저 스테이트 확인 : ${loginUserState.isLogin}`);
+        getInitialProject();
+        setTechStacks([TechStack.photoshop, TechStack.illustrator, TechStack.indesign, TechStack.adobexd, TechStack.figma, TechStack.zeplin, TechStack.protopie]);
     }, []);
+
+    useEffect(() => {
+        setProject({
+            content: contents,
+            stack: project.stack,
+        });
+    }, [contents]);
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] mb-10 flex justify-center">
             <div className="w-[70%] h-[100%] mr-2 border-4 border-blue-100 ">
-                <TextEditor contents={contents} setContents={setContents} />
+                <TextEditor contents={project.content} setContents={setContents} />
 
                 <div className="flex justify-end mx-5 my-2">
                     <button

@@ -1,11 +1,13 @@
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsChatLeft } from 'react-icons/bs';
+import { BiEditAlt } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { axiosInstance } from '../../hooks/queries';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 import { useRouter } from 'next/router';
+import { projectRecoilState } from '../../recoil/project';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
 const TechStackMapping = [
@@ -57,12 +59,17 @@ const ProjectDetail = () => {
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
     const teamMember: { name: string; userImage: string; position: string }[] = [];
     const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
+    const [project, setProject] = useRecoilState(projectRecoilState);
 
     const getProject = async () => {
         const res = await axiosInstance.get(`/project/${loginUserState.user?.team?._id}`);
         setProjectContent(res.data.data.content);
         setProjectStack(res.data.data.stack);
-        setProjectNumLiked(res.data.data.likes.length);
+        setProjectNumLiked(res.data.data.likes.length || 0);
+        setProject({
+            content: res.data.data.content,
+            stack: res.data.data.stack,
+        });
     };
 
     const getUserLiked = async () => {
@@ -104,6 +111,8 @@ const ProjectDetail = () => {
         };
 
         getSessionUser();
+
+        console.log(`login user state 확인 : ${loginUserState.isLogin}`);
         getProject();
         getUserLiked();
         getTeamMember();
@@ -112,6 +121,13 @@ const ProjectDetail = () => {
         });
         setUsedStack(tools);
     }, []);
+
+    useEffect(() => {
+        project.stack?.slice(0, -1).map(x => {
+            tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+        });
+        setUsedStack(tools);
+    }, [project.stack]);
 
     useEffect(() => {
         axiosInstance
@@ -130,10 +146,15 @@ const ProjectDetail = () => {
                         <div className="grow flex px-3">
                             <h4 className="py-4 text-2xl font-semibold">TEAM 승우네</h4>
                         </div>
-                        <div className="py-6 px-3 text-md tracking-wide font-light">2022 KU Hackathon</div>
+                        <BiEditAlt
+                            className="text-2xl my-5 mx-4"
+                            onClick={() => {
+                                router.push('/projects/edit');
+                            }}
+                        />
                     </div>
                     <div className="h-full break-words px-3 pb-10">
-                        <Viewer resultContent={projectContent} />
+                        <Viewer resultContent={project.content} />
                     </div>
                 </div>
                 <div className="flex justify-center w-full h-[5rem]">
