@@ -206,9 +206,27 @@ function Chat() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            axiosInstance.get(`/chat/${selectedChatRoom.roomid}`).then(res => {
-                setMessages(res.data.data.msgs);
-            });
+            if (selectedChatRoom.roomid == '') {
+                const fetchChatRooms = async () => {
+                    try {
+                        await axiosInstance.get('/chat').then(res => {
+                            if (JSON.stringify(chatRooms) == JSON.stringify(res.data.data)) {
+                                return;
+                            } else {
+                                setChatRooms(res.data.data);
+                            }
+                        });
+                    } catch (err) {
+                        console.log(err);
+                    }
+                };
+
+                fetchChatRooms();
+            } else {
+                axiosInstance.get(`/chat/${selectedChatRoom.roomid}`).then(res => {
+                    setMessages(res.data.data.msgs);
+                });
+            }
         }, 1000);
 
         return () => clearInterval(interval);
@@ -237,7 +255,29 @@ function Chat() {
                     <div className="self-start mb-4 flex space-x-3 items-center">
                         <h1 className="text-3xl font-bold">Chats</h1>
                         <span>
-                            <HiOutlineRefresh size={24} className="cursor-pointer" onClick={() => setEnterPressed(false)} title="Refresh Chat List" />
+                            <HiOutlineRefresh
+                                size={24}
+                                className="cursor-pointer"
+                                onClick={() => {
+                                    setEnterPressed(false);
+                                    const fetchChatRooms = async () => {
+                                        try {
+                                            await axiosInstance.get('/chat').then(res => {
+                                                if (JSON.stringify(chatRooms) == JSON.stringify(res.data.data)) {
+                                                    return;
+                                                } else {
+                                                    setChatRooms(res.data.data);
+                                                }
+                                            });
+                                        } catch (err) {
+                                            console.log(err);
+                                        }
+                                    };
+
+                                    fetchChatRooms();
+                                }}
+                                title="Refresh Chat List"
+                            />
                         </span>
                     </div>
                     <div className="relative w-full mb-4">
