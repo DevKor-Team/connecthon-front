@@ -113,16 +113,27 @@ const ProjectDetail = () => {
         };
 
         getSessionUser();
-
-        console.log(`login user state 확인 : ${loginUserState.isLogin}`);
-        getProject();
-        getUserLiked();
-        getTeamMember();
-        projectStack?.slice(0, -1).map(x => {
-            tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
-        });
-        setUsedStack(tools);
+        // console.log(`login user state 확인 : ${loginUserState.isLogin}`);
+        // getProject();
+        // getUserLiked();
+        // getTeamMember();
+        // projectStack?.slice(0, -1).map(x => {
+        //     tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+        // });
+        // setUsedStack(tools);
     }, []);
+
+    useEffect(() => {
+        if (loginUserState.isLogin) {
+            getProject();
+            getUserLiked();
+            getTeamMember();
+            projectStack?.slice(0, -1).map(x => {
+                tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+            });
+            setUsedStack(tools);
+        }
+    }, [loginUserState]);
 
     useEffect(() => {
         project.stack?.slice(0, -1).map(x => {
@@ -155,7 +166,7 @@ const ProjectDetail = () => {
                             }}
                         />
                     </div>
-                    <div className="h-full break-words px-3 pb-10">
+                    <div className="h-full break-words px-3 pb-10 min-h-[100vh]">
                         <Viewer resultContent={project.content} />
                     </div>
                 </div>
