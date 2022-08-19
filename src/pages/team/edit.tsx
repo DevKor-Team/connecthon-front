@@ -29,8 +29,8 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 const ProfileEdit = () => {
     //로그인 Recoil State
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    const teamId = loginUserState.user?.team?._id;
-
+    // const teamId = loginUserState.user?.team?._id;
+    const [teamId, setTeamId] = useState<string>();
     //라우터
     const router = useRouter();
 
@@ -63,6 +63,7 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
+        console.log(`user 알려줘 : ${loginUserState.user?.team?._id}`);
         axiosInstance.put(`/teams/${teamId}`, {
             data: {
                 description: data.description,
@@ -137,6 +138,12 @@ const ProfileEdit = () => {
         setOnModal(false);
     };
 
+    useEffect(() => {
+        if (loginUserState.isLogin === true) {
+            setTeamId(loginUserState.user?.team?._id);
+        }
+    }, [loginUserState]);
+
     const onPreview = () => {
         createCanvas();
     };
@@ -179,11 +186,8 @@ const ProfileEdit = () => {
         ctx.drawImage(imgRef.current, crop.x * scaleX, crop.y * scaleY, crop.width * scaleX, crop.height * scaleY, 0, 0, crop.width * scaleX, crop.height * scaleY);
     };
 
-    if (loginUserState.isLogin == false) {
-        return null;
-    }
     return (
-        <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
+        <div className="mt-[8rem] px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
             <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="flex relative flex-col justify-center items-center md:flex-row">

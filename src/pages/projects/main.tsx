@@ -100,8 +100,10 @@ const ProjectDetail = () => {
                             user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
                         });
                     } else if (response.data.type == 'company') {
-                        alert('참가자 계정만 접근 가능한 페이지입니다.');
-                        router.back();
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
                     }
                 }
             } catch (err) {
@@ -111,16 +113,27 @@ const ProjectDetail = () => {
         };
 
         getSessionUser();
-
-        console.log(`login user state 확인 : ${loginUserState.isLogin}`);
-        getProject();
-        getUserLiked();
-        getTeamMember();
-        projectStack?.slice(0, -1).map(x => {
-            tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
-        });
-        setUsedStack(tools);
+        // console.log(`login user state 확인 : ${loginUserState.isLogin}`);
+        // getProject();
+        // getUserLiked();
+        // getTeamMember();
+        // projectStack?.slice(0, -1).map(x => {
+        //     tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+        // });
+        // setUsedStack(tools);
     }, []);
+
+    useEffect(() => {
+        if (loginUserState.isLogin) {
+            getProject();
+            getUserLiked();
+            getTeamMember();
+            projectStack?.slice(0, -1).map(x => {
+                tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+            });
+            setUsedStack(tools);
+        }
+    }, [loginUserState]);
 
     useEffect(() => {
         project.stack?.slice(0, -1).map(x => {
@@ -153,7 +166,7 @@ const ProjectDetail = () => {
                             }}
                         />
                     </div>
-                    <div className="h-full break-words px-3 pb-10">
+                    <div className="h-full break-words px-3 pb-10 min-h-[100vh]">
                         <Viewer resultContent={project.content} />
                     </div>
                 </div>
