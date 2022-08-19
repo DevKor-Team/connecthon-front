@@ -66,7 +66,7 @@ function UserListModal({
 }: {
     userList: ChatUser[];
     chatRooms: ChatRoomType[];
-    setIsModalOpen: React.Dispatch<SetStateAction<Boolean>>;
+    setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
     setChatRooms: React.Dispatch<SetStateAction<ChatRoomType[]>>;
 }) {
     console.log(typeof userList);
@@ -103,12 +103,12 @@ function Chat() {
     //따라서 ChatListItem 컴포넌트에 setSelectedUser를 전달하여 onClick시 selectedUser가 업데이트 되도록 한다.
     //messages: 선택된 채팅방의 모든 메시지들을 담은 배열. (ChatListItem에 전달된 room의 id를 이용하여 GET 해오는 구조)
     const [selectedChatRoom, setSelectedChatRoom] = useState<{ roomid: string; name: string; img: string }>({ roomid: '', name: '', img: '' });
-    const [isModalOpen, setIsModalOpen] = useState<Boolean>(false);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const [messages, setMessages] = useState<MessageType[]>([]);
 
     //모바일 화면일 때 채팅리스트/채팅방을 오가기 위한 상태
-    const [mobileChat, setMobileChat] = useState<Boolean>(false);
+    const [mobileChat, setMobileChat] = useState<boolean>(false);
 
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
@@ -118,7 +118,7 @@ function Chat() {
 
     //채팅방 리스트 검색 관련
     const [input, setInput] = useState<string>('');
-    const [enterPressed, setEnterPressed] = useState<Boolean>(false);
+    const [enterPressed, setEnterPressed] = useState<boolean>(false);
     const [searchResult, setSearchResult] = useState<ChatRoomType[]>([]);
 
     //검색창 onChange Event Handler
