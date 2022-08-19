@@ -48,7 +48,6 @@ const TechStackMapping = [
     },
 ];
 const ProjectDetail = () => {
-    // const [tools, setTools] = useState<{ name: string; nameKo: string; image: string }[]>();
     const router = useRouter();
     const tools: { name: string; nameKo: string; image: string }[] = [];
     const [projectContent, setProjectContent] = useState<string>('');
@@ -57,7 +56,6 @@ const ProjectDetail = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    // const teamMember: { name: string; userImage: string; position: string }[] = [];
     const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>([{ name: '', userImage: '', position: '' }]);
     const [project, setProject] = useRecoilState(projectRecoilState);
     const [teamName, setTeamName] = useState<string>();
@@ -166,7 +164,7 @@ const ProjectDetail = () => {
                         <Viewer resultContent={project.content} />
                     </div>
                 </div>
-                <div className="flex justify-center w-full h-[5rem]">
+                <div className="flex justify-center w-full h-[5rem] my-3">
                     {usedStack &&
                         usedStack.map(x => {
                             console.log(`x 보여줘바 : ${x}`);
@@ -180,11 +178,11 @@ const ProjectDetail = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[15%]">
+            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[15%]">
                 <div className="flex flex-col">
                     {onLiked ? (
                         <AiFillHeart
-                            className="fill-[#FF2528] mt-10 text-2xl md:text-3xl"
+                            className="fill-[#FF2528] mt-10 text-3xl md:text-3xl"
                             onClick={() => {
                                 setOnLiked(false);
                                 if (projectNumLiked >= 1) {
@@ -196,7 +194,7 @@ const ProjectDetail = () => {
                         />
                     ) : (
                         <AiOutlineHeart
-                            className="fill-white mt-10 text-2xl md:text-3xl"
+                            className="fill-white mt-10 text-3xl md:text-3xl"
                             onClick={() => {
                                 setOnLiked(true);
                                 setProjectNumLiked(projectNumLiked + 1);
@@ -207,13 +205,13 @@ const ProjectDetail = () => {
                     <p className="text-white text-sm text-center">{projectNumLiked}</p>
                 </div>
                 <div className="my-10 mx-3 flex md:flex-col md:ml-2 md:mr-4">
-                    {teamMembers?.map(memb => {
+                    {teamMembers.slice(1, -1).map(memb => {
                         return (
-                            <div className="md:flex md:my-3">
-                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 md:w-[3rem]" />
-                                <div className="flex justify-center items-center md:flex-col md:items-start">
-                                    <p className={`text-${memb.position}`}>{memb.position}</p>
-                                    <div className="md:flex md:items-center md:justify-start">
+                            <div className="w-[20%] mx-5 md:flex md:my-3 flex-nowrap">
+                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 w-[4.5rem] md:w-[3rem]" />
+                                <div className="flex flex-col justify-center items-center  md:items-start">
+                                    <p className={`text-yellow-300 mt-[0.35rem]`}>{memb.position}</p>
+                                    <div className="w-[100%] flex justify-center items-center md:items-center md:justify-start">
                                         <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">{memb.name}</p>
                                         <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
                                     </div>
