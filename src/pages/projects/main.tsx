@@ -5,6 +5,7 @@ import dynamic from 'next/dynamic';
 import { axiosInstance } from '../../hooks/queries';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
+import { useRouter } from 'next/router';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
 const TechStackMapping = [
@@ -46,6 +47,7 @@ const TechStackMapping = [
 ];
 const ProjectDetail = () => {
     // const [tools, setTools] = useState<{ name: string; nameKo: string; image: string }[]>();
+    const router = useRouter();
     const tools: { name: string; nameKo: string; image: string }[] = [];
     const [projectContent, setProjectContent] = useState<string>('');
     const [projectStack, setProjectStack] = useState<Array<string>>();
@@ -53,25 +55,23 @@ const ProjectDetail = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    const userId = loginUserState.user?.id;
-    const teamId = loginUserState.user?.team?._id;
     const teamMember: { name: string; userImage: string; position: string }[] = [];
     const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
 
     const getProject = async () => {
-        const res = await axiosInstance.get(`/project/${teamId}`);
+        const res = await axiosInstance.get(`/project/${loginUserState.user?.team?._id}`);
         setProjectContent(res.data.data.content);
         setProjectStack(res.data.data.stack);
         setProjectNumLiked(res.data.data.likes.length);
     };
 
     const getUserLiked = async () => {
-        const res = await axiosInstance.get(`/project/like/${teamId}/${userId}`);
+        const res = await axiosInstance.get(`/project/like/${loginUserState.user?.team?._id}/${loginUserState.user?.id}`);
         setOnLiked(res.data.like);
     };
 
     const getTeamMember = async () => {
-        const res = await axiosInstance.get(`/teams/${teamId}`);
+        const res = await axiosInstance.get(`/teams/${loginUserState.user?.team?._id}`);
 
         if (res.data.users) {
             res.data.users.map(async (user: string) => {
@@ -83,6 +83,27 @@ const ProjectDetail = () => {
     };
 
     useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        alert('참가자 계정만 접근 가능한 페이지입니다.');
+                        router.back();
+                    }
+                }
+            } catch (err) {
+                alert('로그인이 필요한 서비스입니다.');
+                router.push('/login');
+            }
+        };
+
+        getSessionUser();
         getProject();
         getUserLiked();
         getTeamMember();
@@ -95,8 +116,8 @@ const ProjectDetail = () => {
     useEffect(() => {
         axiosInstance
             .put(`/project/like`, {
-                user: userId,
-                team: teamId,
+                user: loginUserState.user?.id,
+                team: loginUserState.user?.team?._id,
             })
             .then(res => console.log(res.data));
     }, [onLiked]);
