@@ -11,7 +11,7 @@ function ModalUser({
     setChatRooms,
 }: {
     userInfo: ChatUser;
-    setIsModalOpen: React.Dispatch<SetStateAction<Boolean>>;
+    setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
     setChatRooms: React.Dispatch<SetStateAction<ChatRoomType[]>>;
 }) {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);

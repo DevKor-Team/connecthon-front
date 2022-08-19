@@ -15,9 +15,9 @@ function ChatNavSection({
     setIsModalOpen,
     children,
 }: {
-    mobileChat: Boolean;
+    mobileChat: boolean;
     chatRoomList: ChatRoomType[];
-    setIsModalOpen: React.Dispatch<SetStateAction<Boolean>>;
+    setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
     children: JSX.Element[];
 }) {
     return (
@@ -58,7 +58,7 @@ function ChatListItem({
 }: {
     roomInfo: ChatRoomType;
     messages: MessageType[];
-    setMobileChat: React.Dispatch<SetStateAction<Boolean>>;
+    setMobileChat: React.Dispatch<SetStateAction<boolean>>;
     setMessages: React.Dispatch<SetStateAction<MessageType[]>>;
     selectedChatRoom: { roomid: string; name: string; img: string };
     setSelectedChatRoom: React.Dispatch<SetStateAction<{ roomid: string; name: string; img: string }>>;
@@ -117,7 +117,7 @@ function ChatListItem({
 }
 
 //채팅컨테이너 상단 유저 정보 컴포넌트 (상단바)
-function ChattingPartner({ setMobileChat, selectedChatRoom }: { setMobileChat: React.Dispatch<SetStateAction<Boolean>>; selectedChatRoom: { roomid: string; name: string; img: string } }) {
+function ChattingPartner({ setMobileChat, selectedChatRoom }: { setMobileChat: React.Dispatch<SetStateAction<boolean>>; selectedChatRoom: { roomid: string; name: string; img: string } }) {
     return (
         <section className="w-full h-fit flex items-center pb-2 md:pb-4 mb-4 md:space-x-5 border-b">
             <div className="hidden md:inline-block md:w-12 h-12 rounded-full">
