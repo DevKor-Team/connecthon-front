@@ -57,8 +57,8 @@ const ProjectDetail = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    const teamMember: { name: string; userImage: string; position: string }[] = [];
-    const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
+    // const teamMember: { name: string; userImage: string; position: string }[] = [];
+    const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>([{ name: '', userImage: '', position: '' }]);
     const [project, setProject] = useRecoilState(projectRecoilState);
     const [teamName, setTeamName] = useState<string>();
 
@@ -81,12 +81,15 @@ const ProjectDetail = () => {
     const getTeamMember = async () => {
         const res = await axiosInstance.get(`/teams/${loginUserState.user?.team?._id}`);
         setTeamName(res.data.data.name);
-        if (res.data.users) {
-            res.data.users.map(async (user: string) => {
+        console.log(`user가 어디있는지 보자 : ${res.data.data.users}`);
+        if (res.data.data) {
+            res.data.data.users.map(async (user: string) => {
                 const userRes = await axiosInstance.get(`/users/${user}`);
-                teamMember.push({ name: userRes.data.name, userImage: userRes.data.profile.img, position: userRes.data.profile.position });
+                setTeamMembers(teamMember => [
+                    ...teamMember,
+                    { name: userRes.data.data.name.first + userRes.data.data.name.last, userImage: userRes.data.data.profile.img, position: userRes.data.data.profile.position },
+                ]);
             });
-            setTeamMembers(teamMember);
         } else return;
     };
 
@@ -114,14 +117,6 @@ const ProjectDetail = () => {
         };
 
         getSessionUser();
-        // console.log(`login user state 확인 : ${loginUserState.isLogin}`);
-        // getProject();
-        // getUserLiked();
-        // getTeamMember();
-        // projectStack?.slice(0, -1).map(x => {
-        //     tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
-        // });
-        // setUsedStack(tools);
     }, []);
 
     useEffect(() => {
