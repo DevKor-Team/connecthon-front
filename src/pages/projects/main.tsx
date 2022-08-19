@@ -100,8 +100,10 @@ const ProjectDetail = () => {
                             user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
                         });
                     } else if (response.data.type == 'company') {
-                        alert('참가자 계정만 접근 가능한 페이지입니다.');
-                        router.back();
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
                     }
                 }
             } catch (err) {
