@@ -167,7 +167,7 @@ const MyPage: CustomNextPage = () => {
                         <div className="mt-[5rem] md:mt-0 md:w-[70%] sm:h-[70vh] md:h-auto md:flex md:flex-col md:justify-end min-w-[24rem] max-w-[100rem] self-end">
                             <div className="flex flex-col bg-ourWhite rounded-[1.25rem] drop-shadow-lg w-[80%] h-[60%] sm:w-[100%] md:min-h-[46rem] md:h-[80vh] p-[1rem] mx-auto">
                                 <div className="grow p-3 md:pl-5 md:pt-5 md:pr-0 md:pb-0">
-                                    <h4 className="my-1 flex items-center space-x-2">
+                                    <h4 className="my-1 flex items-center space-x-2 mb-5">
                                         <p className="text-lg font-semibold">{loginUserState.user?.team ? `TEAM ${loginUserState.user?.team.name}` : '팀명을 정해주세요'}</p>{' '}
                                         <FiEdit
                                             className="cursor-pointer"
@@ -177,7 +177,6 @@ const MyPage: CustomNextPage = () => {
                                             }}
                                         />
                                     </h4>
-                                    <h2 className="text-[1.7rem] md:text-4xl tracking-wide font-bold my-2">프로젝트 제목</h2>
                                     <h3 className="text-lg tracking-normal">{loginUserState.user?.team?.description}</h3>
                                     <div className="flex justify-center m-auto sm:w-[50%] md:w-[80%] ">
                                         <img src={loginUserState.user?.team?.image ? loginUserState.user?.team?.image : `/project-ex.svg`} alt="project-example" className="w-[80%] max-w-[33rem]" />

@@ -140,8 +140,36 @@ const ProfileEdit = () => {
 
         setOnModal(false);
     };
+    useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: response.data,
+                        });
+                    }
+                }
+            } catch (err) {
+                if (loginUserState.isLogin == false) {
+                    alert('로그인이 필요한 서비스입니다.');
+                    router.push('/login');
+                }
+            }
+        };
+
+        getSessionUser();
+    }, []);
 
     useEffect(() => {
+        console.log(`login user : ${loginUserState.isLogin}`);
         if (loginUserState.isLogin === true) {
             setTeamId(loginUserState.user?.team?._id);
             setTeamname(loginUserState.user?.team?.name);
