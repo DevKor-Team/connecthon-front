@@ -147,7 +147,7 @@ const ProjectDetail = () => {
 
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2 ">
-            <div className="md:w-[85%]">
+            <div className="md:w-[75%]">
                 <div className="w-[100%] border-b rounded-md">
                     <div className="h-[4rem] bg-ourWhite flex">
                         <div className="grow flex px-3">
@@ -178,8 +178,8 @@ const ProjectDetail = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[15%]">
-                <div className="flex flex-col">
+            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[25%]">
+                <div className="flex flex-col items-center md:h-[10%]">
                     {onLiked ? (
                         <AiFillHeart
                             className="fill-[#FF2528] mt-10 text-3xl md:text-3xl"
@@ -204,16 +204,16 @@ const ProjectDetail = () => {
 
                     <p className="text-white text-sm text-center">{projectNumLiked}</p>
                 </div>
-                <div className="my-10 mx-3 flex md:flex-col md:ml-2 md:mr-4">
+                <div className="mr-3 flex md:flex-col md:ml-2 md:mr-4 md:h-[90%]">
                     {teamMembers.slice(1, -1).map(memb => {
                         return (
-                            <div className="w-[20%] mx-5 md:flex md:my-3 flex-nowrap">
-                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 w-[4.5rem] md:w-[3rem]" />
+                            <div className="w-[100%] mr-5 md:flex md:my-3 flex-nowrap">
+                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 w-[3.5rem]" />
                                 <div className="flex flex-col justify-center items-center  md:items-start">
-                                    <p className={`text-yellow-300 mt-[0.35rem]`}>{memb.position}</p>
+                                    <p className={`text-white mt-[0.35rem]`}>{memb.position}</p>
                                     <div className="w-[100%] flex justify-center items-center md:items-center md:justify-start">
                                         <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">{memb.name}</p>
-                                        <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
+                                        <BsChatLeft className="fill-white text-[0.8rem] m-1 cursor-pointer" />
                                     </div>
                                 </div>
                             </div>
