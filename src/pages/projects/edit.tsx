@@ -60,7 +60,7 @@ const ProjectEdit: NextPage = () => {
     const [stacks, setStacks] = useState<string[]>();
     const [techStacks, setTechStacks] = useState<TechStack[]>();
 
-    const teamId = loginUserState.user?.team?._id;
+    // const teamId = loginUserState.user?.team?._id;
     const onRemove = (selectedLabel: string) => {
         setLabels(labels.filter(label => label !== selectedLabel));
     };
@@ -84,7 +84,7 @@ const ProjectEdit: NextPage = () => {
     }
     const tempSave = (projectContent: string) => {
         axiosInstance
-            .put(`/temp/update/${teamId}`, {
+            .put(`/temp/update/${loginUserState.user?.team?._id}`, {
                 change: {
                     content: projectContent,
                     stack: labels,
@@ -95,7 +95,7 @@ const ProjectEdit: NextPage = () => {
 
     const finalSave = (projectContent: string) => {
         axiosInstance
-            .put(`/project/update/${teamId}`, {
+            .put(`/project/update/${loginUserState.user?.team?._id}`, {
                 change: {
                     content: projectContent,
                     stack: labels,
@@ -105,10 +105,32 @@ const ProjectEdit: NextPage = () => {
     };
 
     useEffect(() => {
+        const getSessionUser = async () => {
+            try {
+                const response = await axiosInstance.get('/auth/user');
+                if (response.status != 401) {
+                    if (response.data.type == 'user') {
+                        setLoginUserState({
+                            isLogin: true,
+                            user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
+                        });
+                    } else if (response.data.type == 'company') {
+                        alert('참가자 계정만 접근 가능한 페이지입니다.');
+                        router.back();
+                    }
+                }
+            } catch (err) {
+                alert('로그인이 필요한 서비스입니다.');
+                router.push('/login');
+            }
+        };
+
+        getSessionUser();
+
         setTechStacks([TechStack.photoshop, TechStack.illustrator, TechStack.indesign, TechStack.adobexd, TechStack.figma, TechStack.zeplin, TechStack.protopie]);
-        axiosInstance.get(`/project/${teamId}`).then(res => {
+        axiosInstance.get(`/project/${loginUserState.user?.team?._id}`).then(res => {
             setContents(res.data.data.content);
-            setStacks(res.data.data.stacks);
+            setLabels(res.data.data.stack);
         });
     }, []);
     return (
