@@ -29,8 +29,11 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 const ProfileEdit = () => {
     //로그인 Recoil State
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+
     // const teamId = loginUserState.user?.team?._id;
     const [teamId, setTeamId] = useState<string>();
+    const [teamname, setTeamname] = useState<string>();
+
     //라우터
     const router = useRouter();
 
@@ -141,6 +144,7 @@ const ProfileEdit = () => {
     useEffect(() => {
         if (loginUserState.isLogin === true) {
             setTeamId(loginUserState.user?.team?._id);
+            setTeamname(loginUserState.user?.team?.name);
         }
     }, [loginUserState]);
 
@@ -257,7 +261,7 @@ const ProfileEdit = () => {
                         <label htmlFor="teamIntro" className="opacity-50 px-[1rem]">
                             팀 이름
                         </label>
-                        <input {...register('teamName')} type="text" defaultValue={loginUserState.user?.team?.name} className="border-2 rounded-md md:w-[30rem] mt-2 mb-6 p-1.5 mx-[1rem]" readOnly />
+                        <input {...register('teamName')} type="text" defaultValue={teamname} className="border-2 rounded-md md:w-[30rem] mt-2 mb-6 p-1.5 mx-[1rem]" readOnly />
                         <label htmlFor="teamIntro" className="opacity-50 px-[1rem]">
                             팀 소개
                         </label>
