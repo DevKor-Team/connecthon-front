@@ -38,6 +38,8 @@
         "react-use-scroll-direction": "^0.1.0",
         "recoil": "^0.7.4",
         "sass": "^1.53.0",
+        "socket.io": "^4.5.1",
+        "socket.io-client": "^4.5.1",
         "ts-node": "^10.9.1"
     },
     "devDependencies": {
