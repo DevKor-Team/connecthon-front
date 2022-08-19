@@ -13,6 +13,14 @@ import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 import { axiosInstance } from '../../hooks/queries';
 
+interface Team {
+    id: string;
+    name: string;
+    user?: string[];
+    description?: string;
+    image?: string;
+}
+
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
         makeAspectCrop(
@@ -53,6 +61,9 @@ const ProfileEdit = () => {
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
     const teamId = loginUserState.user?.team?._id;
+    // const [teamList, setTeamList] = useState<string[]>();
+    // const teamList: string[] = [];
+    const [teamList, setTeamList] = useState<string[]>(['']);
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
@@ -139,6 +150,17 @@ const ProfileEdit = () => {
         };
 
         getSessionUser();
+    }, []);
+
+    useEffect(() => {
+        // axiosInstance.get('/teams').then(res => console.log(`team 정보 all : ${res.data.data[1].name}`));
+        axiosInstance.get('/teams').then(res => {
+            if (res.data.data) {
+                res.data.data.map((x: Team) => {
+                    setTeamList(teamList => [...teamList, x.name]);
+                });
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -340,7 +362,10 @@ const ProfileEdit = () => {
                             </select>
                             <label htmlFor="teamName">소속 팀</label>
                             <select {...register('teamName')} name="teamName" id="teamName" defaultValue={loginUserState.user?.team?.name} className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5">
-                                <option value="">팀명은 곧 추가될 예정입니다</option>
+                                {/* <option value="">팀명은 곧 추가될 예정입니다</option> */}
+                                {teamList.slice(1, -1)?.map((x: string) => (
+                                    <option value="">{x}</option>
+                                ))}
                             </select>
                         </div>
                     </div>
