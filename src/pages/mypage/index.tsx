@@ -70,7 +70,7 @@ const MyPage: CustomNextPage = () => {
                                 </div>
                                 <h3 className="font-bold text-[1.75rem] my-1">{`${loginUserState.user?.name}`}</h3>
                                 {/* <p className="mt-1 mb-5">{loginUserState.user?.team?.name ? `TEAM ${loginUserState.user?.team.name}` : '팀명을 정해주세요'}</p> */}
-                                <p className="mt-1 mb-5">{'팀명을 정해주세요'}</p>
+                                <p className="mt-1 mb-5">{loginUserState.user?.team ? `TEAM ${loginUserState.user?.team.name}` : '팀명을 정해주세요'}</p>
                             </div>
 
                             <div className="flex flex-col mx-5 pt-1 pb-10 w-[90%] border-t-2">

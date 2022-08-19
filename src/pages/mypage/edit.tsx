@@ -61,7 +61,7 @@ const ProfileEdit = () => {
     const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
     const [onProfileImage, setOnProfileImage] = useState<boolean>(false);
     // const teamId = loginUserState.user?.team?._id;
-    const [teamList, setTeamList] = useState<string[]>(['']);
+    const [teamList, setTeamList] = useState<{ id: string; name: string }[]>([{ id: '', name: '' }]);
 
     //useForm에 최종적으로 들어갈 오브젝트타입
     type FormValues = {
@@ -155,7 +155,7 @@ const ProfileEdit = () => {
         axiosInstance.get('/teams').then(res => {
             if (res.data.data) {
                 res.data.data.map((x: Team) => {
-                    setTeamList(teamList => [...teamList, x.name]);
+                    setTeamList(teamList => [...teamList, { id: x.id, name: x.name }]);
                 });
                 console.log(`team list 해줘어 : ${teamList}`);
             }
@@ -362,8 +362,8 @@ const ProfileEdit = () => {
                             <label htmlFor="teamName">소속 팀</label>
                             <select {...register('teamName')} name="teamName" id="teamName" defaultValue={loginUserState.user?.team?.name} className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5">
                                 {/* <option value="">팀명은 곧 추가될 예정입니다</option> */}
-                                {teamList.slice(1, -1)?.map((x: string) => (
-                                    <option value={x}>{x}</option>
+                                {teamList.slice(1, -1)?.map((x: { id: string; name: string }) => (
+                                    <option value={x.id}>{x.name}</option>
                                 ))}
                             </select>
                         </div>
