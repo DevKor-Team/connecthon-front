@@ -7,10 +7,7 @@ import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 import { useRouter } from 'next/router';
 import { projectRecoilState } from '../../recoil/project';
-import { TechStackMapping } from '../../constants/stackMapping';
-import { isFunctionDeclaration } from 'typescript';
 import { User } from '../../interfaces/user';
-import { Project } from '../../interfaces/project';
 import dynamic from 'next/dynamic';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
@@ -25,6 +22,8 @@ const ProjectDetail = () => {
     const [userIdArr, setUserIdArr] = useState<string[]>([]);
     const [teamUsers, setTeamUsers] = useState<User[]>([]);
     const tempTeamUser: User[] = [];
+    const [onLiked, setOnLiked] = useState<boolean>(false);
+    const [projectNumLiked, setProjectNumLiked] = useState<number>(0);
 
     //로그인 풀리지 않게 다시 getSessionUser
     useEffect(() => {
@@ -70,12 +69,16 @@ const ProjectDetail = () => {
         if (teamId) {
             axiosInstance.get(`/project/${teamId}`).then(res => {
                 setProjectState(res.data.data);
+                setProjectNumLiked(res.data.data.likes.length || 0);
                 console.log(`team id 로 부터 프로젝트 가져온다. ${res.data.data.content}`);
             });
 
             axiosInstance.get(`/teams/${teamId}`).then(res => {
                 setTeamName(res.data.data.name);
                 setUserIdArr(res.data.data.users);
+            });
+            axiosInstance.get(`/project/like/${teamId}/${loginUserState.user?.id}`).then(res => {
+                setOnLiked(res.data.like);
             });
         }
     }, [teamId]);
@@ -93,6 +96,15 @@ const ProjectDetail = () => {
         }
     }, [userIdArr]);
 
+    useEffect(() => {
+        axiosInstance
+            .put(`/project/like`, {
+                user: loginUserState.user?.id,
+                team: loginUserState.user?.team?._id,
+            })
+            .then(res => console.log(res.data));
+    }, [onLiked]);
+
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2">
             <BiEditAlt
@@ -102,6 +114,33 @@ const ProjectDetail = () => {
                 }}
             />
             <Viewer resultContent={projectState?.content ? projectState?.content : ''} />
+            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[25%]">
+                <div className="flex flex-col items-center md:h-[10%]">
+                    {onLiked ? (
+                        <AiFillHeart
+                            className="fill-[#FF2528] mt-10 text-3xl md:text-3xl"
+                            onClick={() => {
+                                setOnLiked(false);
+                                if (projectNumLiked >= 1) {
+                                    setProjectNumLiked(projectNumLiked - 1);
+                                } else {
+                                    setProjectNumLiked(0);
+                                }
+                            }}
+                        />
+                    ) : (
+                        <AiOutlineHeart
+                            className="fill-white mt-10 text-3xl md:text-3xl"
+                            onClick={() => {
+                                setOnLiked(true);
+                                setProjectNumLiked(projectNumLiked + 1);
+                            }}
+                        />
+                    )}
+
+                    <p className="text-white text-sm text-center">{projectNumLiked}</p>
+                </div>
+            </div>
         </div>
     );
 };
