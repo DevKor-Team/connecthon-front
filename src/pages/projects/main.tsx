@@ -122,31 +122,38 @@ const ProjectDetail = () => {
     }, [onLiked]);
 
     return (
-        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2">
-            <BiEditAlt
-                className="text-2xl my-5 mx-4"
-                onClick={() => {
-                    router.push('/projects/edit');
-                }}
-            />
-            <Viewer resultContent={projectState?.content ? projectState?.content : ''} />
-            <div className="flex justify-center w-full h-[5rem] my-3">
+        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col border-2">
+            <div className="flex border-b bg-[#F6FAFF]">
+                <div className="grow flex mt-1">
+                    <span className="ml-3 flex items-center ">TEAM </span>
+                    <span className="mx-1 text-2xl font-semibold mt-3">{` ${teamName}`}</span>
+                </div>
+                <BiEditAlt
+                    className="text-2xl my-5 mx-4"
+                    onClick={() => {
+                        router.push('/projects/edit');
+                    }}
+                />
+            </div>
+            <div className="mx-3 border-b">
+                <Viewer resultContent={projectState?.content ? projectState?.content : ''} />
+            </div>
+            <div className="flex justify-center items-end w-full h-[5rem] my-3">
                 {usedStack &&
                     usedStack.map(x => {
-                        console.log(`x 보여줘바 : ${x}`);
                         return (
                             <div className="flex flex-col items-center  mx-2">
-                                <img src={x.image} alt={x.name} className="w-[3rem]" />
+                                <img src={x.image} alt={x.name} className="w-[3rem] grayscale" />
                                 <p className="text-[0.75rem]">{x.nameKo}</p>
                             </div>
                         );
                     })}
             </div>
-            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[25%]">
-                <div className="flex flex-col items-center md:h-[10%]">
+            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%]">
+                <div className="flex flex-col items-center justify-center">
                     {onLiked ? (
                         <AiFillHeart
-                            className="fill-[#FF2528] mt-10 text-3xl md:text-3xl"
+                            className="fill-[#FF2528] mt-5 text-3xl md:text-3xl"
                             onClick={() => {
                                 setOnLiked(false);
                                 if (projectNumLiked >= 1) {
@@ -158,7 +165,7 @@ const ProjectDetail = () => {
                         />
                     ) : (
                         <AiOutlineHeart
-                            className="fill-white mt-10 text-3xl md:text-3xl"
+                            className="fill-white mt-5 text-3xl md:text-3xl"
                             onClick={() => {
                                 setOnLiked(true);
                                 setProjectNumLiked(projectNumLiked + 1);
@@ -166,7 +173,20 @@ const ProjectDetail = () => {
                         />
                     )}
 
-                    <p className="text-white text-sm text-center">{projectNumLiked}</p>
+                    <p className="text-white text-sm text-center mb-5">{projectNumLiked}</p>
+                </div>
+                <div className="flex justify-between">
+                    {/* {teamUsers.map(user => (
+                        <div className="flex flex-col">
+                            {user.profile?.img ? (
+                                <img src={user.profile?.img} alt={user.name} className="w-[2rem] rounded-full" />
+                            ) : (
+                                <img src="/profile-default.jpg" className="w-[2rem] rounded-full" />
+                            )}
+                            <p className="text-white text-center">{user.name.first && user.name.last ? user.name.first + user.name.last : user.name.first ? user.name.first : user.name.last}</p>
+                            <p className={`text-white text-center`}>{user.profile?.position}</p>
+                        </div>
+                    ))} */}
                 </div>
             </div>
         </div>
