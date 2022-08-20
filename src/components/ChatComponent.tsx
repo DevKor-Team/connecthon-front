@@ -141,7 +141,7 @@ function ChatBubbleContainer({
     setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
     children: JSX.Element | JSX.Element[];
 }) {
-    const [chatInput, setChatInput] = useState<string>();
+    const [chatInput, setChatInput] = useState<string>('');
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
     function handleMessage(e: React.ChangeEvent<HTMLInputElement>) {

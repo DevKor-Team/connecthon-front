@@ -106,6 +106,7 @@ function Chat() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [chatRooms, setChatRooms] = useState<ChatRoomType[]>([]);
     const [messages, setMessages] = useState<MessageType[]>([]);
+    const [call, setCall] = useState<boolean>(true);
 
     //모바일 화면일 때 채팅리스트/채팅방을 오가기 위한 상태
     const [mobileChat, setMobileChat] = useState<boolean>(false);
@@ -206,33 +207,84 @@ function Chat() {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            if (selectedChatRoom.roomid == '') {
-                const fetchChatRooms = async () => {
-                    try {
-                        await axiosInstance.get('/chat').then(res => {
-                            if (JSON.stringify(chatRooms) == JSON.stringify(res.data.data)) {
-                                return;
-                            } else {
-                                setChatRooms(res.data.data);
-                            }
-                        });
-                    } catch (err) {
-                        console.log(err);
-                    }
-                };
-
-                fetchChatRooms();
-            } else {
-                axiosInstance.get(`/chat/${selectedChatRoom.roomid}`).then(res => {
-                    setMessages(res.data.data.msgs);
-                });
-            }
+            setCall(true);
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [selectedChatRoom]);
+    }, []);
 
     useEffect(() => {
+        if (selectedChatRoom.roomid == '') {
+            const fetchChatRooms = async () => {
+                try {
+                    await axiosInstance.get('/chat').then(res => {
+                        if (JSON.stringify(chatRooms) == JSON.stringify(res.data.data)) {
+                            return;
+                        } else {
+                            setChatRooms(res.data.data);
+                        }
+                    });
+                } catch (err) {
+                    console.log(err);
+                }
+            };
+
+            fetchChatRooms();
+        } else {
+            axiosInstance.get(`/chat/${selectedChatRoom.roomid}`).then(res => {
+                if (JSON.stringify(res.data.data.msgs[0]) === JSON.stringify(messages[0])) {
+                    console.log('같습니다!');
+                    return;
+                } else {
+                    console.log('다릅니다!');
+                    console.log(`새로받은거의 0번째: ${JSON.stringify(res.data.data.msgs[0])}`);
+                    console.log(`원래꺼의 0번째: ${JSON.stringify(messages[0])}`);
+                    setMessages(res.data.data.msgs);
+                }
+            });
+        }
+
+        setCall(false);
+    }, [call]);
+
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         if (selectedChatRoom.roomid == '') {
+    //             const fetchChatRooms = async () => {
+    //                 try {
+    //                     await axiosInstance.get('/chat').then(res => {
+    //                         if (JSON.stringify(chatRooms) == JSON.stringify(res.data.data)) {
+    //                             return;
+    //                         } else {
+    //                             setChatRooms(res.data.data);
+    //                         }
+    //                     });
+    //                 } catch (err) {
+    //                     console.log(err);
+    //                 }
+    //             };
+
+    //             fetchChatRooms();
+    //         } else {
+    //             axiosInstance.get(`/chat/${selectedChatRoom.roomid}`).then(res => {
+    //                 if (JSON.stringify(res.data.data.msgs[0]) === JSON.stringify(messages[0])) {
+    //                     console.log('같습니다!');
+    //                     return;
+    //                 } else {
+    //                     console.log('다릅니다!');
+    //                     console.log(`새로받은거의 0번째: ${JSON.stringify(res.data.data.msgs[0])}`);
+    //                     console.log(`원래꺼의 0번째: ${JSON.stringify(messages[0])}`);
+    //                     setMessages(res.data.data.msgs);
+    //                 }
+    //             });
+    //         }
+    //     }, 1000);
+
+    //     return () => clearInterval(interval);
+    // }, [selectedChatRoom]);
+
+    useEffect(() => {
+        console.log('message state chnaged: ', messages[0]);
         const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
         chatDiv.scrollTop = chatDiv?.scrollHeight;
     }, [messages]);
