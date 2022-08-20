@@ -362,7 +362,7 @@ const ProfileEdit = () => {
                             <label htmlFor="teamName">소속 팀</label>
                             <select {...register('teamName')} name="teamName" id="teamName" defaultValue={loginUserState.user?.team?.name} className="border-2 rounded-md lg:w-[30rem] mt-2 mb-6 p-1.5">
                                 {/* <option value="">팀명은 곧 추가될 예정입니다</option> */}
-                                {teamList.slice(1, -1)?.map((x: { id: string; name: string }) => (
+                                {teamList.slice(1)?.map((x: { id: string; name: string }) => (
                                     <option value={x.id}>{x.name}</option>
                                 ))}
                             </select>

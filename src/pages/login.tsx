@@ -2,11 +2,13 @@ import { CustomNextPage } from '../types/types';
 import { GithubLoginBtn, GoogleLoginBtn, KakaoLoginBtn } from '../components/LoginButton';
 import React, { useState } from 'react';
 import { axiosInstance } from '../hooks/queries';
+import { useRouter } from 'next/router';
 
 const LoginPage: CustomNextPage = () => {
     const [isParticipantMode, setParticipantMode] = useState(true);
+    const router = useRouter();
 
-    const handleCompanyLogin = async (e: React.FormEvent) => {
+    const handleCompanyLogin = (e: React.FormEvent) => {
         e.preventDefault();
         const formId = document.getElementById('formid') as HTMLInputElement;
         const id = formId.value;
@@ -15,9 +17,11 @@ const LoginPage: CustomNextPage = () => {
         const pw = formPw.value;
 
         try {
-            await axiosInstance.post('/auth/local', { username: id, password: pw }).then(res => {
-                if (res.status == 302) {
-                    window.location.href = 'https://connecthon.com';
+            axiosInstance.post('/auth/local', { username: id, password: pw }).then(res => {
+                if (res.status == 200) {
+                    router.push('/');
+                } else {
+                    alert('아이디/비밀번호가 틀렸습니다.');
                 }
             });
         } catch (e) {
