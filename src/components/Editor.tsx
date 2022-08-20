@@ -24,21 +24,21 @@ export type HookMap = {
     addImageBlobHook?: (blob: Blob | File, callback: HookCallback) => void;
 };
 
-const TextEditor: NextPage<IEditor> = ({ contents, setContents }) => {
+const TextEditor: NextPage<IEditor> = () => {
     const editorRef = useRef<ToastEditor>(null);
     const plugins = [colorSyntax];
 
-    const onChangeEditor = () => {
-        if (editorRef.current) {
-            setContents(editorRef.current.getInstance().getMarkdown());
-        }
-    };
+    // const onChangeEditor = () => {
+    //     if (editorRef.current) {
+    //         setContents(editorRef.current.getInstance().getMarkdown());
+    //     }
+    // };
 
-    useEffect(() => {
-        if (editorRef.current) {
-            editorRef.current.getInstance().setMarkdown(contents);
-        }
-    }, []);
+    // useEffect(() => {
+    //     if (editorRef.current) {
+    //         editorRef.current.getInstance().setMarkdown(contents);
+    //     }
+    // }, []);
 
     return (
         <ToastEditor
@@ -47,8 +47,8 @@ const TextEditor: NextPage<IEditor> = ({ contents, setContents }) => {
             previewStyle="vertical"
             plugins={plugins}
             height="auto"
-            initialValue={contents}
-            onChange={onChangeEditor}
+            // initialValue={contents}
+            // onChange={onChangeEditor}
             hideModeSwitch={true}
             usageStatistics={true}
             hooks={{
@@ -65,3 +65,39 @@ const TextEditor: NextPage<IEditor> = ({ contents, setContents }) => {
 };
 
 export default TextEditor;
+
+// import 'prismjs/themes/prism.css';
+
+// import '@toast-ui/editor/dist/toastui-editor.css';
+// import { Editor } from '@toast-ui/react-editor';
+
+// import '@toast-ui/editor-plugin-code-syntax-highlight/dist/toastui-editor-plugin-code-syntax-highlight.css';
+
+// import 'tui-color-picker/dist/tui-color-picker.css';
+// import '@toast-ui/editor-plugin-color-syntax/dist/toastui-editor-plugin-color-syntax.css';
+// import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
+// import { axiosInstance } from '../hooks/queries/index';
+// import { useRecoilState } from 'recoil';
+// import { projectRecoilState } from '../recoil/project';
+
+// export default function Writer() {
+//     const [project, setProject] = useRecoilState(projectRecoilState);
+//     return (
+//         <Editor
+//             initialEditType="markdown"
+//             previewStyle="vertical"
+//             initialValue={project.content}
+//             plugins={[colorSyntax]}
+//             height={`auto`}
+//             hooks={{
+//                 addImageBlobHook: async (blob, callback) => {
+//                     const data = new FormData();
+//                     data.append('image', blob);
+//                     const res = await axiosInstance.post(`/image`, data);
+//                     const imgUrl = res.data.url;
+//                     callback(imgUrl, 'description');
+//                 },
+//             }}
+//         />
+//     );
+// }

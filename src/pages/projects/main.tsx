@@ -2,95 +2,29 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsChatLeft } from 'react-icons/bs';
 import { BiEditAlt } from 'react-icons/bi';
 import { useEffect, useState } from 'react';
-import dynamic from 'next/dynamic';
 import { axiosInstance } from '../../hooks/queries';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 import { useRouter } from 'next/router';
 import { projectRecoilState } from '../../recoil/project';
+import { TechStackMapping } from '../../constants/stackMapping';
+import { isFunctionDeclaration } from 'typescript';
+import { User } from '../../interfaces/user';
+import { Project } from '../../interfaces/project';
+import dynamic from 'next/dynamic';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
-const TechStackMapping = [
-    {
-        name: 'photoshop',
-        nameKo: '포토샵',
-        image: '/stacks/photoshop.svg',
-    },
-    {
-        name: 'illustrator',
-        nameKo: '일러스트레이터',
-        image: '/stacks/illustrator.svg',
-    },
-    {
-        name: 'indesign',
-        nameKo: '인디자인',
-        image: '/stacks/indesign.svg',
-    },
-    {
-        name: 'XD',
-        nameKo: 'XD',
-        image: '/stacks/adobexd.svg',
-    },
-    {
-        name: 'figma',
-        nameKo: '피그마',
-        image: '/stacks/figma.svg',
-    },
-    {
-        name: 'zeplin',
-        nameKo: '제플린',
-        image: '/stacks/zeplin.svg',
-    },
-    {
-        name: 'protopie',
-        nameKo: '프로토파이',
-        image: '/stacks/protopie.svg',
-    },
-];
+
 const ProjectDetail = () => {
     const router = useRouter();
-    const tools: { name: string; nameKo: string; image: string }[] = [];
-    const [projectContent, setProjectContent] = useState<string>('');
-    const [projectStack, setProjectStack] = useState<Array<string>>();
-    const [projectNumLiked, setProjectNumLiked] = useState<number>(0);
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
-    const [onLiked, setOnLiked] = useState<boolean>(false);
-    const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>([{ name: '', userImage: '', position: '' }]);
-    const [project, setProject] = useRecoilState(projectRecoilState);
-    const [teamName, setTeamName] = useState<string>();
+    const [teamId, setTeamId] = useState<string>();
+    const [projectState, setProjectState] = useRecoilState(projectRecoilState);
 
-    const getProject = async () => {
-        const res = await axiosInstance.get(`/project/${loginUserState.user?.team?._id}`);
-        setProjectContent(res.data.data.content);
-        setProjectStack(res.data.data.stack);
-        setProjectNumLiked(res.data.data.likes.length || 0);
-        setProject({
-            content: res.data.data.content,
-            stack: res.data.data.stack,
-        });
-    };
-
-    const getUserLiked = async () => {
-        const res = await axiosInstance.get(`/project/like/${loginUserState.user?.team?._id}/${loginUserState.user?.id}`);
-        setOnLiked(res.data.like);
-    };
-
-    const getTeamMember = async () => {
-        const res = await axiosInstance.get(`/teams/${loginUserState.user?.team?._id}`);
-        setTeamName(res.data.data.name);
-        console.log(`user가 어디있는지 보자 : ${res.data.data.users}`);
-        if (res.data.data) {
-            res.data.data.users.map(async (user: string) => {
-                const userRes = await axiosInstance.get(`/users/${user}`);
-                setTeamMembers(teamMember => [
-                    ...teamMember,
-                    { name: userRes.data.data.name.first + userRes.data.data.name.last, userImage: userRes.data.data.profile.img, position: userRes.data.data.profile.position },
-                ]);
-            });
-        } else return;
-    };
-
+    const [teamName, setTeamName] = useState();
+    const [userIdArr, setUserIdArr] = useState();
+    const [teamUsers, setTeamUsers] = useState<User[]>();
+    const tempTeamUser: User[] = [];
     useEffect(() => {
         const getSessionUser = async () => {
             try {
@@ -116,111 +50,39 @@ const ProjectDetail = () => {
 
         getSessionUser();
     }, []);
-
     useEffect(() => {
         if (loginUserState.isLogin) {
-            getProject();
-            getUserLiked();
-            getTeamMember();
-            projectStack?.slice(0, -1).map(x => {
-                tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
-            });
-            setUsedStack(tools);
+            setTeamId(loginUserState.user?.team?._id);
+            console.log(`로그인 성공했고, 팀 아이디 받아옴 : ${teamId}`);
+        } else {
+            console.log('로그인 실패 ');
         }
     }, [loginUserState]);
 
     useEffect(() => {
-        project.stack?.slice(0, -1).map(x => {
-            tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
-        });
-        setUsedStack(tools);
-    }, [project.stack]);
+        console.log(`team id 있니 : ${teamId}`);
+        if (teamId) {
+            axiosInstance.get(`/project/${teamId}`).then(res => {
+                setProjectState(res.data.data);
+                console.log(`team id 로 부터 프로젝트 가져온다. ${res.data.data.content}`);
+            });
 
-    useEffect(() => {
-        axiosInstance
-            .put(`/project/like`, {
-                user: loginUserState.user?.id,
-                team: loginUserState.user?.team?._id,
-            })
-            .then(res => console.log(res.data));
-    }, [onLiked]);
+            axiosInstance.get(`/teams/${teamId}`).then(res => {
+                setTeamName(res.data.data.name);
+                // team user 정보도 여기서 가져와야 한느데.. 잘 안되넹
+            });
+        }
+    }, [teamId]);
 
     return (
-        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2 ">
-            <div className="md:w-[75%]">
-                <div className="w-[100%] border-b rounded-md">
-                    <div className="h-[4rem] bg-ourWhite flex">
-                        <div className="grow flex px-3">
-                            <h4 className="py-4 text-2xl font-semibold">{`TEAM ${teamName}`}</h4>
-                        </div>
-                        <BiEditAlt
-                            className="text-2xl my-5 mx-4"
-                            onClick={() => {
-                                router.push('/projects/edit');
-                            }}
-                        />
-                    </div>
-                    <div className="h-full break-words px-3 pb-10 min-h-[100vh]">
-                        <Viewer resultContent={project.content} />
-                    </div>
-                </div>
-                <div className="flex justify-center w-full h-[5rem] my-3">
-                    {usedStack &&
-                        usedStack.map(x => {
-                            console.log(`x 보여줘바 : ${x}`);
-                            return (
-                                <div className="flex flex-col items-center  mx-2">
-                                    <img src={x.image} alt={x.name} className="w-[3rem]" />
-                                    <p className="text-[0.75rem]">{x.nameKo}</p>
-                                </div>
-                            );
-                        })}
-                </div>
-            </div>
-
-            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[25%]">
-                <div className="flex flex-col items-center md:h-[10%]">
-                    {onLiked ? (
-                        <AiFillHeart
-                            className="fill-[#FF2528] mt-10 text-3xl md:text-3xl"
-                            onClick={() => {
-                                setOnLiked(false);
-                                if (projectNumLiked >= 1) {
-                                    setProjectNumLiked(projectNumLiked - 1);
-                                } else {
-                                    setProjectNumLiked(0);
-                                }
-                            }}
-                        />
-                    ) : (
-                        <AiOutlineHeart
-                            className="fill-white mt-10 text-3xl md:text-3xl"
-                            onClick={() => {
-                                setOnLiked(true);
-                                setProjectNumLiked(projectNumLiked + 1);
-                            }}
-                        />
-                    )}
-
-                    <p className="text-white text-sm text-center">{projectNumLiked}</p>
-                </div>
-                <div className="mr-3 flex md:flex-col md:ml-2 md:mr-4 md:h-[90%]">
-                    {teamMembers.slice(1, -1).map(memb => {
-                        return (
-                            <div className="w-[100%] mr-5 md:flex md:my-3 flex-nowrap">
-                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 w-[3.5rem]" />
-                                <div className="flex flex-col justify-center items-center  md:items-start">
-                                    <p className={`text-white mt-[0.35rem]`}>{memb.position}</p>
-                                    <div className="w-[100%] flex justify-center items-center md:items-center md:justify-start">
-                                        <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">{memb.name}</p>
-                                        <BsChatLeft className="fill-white text-[0.8rem] m-1 cursor-pointer" />
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
+        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2">
+            <BiEditAlt
+                className="text-2xl my-5 mx-4"
+                onClick={() => {
+                    router.push('/projects/edit');
+                }}
+            />
+            <Viewer resultContent={projectState?.content ? projectState?.content : ''} />
         </div>
     );
 };
