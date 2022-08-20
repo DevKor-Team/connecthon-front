@@ -34,7 +34,7 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/about">ABOUT</Link>
                         </li>
                         <li onClick={closeMenu}>
-                            <Link href="/projects">PROJECT</Link>
+                            <Link href="/projects/main">PROJECT</Link>
                         </li>
                         <li onClick={closeMenu}>
                             <Link href="/participants">PARTICIPANTS</Link>
@@ -87,7 +87,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/about">ABOUT</Link>
                         </li>
                         <li>
-                            <Link href="/projects">PROJECT</Link>
+                            <Link href="/projects/main">PROJECT</Link>
                         </li>
                         <li>
                             <Link href="/participants">PARTICIPANTS</Link>
