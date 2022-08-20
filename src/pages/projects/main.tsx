@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import { projectRecoilState } from '../../recoil/project';
 import { User } from '../../interfaces/user';
 import dynamic from 'next/dynamic';
+import { TechStackMapping } from '../../constants/stackMapping';
 
 const Viewer = dynamic(() => import('../../components/Viewer'), { ssr: false });
 
@@ -17,13 +18,17 @@ const ProjectDetail = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [teamId, setTeamId] = useState<string>();
     const [projectState, setProjectState] = useRecoilState(projectRecoilState);
-
+    const tools: { name: string; nameKo: string; image: string }[] = [];
     const [teamName, setTeamName] = useState();
     const [userIdArr, setUserIdArr] = useState<string[]>([]);
     const [teamUsers, setTeamUsers] = useState<User[]>([]);
     const tempTeamUser: User[] = [];
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [projectNumLiked, setProjectNumLiked] = useState<number>(0);
+    const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
+    console.log(projectState.stack);
+    // stack 살리기 !
+    // UI 작업
 
     //로그인 풀리지 않게 다시 getSessionUser
     useEffect(() => {
@@ -80,8 +85,19 @@ const ProjectDetail = () => {
             axiosInstance.get(`/project/like/${teamId}/${loginUserState.user?.id}`).then(res => {
                 setOnLiked(res.data.like);
             });
+            projectState.stack.slice(0, -1).map(x => {
+                tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+            });
+            setUsedStack(tools);
         }
     }, [teamId]);
+
+    useEffect(() => {
+        projectState.stack.slice(0, -1).map(x => {
+            tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
+        });
+        setUsedStack(tools);
+    }, [projectState.stack]);
 
     //위에서 받아온 "팀원들의 id"배열을 가지고 팀원 개개인의 정보를 가져온다
     //해당 개개인의 정보들은 teamUsers 배열에 다시 차곡차곡 넣어준다
@@ -114,6 +130,18 @@ const ProjectDetail = () => {
                 }}
             />
             <Viewer resultContent={projectState?.content ? projectState?.content : ''} />
+            <div className="flex justify-center w-full h-[5rem] my-3">
+                {usedStack &&
+                    usedStack.map(x => {
+                        console.log(`x 보여줘바 : ${x}`);
+                        return (
+                            <div className="flex flex-col items-center  mx-2">
+                                <img src={x.image} alt={x.name} className="w-[3rem]" />
+                                <p className="text-[0.75rem]">{x.nameKo}</p>
+                            </div>
+                        );
+                    })}
+            </div>
             <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[25%]">
                 <div className="flex flex-col items-center md:h-[10%]">
                     {onLiked ? (
