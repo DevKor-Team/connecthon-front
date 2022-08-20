@@ -121,8 +121,6 @@ function Participants() {
 
     /* ------- All, Developers, Designers, Planners 포지션 카테고리 선택 시 관련 애니메이션 구현 ------- */
     function onSelectCategory(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
-        let newLength, newLeft;
-
         //다시 카테고리 선택을 하면 이전의 검색결과는 사라져야 함.
         setEnterPressed(false);
 
@@ -138,8 +136,8 @@ function Participants() {
         target.classList.replace('text-[rgba(0,0,0,0.1)]', 'text-black');
 
         //새롭게 선택된 카테고리의 left값, width값에 맞춰서 underline이 이동하도록 한다.
-        newLength = target.offsetWidth;
-        newLeft = target.getBoundingClientRect().left;
+        const newLength = target.offsetWidth;
+        const newLeft = target.getBoundingClientRect().left;
 
         underline.style.width = `${newLength}px`;
         underline.style.left = `${newLeft}px`;
