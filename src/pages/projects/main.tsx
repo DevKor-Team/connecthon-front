@@ -48,7 +48,6 @@ const TechStackMapping = [
     },
 ];
 const ProjectDetail = () => {
-    // const [tools, setTools] = useState<{ name: string; nameKo: string; image: string }[]>();
     const router = useRouter();
     const tools: { name: string; nameKo: string; image: string }[] = [];
     const [projectContent, setProjectContent] = useState<string>('');
@@ -57,8 +56,7 @@ const ProjectDetail = () => {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    const teamMember: { name: string; userImage: string; position: string }[] = [];
-    const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>();
+    const [teamMembers, setTeamMembers] = useState<{ name: string; userImage: string; position: string }[]>([{ name: '', userImage: '', position: '' }]);
     const [project, setProject] = useRecoilState(projectRecoilState);
     const [teamName, setTeamName] = useState<string>();
 
@@ -81,12 +79,15 @@ const ProjectDetail = () => {
     const getTeamMember = async () => {
         const res = await axiosInstance.get(`/teams/${loginUserState.user?.team?._id}`);
         setTeamName(res.data.data.name);
-        if (res.data.users) {
-            res.data.users.map(async (user: string) => {
+        console.log(`user가 어디있는지 보자 : ${res.data.data.users}`);
+        if (res.data.data) {
+            res.data.data.users.map(async (user: string) => {
                 const userRes = await axiosInstance.get(`/users/${user}`);
-                teamMember.push({ name: userRes.data.name, userImage: userRes.data.profile.img, position: userRes.data.profile.position });
+                setTeamMembers(teamMember => [
+                    ...teamMember,
+                    { name: userRes.data.data.name.first + userRes.data.data.name.last, userImage: userRes.data.data.profile.img, position: userRes.data.data.profile.position },
+                ]);
             });
-            setTeamMembers(teamMember);
         } else return;
     };
 
@@ -114,14 +115,6 @@ const ProjectDetail = () => {
         };
 
         getSessionUser();
-        // console.log(`login user state 확인 : ${loginUserState.isLogin}`);
-        // getProject();
-        // getUserLiked();
-        // getTeamMember();
-        // projectStack?.slice(0, -1).map(x => {
-        //     tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
-        // });
-        // setUsedStack(tools);
     }, []);
 
     useEffect(() => {
@@ -154,7 +147,7 @@ const ProjectDetail = () => {
 
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2 ">
-            <div className="md:w-[85%]">
+            <div className="md:w-[75%]">
                 <div className="w-[100%] border-b rounded-md">
                     <div className="h-[4rem] bg-ourWhite flex">
                         <div className="grow flex px-3">
@@ -171,7 +164,7 @@ const ProjectDetail = () => {
                         <Viewer resultContent={project.content} />
                     </div>
                 </div>
-                <div className="flex justify-center w-full h-[5rem]">
+                <div className="flex justify-center w-full h-[5rem] my-3">
                     {usedStack &&
                         usedStack.map(x => {
                             console.log(`x 보여줘바 : ${x}`);
@@ -185,11 +178,11 @@ const ProjectDetail = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[15%]">
-                <div className="flex flex-col">
+            <div className="flex flex-col justify-center items-center border-t bg-[#1D1D1D] w-[100%] md:w-[25%]">
+                <div className="flex flex-col items-center md:h-[10%]">
                     {onLiked ? (
                         <AiFillHeart
-                            className="fill-[#FF2528] mt-10 text-2xl md:text-3xl"
+                            className="fill-[#FF2528] mt-10 text-3xl md:text-3xl"
                             onClick={() => {
                                 setOnLiked(false);
                                 if (projectNumLiked >= 1) {
@@ -201,7 +194,7 @@ const ProjectDetail = () => {
                         />
                     ) : (
                         <AiOutlineHeart
-                            className="fill-white mt-10 text-2xl md:text-3xl"
+                            className="fill-white mt-10 text-3xl md:text-3xl"
                             onClick={() => {
                                 setOnLiked(true);
                                 setProjectNumLiked(projectNumLiked + 1);
@@ -211,16 +204,16 @@ const ProjectDetail = () => {
 
                     <p className="text-white text-sm text-center">{projectNumLiked}</p>
                 </div>
-                <div className="my-10 mx-3 flex md:flex-col md:ml-2 md:mr-4">
-                    {teamMembers?.map(memb => {
+                <div className="mr-3 flex md:flex-col md:ml-2 md:mr-4 md:h-[90%]">
+                    {teamMembers.slice(1, -1).map(memb => {
                         return (
-                            <div className="md:flex md:my-3">
-                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 md:w-[3rem]" />
-                                <div className="flex justify-center items-center md:flex-col md:items-start">
-                                    <p className={`text-${memb.position}`}>{memb.position}</p>
-                                    <div className="md:flex md:items-center md:justify-start">
+                            <div className="w-[100%] mr-5 md:flex md:my-3 flex-nowrap">
+                                <img src={memb.userImage} alt={memb.name} className="rounded-full px-2 w-[3.5rem]" />
+                                <div className="flex flex-col justify-center items-center  md:items-start">
+                                    <p className={`text-white mt-[0.35rem]`}>{memb.position}</p>
+                                    <div className="w-[100%] flex justify-center items-center md:items-center md:justify-start">
                                         <p className="text-white text-center text-[0.8rem] px-1 md:pl-0 md:pr-1 md:text-sm">{memb.name}</p>
-                                        <BsChatLeft className="fill-white text-[0.8rem] cursor-pointer" />
+                                        <BsChatLeft className="fill-white text-[0.8rem] m-1 cursor-pointer" />
                                     </div>
                                 </div>
                             </div>

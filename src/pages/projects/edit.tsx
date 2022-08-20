@@ -154,8 +154,8 @@ const ProjectEdit: NextPage = () => {
         });
     }, [contents]);
     return (
-        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] mb-10 flex justify-center">
-            <div className="w-[70%] h-[100%] mr-2 border-4 border-blue-100 ">
+        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] mb-10 flex flex-col md:flex-row md:justify-center">
+            <div className="w-full md:w-[70%] md:h-[100%] mr-2 border-4 border-blue-100 ">
                 <TextEditor contents={project.content} setContents={setContents} />
 
                 <div className="flex justify-end mx-5 my-2">
@@ -180,7 +180,7 @@ const ProjectEdit: NextPage = () => {
                 </div>
             </div>
 
-            <div className="flex flex-col w-[30%] rounded-xl bg-[#FFFFFF] drop-shadow-xl shadow-[#2086FF]">
+            <div className="flex flex-col w-full md:w-[30%] rounded-xl bg-[#FFFFFF] drop-shadow-xl shadow-[#2086FF]">
                 <div className="bg-[#F6FAFF] px-5 py-3">
                     <h2 className="text-[#2086FF] tracking-wide">사용한 스택</h2>
                 </div>
@@ -210,11 +210,11 @@ const ProjectEdit: NextPage = () => {
                 <div className="flex flex-wrap justify-start mx-2 mb-10">
                     {(enterPressed ? searchStack : TechStackMapping)?.map(stack => {
                         return (
-                            <div className="w-[25%]">
+                            <div className="w-[25%] flex flex-col items-center my-1">
                                 <img
                                     src={stack.image}
                                     alt={stack.name}
-                                    className="w-[70%] mx-3"
+                                    className="w-[70%] mx-3 max-w-[5rem]"
                                     onClick={() => {
                                         if (!labels.includes(stack.nameKo)) setLabels([stack.nameKo, ...labels]);
                                     }}
