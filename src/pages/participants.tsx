@@ -266,7 +266,6 @@ function Participants() {
                         />
                     ))}
             </div>
-            <Footer />
         </>
     );
 }

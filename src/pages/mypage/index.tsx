@@ -169,8 +169,7 @@ const MyPage: CustomNextPage = () => {
                                         <FiEdit
                                             className="cursor-pointer"
                                             onClick={() => {
-                                                alert('준비중입니다!');
-                                                // router.push('/team/edit');
+                                                router.push('/team/edit');
                                             }}
                                         />
                                     </h4>
