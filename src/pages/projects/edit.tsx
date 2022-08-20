@@ -138,30 +138,33 @@ const ProjectEdit: NextPage = () => {
     };
 
     return (
-        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem]">
-            <div>
+        <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] md:flex">
+            <div className="border md:w-[70%] drop-shadow-xl rounded-xl">
                 <TextEditor />
+                <div className="flex justify-end m-2">
+                    <button
+                        className="border border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2"
+                        onClick={() => {
+                            tempSave();
+                            alert('임시 저장되었습니다!');
+                            router.push('/projects/main');
+                        }}
+                    >
+                        임시 저장
+                    </button>
+                    <button
+                        className="border border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold"
+                        onClick={() => {
+                            finalSave();
+                            router.push(`/projects/main`);
+                        }}
+                    >
+                        저장
+                    </button>
+                </div>
             </div>
-            <button
-                className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2"
-                onClick={() => {
-                    tempSave();
-                    alert('임시 저장되었습니다!');
-                    router.push('/projects/main');
-                }}
-            >
-                임시 저장
-            </button>
-            <button
-                className="border-2 border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold"
-                onClick={() => {
-                    finalSave();
-                    router.push(`/projects/main`);
-                }}
-            >
-                저장
-            </button>
-            <div className="flex flex-col w-full md:w-[30%] rounded-xl bg-[#FFFFFF] drop-shadow-xl shadow-[#2086FF]">
+
+            <div className="flex flex-col w-full md:w-[35%] rounded-xl bg-[#FFFFFF] drop-shadow-xl shadow-[#2086FF] p-1">
                 <div className="bg-[#F6FAFF] px-5 py-3">
                     <h2 className="text-[#2086FF] tracking-wide">사용한 스택</h2>
                 </div>
@@ -195,7 +198,7 @@ const ProjectEdit: NextPage = () => {
                                 <img
                                     src={stack.image}
                                     alt={stack.name}
-                                    className="w-[70%] mx-3 max-w-[5rem]"
+                                    className="w-[70%] mx-3 max-w-[5rem] grayscale"
                                     onClick={() => {
                                         if (!labels?.includes(stack.nameKo)) setLabels([stack.nameKo, ...labels]);
                                     }}
