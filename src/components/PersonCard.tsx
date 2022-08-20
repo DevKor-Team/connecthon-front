@@ -30,12 +30,12 @@ function PlannerBadge() {
 }
 
 type PersonType = {
-    id: string;
-    position: 'developer' | 'designer' | 'planner';
-    imgurl: string;
-    firstname: string;
-    lastname: string;
-    team: string;
+    id?: string;
+    position?: string;
+    imgurl?: string;
+    firstname?: string;
+    lastname?: string;
+    team?: string;
 };
 
 function PersonCard({ id, position, imgurl, firstname, lastname, team }: PersonType) {
@@ -45,15 +45,17 @@ function PersonCard({ id, position, imgurl, firstname, lastname, team }: PersonT
         <div className="box-border w-[48%] md:w-[31%] 2xl:w-[24%] h-56 lg:h-[22.5rem] rounded-xl border-2 px-2 lg:px-4 border-slate-200 flex flex-col justify-center mb-3.5 sm:mb-6 lg:mb-8">
             {position == 'developer' ? <DeveloperBadge /> : position == 'designer' ? <DesignerBadge /> : <PlannerBadge />}
             <div className="w-full flex flex-col items-center space-y-3 mb-4 lg:mb-8">
-                <div className={`rounded-full w-[4.5rem] h-[4.5rem] lg:w-[8.125rem] lg:h-[8.125rem] cursor-pointer`} style={{ background: `url(${imgurl})` }}></div>
+                <div className={`rounded-full w-[4.5rem] h-[4.5rem] lg:w-[8.125rem] lg:h-[8.125rem] cursor-pointer`}>
+                    <img className="rounded-full w-full h-full" src={imgurl || '/profile-default.jpg'} />
+                </div>
                 <div className="w-full flex flex-col items-center">
-                    <h3 className="font-bold text-lg lg:text-xl mb-0.5 leading-5 cursor-pointer">{`${firstname}${lastname}`}</h3>
-                    <h4 className="font-medium text-sm text-ourGrey leading-5">{`${team}`}</h4>
+                    <h3 className="font-bold text-lg lg:text-xl mb-0.5 leading-5 cursor-pointer">{`${firstname}${lastname || ''}`}</h3>
+                    <h4 className="font-medium text-sm text-ourGrey leading-5">{team ? `${team}` : '소속된 팀이 없어요'}</h4>
                 </div>
             </div>
             <div className="flex justify-center">
-                <Link href={`${loginUserData.isLogin ? `/user:${id}` : '/login'}`}>
-                    <div className="rounded-3xl bg-ourBlack text-white py-2 lg:py-2.5 px-5 md:px-8 text-xs lg:text-sm font-medium text-center mb-2 cursor-pointer">CONTACT</div>
+                <Link href={`${loginUserData.isLogin ? `/user/${id}` : '/login'}`}>
+                    <div className="rounded-3xl bg-ourBlack text-white py-2 lg:py-2.5 px-5 md:px-8 text-xs lg:text-sm font-medium text-center mb-2 cursor-pointer">VIEW MORE</div>
                 </Link>
             </div>
         </div>
