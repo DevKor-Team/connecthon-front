@@ -10,6 +10,7 @@ import { TechStack } from '../../interfaces/techStack';
 import { NextPage } from 'next';
 import { projectRecoilState } from '../../recoil/project';
 import { TechStackMapping } from '../../constants/stackMapping';
+import { tempProjectRecoilState } from '../../recoil/tempproject';
 
 const TextEditor = dynamic(() => import('../../components/Editor'), { ssr: false });
 
@@ -17,8 +18,10 @@ const ProjectEdit: NextPage = () => {
     const router = useRouter();
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [project, setProject] = useRecoilState(projectRecoilState);
+    const [tempProject, setTempProject] = useRecoilState(tempProjectRecoilState);
     const [teamId, setTeamId] = useState<string>();
 
+    //로그인 풀리지 않게 다시 getSessionUser
     useEffect(() => {
         const getSessionUser = async () => {
             try {
@@ -43,30 +46,86 @@ const ProjectEdit: NextPage = () => {
         getSessionUser();
     }, []);
 
+    //로그인한 사용자가 속한 팀의 아이디를 받아온다
     useEffect(() => {
         if (loginUserState.isLogin) {
             setTeamId(loginUserState.user?.team?._id);
         }
     }, [loginUserState]);
 
+    //위에서 받아온 팀아이디를 가지고 "임시저장"된 프로젝트의 "content: string"과 "stack: string[]"을 가져온다.
     useEffect(() => {
-        axiosInstance.get(`/temp/${teamId}`).then(res => {
-            setProject({
-                content: res.data.data.content,
-                stack: res.data.data.stack,
+        if (teamId) {
+            axiosInstance.get(`/temp/${teamId}`).then(res => {
+                setTempProject({
+                    content: res.data.data.content,
+                    stack: res.data.data.stack,
+                });
+                console.log(`temp 저장된거 가져다줭 : ${res.data.data.content}`);
+                console.log(`temp 저장된거 가져다줭 : ${res.data.data.stack}`);
             });
-            console.log(`temp 저장된거 가져다줭 : ${res.data.data.content}`);
-            console.log(`temp 저장된거 가져다줭 : ${res.data.data.stack}`);
-        });
+        }
     }, [teamId]);
 
-    // temp get을 해야 함
-    // temp save
-    // project save
+    // [TEMP SAVE]
+    const tempSave = () => {
+        if (teamId) {
+            axiosInstance
+                .put(`/temp/update/${teamId}`, {
+                    change: {
+                        content: tempProject.content,
+                        stack: tempProject.stack,
+                    },
+                })
+                .then(res => {
+                    setTempProject({ content: res.data?.data.content, stack: res.data.data.stack });
+                });
+
+            // console.log(`temp save 내용 확인 : ${res.data.data.content}`);
+            // setContent(res.data.data.content);
+            // setStack(res.data.data.stack);
+        }
+    };
+    // [PROJECT REAL SAVE]
+    const finalSave = () => {
+        axiosInstance
+            .put(`/project/update/${loginUserState.user?.team?._id}`, {
+                change: {
+                    content: tempProject.content,
+                    stack: tempProject.stack,
+                },
+            })
+            .then(res => {
+                setProject(tempProject);
+            });
+
+        alert('프로젝트가 성공적으로 저장되었습니다!');
+    };
 
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem]">
-            <div></div>
+            <div>
+                <TextEditor />
+            </div>
+            <button
+                className="border-2 border-[#2087FF] py-1 px-2 rounded-md text-[#2087FF] font-semibold mx-2"
+                onClick={() => {
+                    tempSave();
+                    alert('임시 저장되었습니다!');
+                    router.push('/projects/main');
+                }}
+            >
+                임시 저장
+            </button>
+            <button
+                className="border-2 border-[#2087FF] py-1 px-5 rounded-md text-[#2087FF] font-semibold"
+                onClick={() => {
+                    finalSave();
+                    router.push(`/projects/main`);
+                }}
+            >
+                저장
+            </button>
         </div>
     );
 };

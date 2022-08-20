@@ -22,9 +22,11 @@ const ProjectDetail = () => {
     const [projectState, setProjectState] = useRecoilState(projectRecoilState);
 
     const [teamName, setTeamName] = useState();
-    const [userIdArr, setUserIdArr] = useState();
-    const [teamUsers, setTeamUsers] = useState<User[]>();
+    const [userIdArr, setUserIdArr] = useState<string[]>([]);
+    const [teamUsers, setTeamUsers] = useState<User[]>([]);
     const tempTeamUser: User[] = [];
+
+    //로그인 풀리지 않게 다시 getSessionUser
     useEffect(() => {
         const getSessionUser = async () => {
             try {
@@ -50,6 +52,8 @@ const ProjectDetail = () => {
 
         getSessionUser();
     }, []);
+
+    //로그인한 사용자가 속한 팀의 아이디를 받아온다
     useEffect(() => {
         if (loginUserState.isLogin) {
             setTeamId(loginUserState.user?.team?._id);
@@ -59,6 +63,8 @@ const ProjectDetail = () => {
         }
     }, [loginUserState]);
 
+    //위에서 가져온 팀 아이디를 가지고 해당 팀의 프로젝트를 가져온다
+    //또한, 팀 아이디를 가지고 "팀의 이름"과 "팀원들의 id"배열을 가져온다
     useEffect(() => {
         console.log(`team id 있니 : ${teamId}`);
         if (teamId) {
@@ -69,10 +75,23 @@ const ProjectDetail = () => {
 
             axiosInstance.get(`/teams/${teamId}`).then(res => {
                 setTeamName(res.data.data.name);
-                // team user 정보도 여기서 가져와야 한느데.. 잘 안되넹
+                setUserIdArr(res.data.data.users);
             });
         }
     }, [teamId]);
+
+    //위에서 받아온 "팀원들의 id"배열을 가지고 팀원 개개인의 정보를 가져온다
+    //해당 개개인의 정보들은 teamUsers 배열에 다시 차곡차곡 넣어준다
+    useEffect(() => {
+        if (userIdArr) {
+            userIdArr.forEach(id => {
+                axiosInstance.get(`users/${id}`).then(res => {
+                    console.log(res.data.data);
+                    setTeamUsers(prev => prev.concat(res.data.data));
+                });
+            });
+        }
+    }, [userIdArr]);
 
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col md:flex-row border-2">
