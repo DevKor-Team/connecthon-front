@@ -33,12 +33,12 @@ function Participants() {
             try {
                 const response = await axiosInstance.get('/auth/user');
                 if (response.status != 401) {
-                    if (response.data.type == 'user') {
+                    if (response.data.type === 'user') {
                         setLoginUserState({
                             isLogin: true,
                             user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
                         });
-                    } else if (response.data.type == 'company') {
+                    } else if (response.data.type === 'company') {
                         setLoginUserState({
                             isLogin: true,
                             user: response.data,
@@ -46,8 +46,8 @@ function Participants() {
                     }
                 }
             } catch (err) {
-                alert('로그인이 필요한 서비스입니다.');
-                router.push('/login');
+                // alert('로그인이 필요한 서비스입니다.');
+                // router.push('/login');
             }
         };
 
@@ -59,8 +59,8 @@ function Participants() {
         const fetchUsers = () => {
             try {
                 axiosInstance.get('/users').then(response => setUsers(response.data.data));
-            } catch (e) {
-                console.log(e);
+            } catch (err) {
+                console.dir(err);
             }
         };
 
@@ -69,15 +69,19 @@ function Participants() {
 
     useEffect(() => {
         if (users.length !== 0) {
-            users.forEach(user => {
-                if (user.profile?.position == 'developer') {
-                    setDevelopers(developers.concat(user));
-                } else if (user.profile?.position == 'designer') {
-                    setDesigners(designers.concat(user));
-                } else {
-                    setPlanners(planners.concat(user));
-                }
-            });
+            setDevelopers(users.filter(user => user.profile?.position === 'developer'));
+            setDesigners(users.filter(user => user.profile?.position === 'designer'));
+            setPlanners(users.filter(user => user.profile?.position === 'planner'));
+
+            // users.forEach(user => {
+            //     if (user.profile?.position == 'developer') {
+            //         setDevelopers(developers.concat(user));
+            //     } else if (user.profile?.position == 'designer') {
+            //         setDesigners(designers.concat(user));
+            //     } else {
+            //         setPlanners(planners.concat(user));
+            //     }
+            // });
         }
     }, [users]);
 
@@ -169,7 +173,23 @@ function Participants() {
 
         if (e.key == 'Enter') {
             setEnterPressed(true);
-            setSearchResult(users.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))));
+            if (currentCategory === 'users') {
+                setSearchResult(
+                    users.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
+                );
+            } else if (currentCategory === 'developers') {
+                setSearchResult(
+                    developers.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
+                );
+            } else if (currentCategory === 'designers') {
+                setSearchResult(
+                    designers.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
+                );
+            } else if (currentCategory === 'planners') {
+                setSearchResult(
+                    planners.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
+                );
+            }
             setInput('');
             searchinput.blur();
         } else return;
