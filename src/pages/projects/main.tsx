@@ -146,9 +146,7 @@ const ProjectDetail = () => {
                     }}
                 />
             </div>
-            <div className="mx-3 border-b">
-                <Viewer resultContent={projectState?.content ? projectState?.content : ''} />
-            </div>
+            <div className="mx-3 border-b">{projectState?.content && <Viewer resultContent={projectState.content} />}</div>
             <div className="flex justify-center items-end w-full h-[5rem] my-3">
                 {usedStack &&
                     usedStack.map(x => {
