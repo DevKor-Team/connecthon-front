@@ -64,7 +64,11 @@ function myCompany() {
                             isLogin: true,
                             user: response.data,
                         });
-                        setNumCareerInput(response.data?.profile?.career.length);
+                        if (response.data?.profile?.career.length) {
+                            setNumCareerInput(response.data.profile.career.length);
+                        } else {
+                            setNumCareerInput(1);
+                        }
                         // setNumCareerInput(response.data.profile.career.length);
                     }
                 }
