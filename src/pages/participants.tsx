@@ -13,19 +13,20 @@ import { loginRecoilState } from '../recoil/loginuser';
 function Participants() {
     let initialLength: number, initialLeft: number;
     const [users, setUsers] = useState<Participant[]>([]);
-    const [developers, setDevelopers] = useState<Participant[]>([]);
-    const [planners, setPlanners] = useState<Participant[]>([]);
-    const [designers, setDesigners] = useState<Participant[]>([]);
+    const [queryUsers, setQueryUsers] = useState<Participant[]>([]);
+    // const [developers, setDevelopers] = useState<Participant[]>([]);
+    // const [planners, setPlanners] = useState<Participant[]>([]);
+    // const [designers, setDesigners] = useState<Participant[]>([]);
 
     const [currentCategory, setCurrentCategory] = useState('users');
-    const [searchResult, setSearchResult] = useState<Participant[]>([]);
-    const [enterPressed, setEnterPressed] = useState(false);
+    // const [searchResult, setSearchResult] = useState<Participant[]>([]);
+    // const [_, setEnterPressed] = useState(false);
 
     const [input, setInput] = useState('');
 
-    const router = useRouter();
+    // const router = useRouter();
 
-    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+    const [_, setLoginUserState] = useRecoilState(loginRecoilState);
 
     //로그인 풀리지 않게
     useEffect(() => {
@@ -69,9 +70,9 @@ function Participants() {
 
     useEffect(() => {
         if (users.length !== 0) {
-            setDevelopers(users.filter(user => user.profile?.position === 'developer'));
-            setDesigners(users.filter(user => user.profile?.position === 'designer'));
-            setPlanners(users.filter(user => user.profile?.position === 'planner'));
+            setQueryUsers(users.filter(user => currentCategory === 'users' || user.profile?.position === currentCategory));
+            // setDesigners(users.filter(user => user.profile?.position === 'designer'));
+            // setPlanners(users.filter(user => user.profile?.position === 'planner'));
 
             // users.forEach(user => {
             //     if (user.profile?.position == 'developer') {
@@ -83,7 +84,7 @@ function Participants() {
             //     }
             // });
         }
-    }, [users]);
+    }, [users, currentCategory]);
 
     /* ------- 슬라이딩 메뉴 애니메이션을 위해서 초기 width, left값 세팅 ------- */
     useEffect(() => {
@@ -126,7 +127,7 @@ function Participants() {
     /* ------- All, Developers, Designers, Planners 포지션 카테고리 선택 시 관련 애니메이션 구현 ------- */
     function onSelectCategory(e: React.MouseEvent<HTMLLIElement, MouseEvent>) {
         //다시 카테고리 선택을 하면 이전의 검색결과는 사라져야 함.
-        setEnterPressed(false);
+        // setEnterPressed(false);
 
         const target = e.target as HTMLLIElement;
         const removeTarget = document.querySelector('.text-black');
@@ -172,24 +173,10 @@ function Participants() {
         const searchinput = document.querySelector('#searchinput') as HTMLInputElement;
 
         if (e.key == 'Enter') {
-            setEnterPressed(true);
-            if (currentCategory === 'users') {
-                setSearchResult(
-                    users.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
-                );
-            } else if (currentCategory === 'developers') {
-                setSearchResult(
-                    developers.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
-                );
-            } else if (currentCategory === 'designers') {
-                setSearchResult(
-                    designers.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
-                );
-            } else if (currentCategory === 'planners') {
-                setSearchResult(
-                    planners.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
-                );
-            }
+            // setEnterPressed(true);
+            setQueryUsers(
+                queryUsers.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
+            );
             setInput('');
             searchinput.blur();
         } else return;
@@ -248,21 +235,21 @@ function Participants() {
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-300 text-[rgba(0,0,0,0.1)] cursor-pointer"
                         onClick={e => onSelectCategory(e)}
-                        id="planners"
+                        id="planner"
                     >
                         Planner
                     </li>
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-300 text-[rgba(0,0,0,0.1)] cursor-pointer"
                         onClick={e => onSelectCategory(e)}
-                        id="developers"
+                        id="developer"
                     >
                         Developer
                     </li>
                     <li
                         className="text-center font-bold flex justify-center items-center px-4 pb-1 transition-all ease-in duration-300 text-[rgba(0,0,0,0.1)] cursor-pointer"
                         onClick={e => onSelectCategory(e)}
-                        id="designers"
+                        id="designer"
                     >
                         Designer
                     </li>
@@ -272,7 +259,7 @@ function Participants() {
 
             {/* 참가자 리스트 영역 */}
             <div className="transition-all opacity-100 duration-200 w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap gap-[4%] md:gap-[3.5%] 2xl:gap-[1.333333333%]" id="card-wrapper">
-                {(enterPressed ? searchResult : currentCategory == 'users' ? users : currentCategory == 'developers' ? developers : currentCategory == 'designers' ? designers : planners)
+                {queryUsers
                     .filter(user => user.team?.name !== 'Staff')
                     .map(user => (
                         <PersonCard
