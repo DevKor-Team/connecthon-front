@@ -107,7 +107,11 @@ const ProjectDetail = () => {
                 const newTeamUsers: User[] = await Promise.all(
                     userIdArr.map(async userId => {
                         const res = await axiosInstance(`users/${userId}`);
-                        return res.data.data as User;
+                        console.log(res.data);
+                        return {
+                            ...res.data.data,
+                            name: res.data.data.name.first + (res.data.data.name.last || ''),
+                        };
                     }),
                 );
 
@@ -197,7 +201,7 @@ const ProjectDetail = () => {
                             ) : (
                                 <img src="/profile-default.jpg" className="w-[2rem] rounded-full mx-auto" />
                             )}
-                            <p className="text-white text-center mt-2 mb-5">{user.name.first + (user.name.last || '')}</p>
+                            <p className="text-white text-center mt-2 mb-5">{user.name}</p>
                         </div>
                     ))}
                 </div>
