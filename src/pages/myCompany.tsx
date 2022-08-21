@@ -64,10 +64,12 @@ function myCompany() {
                             isLogin: true,
                             user: response.data,
                         });
-                        setNumCareerInput(response.data.profile.career.length);
+                        setNumCareerInput(response.data?.profile?.career.length);
+                        // setNumCareerInput(response.data.profile.career.length);
                     }
                 }
             } catch (err) {
+                console.dir(err);
                 alert('로그인이 필요한 서비스입니다.');
                 router.push('/login');
             }
