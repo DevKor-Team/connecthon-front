@@ -102,14 +102,25 @@ const ProjectDetail = () => {
     //위에서 받아온 "팀원들의 id"배열을 가지고 팀원 개개인의 정보를 가져온다
     //해당 개개인의 정보들은 teamUsers 배열에 다시 차곡차곡 넣어준다
     useEffect(() => {
-        if (userIdArr) {
-            userIdArr.forEach(id => {
-                axiosInstance.get(`users/${id}`).then(res => {
-                    console.log(res.data.data);
-                    setTeamUsers(prev => prev.concat(res.data.data));
-                });
-            });
-        }
+        const getUserInfos = async () => {
+            if (userIdArr) {
+                const newTeamUsers: User[] = await Promise.all(
+                    userIdArr.map(async userId => {
+                        const res = await axiosInstance(`users/${userId}`);
+                        return res.data.data as User;
+                    }),
+                );
+
+                setTeamUsers(teamUsers.concat(newTeamUsers));
+                // userIdArr.forEach(id => {
+                //     axiosInstance.get(`users/${id}`).then(res => {
+                //         console.log(res.data.data);
+                //         setTeamUsers(prev => prev.concat(res.data.data));
+                //     });
+                // });
+            }
+        };
+        getUserInfos();
     }, [userIdArr]);
 
     useEffect(() => {
@@ -176,17 +187,21 @@ const ProjectDetail = () => {
                     <p className="text-white text-sm text-center mb-5">{projectNumLiked}</p>
                 </div>
                 <div className="flex justify-between">
-                    {/* {teamUsers.map(user => (
-                        <div className="flex flex-col">
+                    {teamUsers.map(user => (
+                        <div
+                            className="flex flex-col mx-3 cursor-pointer"
+                            onClick={() => {
+                                router.push(`/user/${user.id}`);
+                            }}
+                        >
                             {user.profile?.img ? (
-                                <img src={user.profile?.img} alt={user.name} className="w-[2rem] rounded-full" />
+                                <img src={user.profile?.img} alt={user.name} className="w-[2rem] rounded-full mx-auto " />
                             ) : (
-                                <img src="/profile-default.jpg" className="w-[2rem] rounded-full" />
+                                <img src="/profile-default.jpg" className="w-[2rem] rounded-full mx-auto" />
                             )}
-                            <p className="text-white text-center">{user.name.first && user.name.last ? user.name.first + user.name.last : user.name.first ? user.name.first : user.name.last}</p>
-                            <p className={`text-white text-center`}>{user.profile?.position}</p>
+                            <p className="text-white text-center mt-2 mb-5">{user.name.first + (user.name.last || '')}</p>
                         </div>
-                    ))} */}
+                    ))}
                 </div>
             </div>
         </div>
