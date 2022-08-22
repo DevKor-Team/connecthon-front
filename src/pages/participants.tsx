@@ -192,20 +192,20 @@ function Participants() {
             <Header />
             {/* 페이지 메인 / 검색창까지 영역 */}
             <section className="relative w-full h-72 bg-center bg-cover bg-no-repeat bg-[url('/participants_temp.svg')] mt-16 md:mt-20 flex flex-col justify-center items-center">
-                <h1 className="text-white text-3xl lg:text-4xl font-bold mb-4">2022 해커톤 선원들</h1>
+                <h1 className="text-white text-3xl lg:text-[2.5rem] lg:leading-tight font-bold mb-4">2022 해커톤 선원들</h1>
 
                 {/* Mobile Subtitle */}
                 <div className="flex flex-col justify-center items-center text-white lg:hidden">
-                    <p className="text-white text-sm">기획자, 개발자, 디자이너로 이루어진</p>
-                    <p className="text-white text-sm">2022 KU HACKATHON 참가자 리스트입니다.</p>
-                    <p className="text-white text-sm">궁금한 참여자가 있다면 프로필을 눌러 자세한 정보를</p>
-                    <p className="text-white text-sm">확인 후 컨택해 보세요.</p>
+                    <p className="text-white text-sm tracking-tight">기획자, 개발자, 디자이너로 이루어진</p>
+                    <p className="text-white text-sm tracking-tight">2022 KU HACKATHON 참가자 리스트입니다.</p>
+                    <p className="text-white text-sm tracking-tight">궁금한 참여자가 있다면 프로필을 눌러 자세한 정보를</p>
+                    <p className="text-white text-sm tracking-tight">확인 후 컨택해 보세요.</p>
                 </div>
 
                 {/* PC Subtitle */}
                 <div className="hidden lg:flex flex-col justify-center items-center text-white">
-                    <p className="text-white text-base">기획자, 개발자, 디자이너로 이루어진 2022 KU HACKATHON 참가자 리스트입니다.</p>
-                    <p className="text-white text-base">궁금한 참여자가 있다면 프로필을 눌러 자세한 정보를 확인 후 컨택해 보세요.</p>
+                    <p className="text-white text-lg">기획자, 개발자, 디자이너로 이루어진 2022 KU HACKATHON 참가자 리스트입니다.</p>
+                    <p className="text-white text-lg">궁금한 참여자가 있다면 프로필을 눌러 자세한 정보를 확인 후 컨택해 보세요.</p>
                 </div>
 
                 {/* 검색창 */}

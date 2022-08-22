@@ -42,10 +42,8 @@ const ProjectDetail = () => {
                             user: { ...response.data, name: response.data.name.first + (response.data.name.last || '') },
                         });
                     } else if (response.data.type == 'company') {
-                        setLoginUserState({
-                            isLogin: true,
-                            user: response.data,
-                        });
+                        alert('참가자 계정만 접근 가능한 페이지입니다.');
+                        router.back();
                     }
                 }
             } catch (err) {
@@ -135,6 +133,10 @@ const ProjectDetail = () => {
             })
             .then(res => console.log(res.data));
     }, [onLiked]);
+
+    if (loginUserState?.user?.type === 'company' || loginUserState.isLogin === false) {
+        return null;
+    }
 
     return (
         <div className="mt-[8rem] mx-4 md:mx-16 lg:mx-20 xl:mx-[13.375rem] flex flex-col border-2">
