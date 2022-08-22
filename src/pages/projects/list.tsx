@@ -110,9 +110,11 @@ function ProjectList() {
 
             {/* 프로젝트 리스트 영역 */}
             <div className="w-full px-4 md:px-16 lg:px-20 xl:px-[13.375rem] flex flex-wrap sm:gap-[4%] mt-20 md:mt-24" id="card-wrapper">
-                {(enterPressed ? searchResult : list).map(prj => (
-                    <ProjectCard teamId={prj?._doc.team} likes={prj?._doc.likes?.length} />
-                ))}
+                {(enterPressed ? searchResult : list)
+                    .filter(prj => prj?._doc.team !== '62fa4a28c4dd47bee8327262')
+                    .map(prj => (
+                        <ProjectCard teamId={prj?._doc.team} likes={prj?._doc.likes?.length} />
+                    ))}
             </div>
         </>
     );
