@@ -42,6 +42,9 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
                         <li onClick={closeMenu}>
                             <Link href={`${loginUserData.isLogin ? '/chatting' : '/login'}`}>CHAT</Link>
                         </li>
+                        <li onClick={closeMenu}>
+                            <Link href="/projects/list">WORKS</Link>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -76,7 +79,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
     return (
         <>
             <SideMenu theme={theme} />
-            <header className={`z-[100] ${theme == 'dark' ? 'bg-ourBlack' : 'bg-white'}`}>
+            <header className={`z-[100] ${theme == 'dark' ? 'bg-ourBlack' : 'bg-white'} w-[100vw] box-border`}>
                 <div className="flex z-70 items-center space-x-6 md:space-x-12 lg:space-x-16">
                     <FiMenu size={24} stroke={`${theme == 'dark' ? 'white' : 'black'}`} className={`text-lg font-light md:hidden cursor-pointer`} onClick={openMenu} />
                     <Link href="/home">
@@ -94,6 +97,9 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                         </li>
                         <li>
                             <Link href={`${loginUserData.isLogin ? '/chatting' : '/login'}`}>CHAT</Link>
+                        </li>
+                        <li>
+                            <Link href="/projects/list">WORKS</Link>
                         </li>
                     </ul>
                 </div>

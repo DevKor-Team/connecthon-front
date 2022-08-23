@@ -74,8 +74,8 @@ function Footer({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/about">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>ABOUT</span>
                             </Link>
-                            <Link href="/projects">
-                                <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>PROJECT</span>
+                            <Link href="/projects/list">
+                                <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>WORKS</span>
                             </Link>
                             <Link href="/participants">
                                 <span className={`font-semibold ${theme == 'dark' ? 'text-ourWhite' : 'text-ourBlack'} cursor-pointer`}>PARTICIPANTS</span>

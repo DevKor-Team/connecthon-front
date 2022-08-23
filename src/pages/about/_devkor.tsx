@@ -6,8 +6,8 @@ const DevKor = () => {
     return (
         <div className="mb-[8rem] text-right flex flex-col justify-end items-end relative">
             <div className="w-[80%]">
-                <div className="absolute top-[-0.5rem] right-[-2rem] w-[14rem] md:w-[18rem] md:right-[-4rem] md:top-0 ">
-                    <img src="devkor-logo.svg" alt="devkor-logo" className="md:w-[18rem]" />
+                <div className="absolute top-[-0.5rem] -right-[1.05rem] w-[14rem] md:w-[18rem] md:right-[-4rem] md:top-0">
+                    <img src="devkor-logo.png" alt="devkor-logo" className="md:w-[18rem]" />
                 </div>
                 <div className="w-[100%] flex flex-col items-end">
                     <h1 className="text-[2.5rem] font-bold text-[#F6CC00] pt-10 sm:text-[3.5rem] md:pt-[5rem] md:text-[3.5rem]">2</h1>
