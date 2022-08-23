@@ -9,11 +9,23 @@ import { RiTeamFill } from 'react-icons/ri';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
 
+interface ProjectData {
+    id: string;
+    _doc: {
+        _id: string;
+        team: string;
+        stack: string[];
+        content: string;
+        likes: string[];
+        __v: number;
+    };
+}
+
 function ProjectList() {
     const [input, setInput] = useState('');
     const [enterPressed, setEnterPressed] = useState(false);
-    const [searchResult, setSearchResult] = useState([]);
-    const [list, setList] = useState<any>([]);
+    const [searchResult, setSearchResult] = useState<ProjectData[]>([]);
+    const [list, setList] = useState<ProjectData[]>([]);
 
     const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 

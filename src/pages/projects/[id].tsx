@@ -17,7 +17,7 @@ const TeamProject = () => {
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [teamId, setTeamId] = useState<string | string[] | undefined>();
-    const [projectState, setProjectState] = useState<ProjectState>({});
+    const [projectState, setProjectState] = useState<ProjectState>({ content: '', stack: [''] });
     const tools: { name: string; nameKo: string; image: string }[] = [];
     const [teamName, setTeamName] = useState();
     const [userIdArr, setUserIdArr] = useState<string[]>([]);
