@@ -2,13 +2,20 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { axiosInstance } from '../../hooks/queries';
 import { Company } from '../../interfaces/company';
-import { GoChevronRight } from 'react-icons/go';
 
 function Enterprise() {
     const router = useRouter();
     const { id } = router.query;
     const [company, setCompany] = useState<Company>();
     const [careers, setCareers] = useState<string[]>([]);
+
+    function handleLinkClick() {
+        if (company?.profile?.link?.instagram) {
+            window.open(company?.profile?.link?.instagram, '_blank');
+        } else {
+            alert('해당 기업의 입력된 대표 사이트가 없습니다.');
+        }
+    }
 
     useEffect(() => {
         async function fetchCompany() {
@@ -44,11 +51,11 @@ function Enterprise() {
                         <div className="flex flex-col space-y-5">
                             <span className="rounded-md w-[15rem] mt-2 p-1.5 text-center text-2xl font-bold">{company?.name}</span>
                             <a
-                                className="rounded-md w-[15rem] mt-2 mb-6 p-1.5 text-center bg-ourBlack cursor-pointer text-white flex items-center justify-center space-x-2"
-                                href={`${company?.profile?.link?.instagram}`}
+                                className="rounded-md w-[15rem] mt-2 mb-6 p-2 text-center bg-ourBlue hover:bg-blue-700 cursor-pointer text-white flex items-center justify-center space-x-2"
+                                onClick={handleLinkClick}
                                 target="_blank"
                             >
-                                <GoChevronRight fill="white" size={24} /> <span className="text-white flex justify-center items-center">Visit Our Website</span>
+                                <span className="text-white flex justify-center items-center">Visit Website</span>
                             </a>
                         </div>
                     </section>
