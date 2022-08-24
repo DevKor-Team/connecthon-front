@@ -17,7 +17,7 @@ const TeamProject = () => {
 
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
     const [teamId, setTeamId] = useState<string | string[] | undefined>();
-    const [projectState, setProjectState] = useState<ProjectState>({});
+    const [projectState, setProjectState] = useState<ProjectState>({ content: '', stack: [''] });
     const tools: { name: string; nameKo: string; image: string }[] = [];
     const [teamName, setTeamName] = useState();
     const [userIdArr, setUserIdArr] = useState<string[]>([]);
@@ -25,7 +25,7 @@ const TeamProject = () => {
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [projectNumLiked, setProjectNumLiked] = useState<number>(0);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    console.log(projectState.stack);
+    // console.log(projectState.stack);
     // stack 살리기 !
     // UI 작업
 
