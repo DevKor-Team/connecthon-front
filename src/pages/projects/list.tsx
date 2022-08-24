@@ -58,7 +58,6 @@ function ProjectList() {
         axiosInstance.get('/project').then(res => {
             setList(res.data.data);
         });
-        console.log(list);
     }, [loginUserData]);
 
     /* ------------ 검색창에 input 입력시 검색어 업데이트 함수 -------------- */
