@@ -90,7 +90,7 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                             <Link href="/about">ABOUT</Link>
                         </li>
                         <li>
-                            <Link href="/projects/main">PROJECT</Link>
+                            <Link href="/projects/list">PROJECT</Link>
                         </li>
                         <li>
                             <Link href="/participants">PARTICIPANTS</Link>
