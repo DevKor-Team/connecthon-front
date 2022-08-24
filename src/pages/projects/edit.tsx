@@ -90,9 +90,6 @@ const ProjectEdit: NextPage = () => {
                     stack: res.data.data.stack,
                 });
                 setLabels(tempProject.stack);
-
-                console.log(`temp 저장된거 가져다줭 : ${res.data.data.content}`);
-                console.log(`temp 저장된거 가져다줭 : ${res.data.data.stack}`);
             });
         }
     }, [teamId]);
@@ -110,10 +107,6 @@ const ProjectEdit: NextPage = () => {
                 .then(res => {
                     setTempProject({ content: res.data?.data.content, stack: res.data.data.stack });
                 });
-
-            // console.log(`temp save 내용 확인 : ${res.data.data.content}`);
-            // setContent(res.data.data.content);
-            // setStack(res.data.data.stack);
         }
     };
 
@@ -122,7 +115,6 @@ const ProjectEdit: NextPage = () => {
     }, [tempProject.stack]);
     // [PROJECT REAL SAVE]
     const finalSave = () => {
-        console.log(`labels : ${labels}`);
         axiosInstance
             .put(`/project/update/${loginUserState.user?.team?._id}`, {
                 change: {

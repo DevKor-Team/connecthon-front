@@ -66,7 +66,6 @@ const ProfileEdit = () => {
     });
 
     const onSubmit: SubmitHandler<FormValues> = (data: FormValues) => {
-        console.log(`user 알려줘 : ${loginUserState.user?.team?._id}`);
         axiosInstance.put(`/teams/${teamId}`, {
             data: {
                 description: data.description,
@@ -169,7 +168,6 @@ const ProfileEdit = () => {
     }, []);
 
     useEffect(() => {
-        console.log(`login user : ${loginUserState.isLogin}`);
         if (loginUserState.isLogin === true) {
             setTeamId(loginUserState.user?.team?._id);
             setTeamname(loginUserState.user?.team?.name);

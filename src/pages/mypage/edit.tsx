@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Layout from '../../layouts/Layout';
 import Dropzone from 'react-dropzone';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
-import { AiOutlinePlusCircle, AiOutlineClose, AiOutlineConsoleSql } from 'react-icons/ai';
+import { AiOutlinePlusCircle, AiOutlineClose } from 'react-icons/ai';
 import { TbTrashOff } from 'react-icons/tb';
 import { useRouter } from 'next/router';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -100,7 +100,6 @@ const ProfileEdit = () => {
             career: data.career.slice(0, numCareerInput),
             _id: loginUserState.user?.profile?._id,
         };
-        console.log(loginUserState.user?.id);
         axiosInstance
             .put(`/users/${loginUserState.user?.id}/profile`, {
                 profile: updatedProfile,
@@ -151,13 +150,11 @@ const ProfileEdit = () => {
     }, []);
 
     useEffect(() => {
-        // axiosInstance.get('/teams').then(res => console.log(`team 정보 all : ${res.data.data[1].name}`));
         axiosInstance.get('/teams').then(res => {
             if (res.data.data) {
                 res.data.data.map((x: Team) => {
                     setTeamList(teamList => [...teamList, { id: x.id, name: x.name }]);
                 });
-                console.log(`team list 해줘어 : ${teamList}`);
             }
         });
     }, []);
@@ -189,8 +186,7 @@ const ProfileEdit = () => {
     }
     const uploadProfileImage = async (blob: Blob | null) => {
         if (!blob) return;
-        const url = URL.createObjectURL(blob);
-        console.log(url);
+        // const url = URL.createObjectURL(blob);
 
         //blob객체를 서버로 전송한다.
         //이미지에 대한 POST는 응답으로 프사 업데이트된 유저객체가 돌아오므로 다시 loginUserState에 저장해준다.
@@ -237,7 +233,6 @@ const ProfileEdit = () => {
             return alert('이미지 저장에 실패하였습니다.');
         }
         createCanvas();
-        console.log(canvasRef.current);
         canvasRef.current.toBlob((blob: Blob | null) => uploadProfileImage(blob), 'image/*', 0.95);
         setOnProfileImage(true);
     };
@@ -273,7 +268,6 @@ const ProfileEdit = () => {
     if (loginUserState.isLogin == false) {
         return null;
     }
-    //console.log(numCareerInput);
     return (
         <div className="px-4 md:px-16 lg:px-20 xl:px-[13.375rem]">
             <div className="md:bg-ourWhite mt-[8rem] mb-[8rem] w-[100%]">

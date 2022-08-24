@@ -26,7 +26,6 @@ const ProjectDetail = () => {
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [projectNumLiked, setProjectNumLiked] = useState<number>(0);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    console.log(projectState.stack);
     // stack 살리기 !
     // UI 작업
 
@@ -59,7 +58,6 @@ const ProjectDetail = () => {
     useEffect(() => {
         if (loginUserState.isLogin) {
             setTeamId(loginUserState.user?.team?._id);
-            console.log(`로그인 성공했고, 팀 아이디 받아옴 : ${teamId}`);
         } else {
             console.log('로그인 실패 ');
         }
@@ -68,12 +66,10 @@ const ProjectDetail = () => {
     //위에서 가져온 팀 아이디를 가지고 해당 팀의 프로젝트를 가져온다
     //또한, 팀 아이디를 가지고 "팀의 이름"과 "팀원들의 id"배열을 가져온다
     useEffect(() => {
-        console.log(`team id 있니 : ${teamId}`);
         if (teamId) {
             axiosInstance.get(`/project/${teamId}`).then(res => {
                 setProjectState(res.data.data);
                 setProjectNumLiked(res.data.data.likes.length || 0);
-                console.log(`team id 로 부터 프로젝트 가져온다. ${res.data.data.content}`);
             });
 
             axiosInstance.get(`/teams/${teamId}`).then(res => {
@@ -105,7 +101,6 @@ const ProjectDetail = () => {
                 const newTeamUsers: User[] = await Promise.all(
                     userIdArr.map(async userId => {
                         const res = await axiosInstance(`users/${userId}`);
-                        console.log(res.data);
                         return {
                             ...res.data.data,
                             name: res.data.data.name.first + (res.data.data.name.last || ''),
@@ -114,12 +109,6 @@ const ProjectDetail = () => {
                 );
 
                 setTeamUsers(teamUsers.concat(newTeamUsers));
-                // userIdArr.forEach(id => {
-                //     axiosInstance.get(`users/${id}`).then(res => {
-                //         console.log(res.data.data);
-                //         setTeamUsers(prev => prev.concat(res.data.data));
-                //     });
-                // });
             }
         };
         getUserInfos();

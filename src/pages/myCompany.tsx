@@ -34,7 +34,6 @@ function myCompany() {
             major: data.major,
             career: data.career.slice(0, numCareerInput),
         };
-        console.log(loginUserState.user?.id);
         axiosInstance
             .put(`/companies/${loginUserState.user?.id}/profile`, {
                 profile: updatedProfile,
@@ -43,7 +42,6 @@ function myCompany() {
             .then(res => console.log(res.data));
 
         alert('프로필이 수정되었습니다!');
-        console.log(loginUserState.user);
     };
 
     //react-hook-form

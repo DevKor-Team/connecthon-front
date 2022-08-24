@@ -14,7 +14,7 @@ const AboutUs = () => {
         2: useAutoScroll(),
     };
 
-    const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
+    const [_, setLoginUserState] = useRecoilState(loginRecoilState);
 
     useEffect(() => {
         const getSessionUser = async () => {
