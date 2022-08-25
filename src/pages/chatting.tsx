@@ -4,59 +4,13 @@ import { FiSearch } from 'react-icons/fi';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { ChatNavSection, ChattingPartner, ChatBubbleContainer, ChatBubble, ChatListItem } from '../components/ChatComponent';
 import { IoMdClose } from 'react-icons/io';
-import { ChatRoomType, ChatDataType, MessageType } from '../interfaces/chat';
+import { ChatRoomType, MessageType } from '../interfaces/chat';
 import { axiosInstance } from '../hooks/queries';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../recoil/loginuser';
-import { User } from '../interfaces/user';
 import ModalUser from '../components/ChatModalUser';
 import { ChatUser } from '../interfaces/chat';
-
-const tempChatList = [
-    {
-        id: '1',
-        user: 'user1',
-        userImg: 'https://picsum.photos/200',
-        userName: {
-            first: '안',
-            last: '수진',
-        },
-        company: 'company1',
-        companyImg: 'https://picsum.photos/200',
-        companyName: '카카오',
-        lastMsg: '화이팅',
-        lastSend: new Date(),
-    },
-    {
-        id: '2',
-        user: 'user2',
-        userImg: 'https://picsum.photos/200',
-        userName: {
-            first: '노',
-            last: '정훈',
-        },
-        company: 'company1',
-        companyImg: 'https://picsum.photos/200',
-        companyName: '토스',
-        lastMsg: '화이팅 해커톤',
-        lastSend: new Date(),
-    },
-    {
-        id: '3',
-        user: 'user3',
-        userImg: 'https://picsum.photos/200',
-        userName: {
-            first: '정',
-            last: '호진',
-        },
-        company: 'company1',
-        companyImg: 'https://picsum.photos/200',
-        companyName: '네이버',
-        lastMsg: '화이팅 정호진 아아아ㅏㅇ아아아아아아아아아아아아아아아ㅏ앙아',
-        lastSend: new Date(),
-    },
-];
 
 function UserListModal({
     userList,
@@ -69,7 +23,6 @@ function UserListModal({
     setIsModalOpen: React.Dispatch<SetStateAction<boolean>>;
     setChatRooms: React.Dispatch<SetStateAction<ChatRoomType[]>>;
 }) {
-    console.log(typeof userList);
     return (
         <div className="absolute inset-0 z-40 flex items-center justify-center h-[100%] w-[100vw] bg-ourBlack bg-opacity-70">
             <div className="w-[21rem] sm:w-[30rem] h-[30rem] bg-white rounded-2xl drop-shadow-2xl p-8 flex flex-col space-y-6">
@@ -81,16 +34,6 @@ function UserListModal({
                     {userList.map(user => (
                         <ModalUser key={user.id} userInfo={user} setIsModalOpen={setIsModalOpen} setChatRooms={setChatRooms} />
                     ))}
-                    {/* {userList
-                        .filter(user => {
-                            chatRooms.forEach(room => {
-                                if (room.user == user.id) return false;
-                                else return true;
-                            });
-                        })
-                        .map(user => (
-                            <ModalUser key={user.id} userInfo={user} setIsModalOpen={setIsModalOpen} setChatRooms={setChatRooms} />
-                        ))} */}
                 </section>
             </div>
         </div>
@@ -233,12 +176,8 @@ function Chat() {
         } else {
             axiosInstance.get(`/chat/${selectedChatRoom.roomid}`).then(res => {
                 if (JSON.stringify(res.data.data.msgs[0]) === JSON.stringify(messages[0])) {
-                    console.log('같습니다!');
                     return;
                 } else {
-                    console.log('다릅니다!');
-                    console.log(`새로받은거의 0번째: ${JSON.stringify(res.data.data.msgs[0])}`);
-                    console.log(`원래꺼의 0번째: ${JSON.stringify(messages[0])}`);
                     setMessages(res.data.data.msgs);
                 }
             });
@@ -284,7 +223,6 @@ function Chat() {
     // }, [selectedChatRoom]);
 
     useEffect(() => {
-        console.log('message state chnaged: ', messages[0]);
         const chatDiv = document.getElementById('chatdiv') as HTMLDivElement;
         chatDiv.scrollTop = chatDiv?.scrollHeight;
     }, [messages]);

@@ -25,7 +25,6 @@ const TeamProject = () => {
     const [onLiked, setOnLiked] = useState<boolean>(false);
     const [projectNumLiked, setProjectNumLiked] = useState<number>(0);
     const [usedStack, setUsedStack] = useState<{ name: string; nameKo: string; image: string }[]>();
-    // console.log(projectState.stack);
     // stack 살리기 !
     // UI 작업
 
@@ -63,7 +62,6 @@ const TeamProject = () => {
             axiosInstance.get(`/project/${teamId}`).then(res => {
                 setProjectState(res.data.data);
                 setProjectNumLiked(res.data.data.likes.length || 0);
-                console.log(`team id 로 부터 프로젝트 가져온다. ${res.data.data.content}`);
             });
 
             axiosInstance.get(`/teams/${teamId}`).then(res => {
@@ -95,7 +93,6 @@ const TeamProject = () => {
                 const newTeamUsers: User[] = await Promise.all(
                     userIdArr.map(async userId => {
                         const res = await axiosInstance(`users/${userId}`);
-                        console.log(res.data);
                         return {
                             ...res.data.data,
                             name: res.data.data.name.first + (res.data.data.name.last || ''),
@@ -104,12 +101,6 @@ const TeamProject = () => {
                 );
 
                 setTeamUsers(teamUsers.concat(newTeamUsers));
-                // userIdArr.forEach(id => {
-                //     axiosInstance.get(`users/${id}`).then(res => {
-                //         console.log(res.data.data);
-                //         setTeamUsers(prev => prev.concat(res.data.data));
-                //     });
-                // });
             }
         };
         getUserInfos();

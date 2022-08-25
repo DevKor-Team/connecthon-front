@@ -162,21 +162,18 @@ function Participants() {
     function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const currentValue = e.target.value;
         setInput(currentValue);
+        setQueryUsers(users);
     }
     /* ------------------------------------------------------------- */
 
     /* ------- 사용자가 Enter 눌렀을 시 입력한 검색어에 대해 검색해주는 함수 ------- */
     function searchUser(e: React.KeyboardEvent<HTMLInputElement>) {
         const keyword = input;
-        const firstname = input.slice(0, 1);
-        const lastname = input.slice(1);
         const searchinput = document.querySelector('#searchinput') as HTMLInputElement;
 
         if (e.key == 'Enter') {
             // setEnterPressed(true);
-            setQueryUsers(
-                queryUsers.filter(user => user.team?.name?.includes(keyword) || user.name?.last?.includes(keyword) || (user.name?.first == firstname && user.name?.last?.includes(lastname))),
-            );
+            setQueryUsers(queryUsers.filter(user => user.team?.name?.includes(keyword) || `${user.name?.first}${user.name?.last}`.includes(keyword)));
             setInput('');
             searchinput.blur();
         } else return;

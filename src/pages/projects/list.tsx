@@ -8,6 +8,7 @@ import ProjectCard from '../../components/ProjectCard';
 import { RiTeamFill } from 'react-icons/ri';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
+import { readJsonConfigFile } from 'typescript';
 
 interface ProjectData {
     id: string;
@@ -58,7 +59,6 @@ function ProjectList() {
         axiosInstance.get('/project').then(res => {
             setList(res.data.data);
         });
-        console.log(list);
     }, [loginUserData]);
 
     /* ------------ 검색창에 input 입력시 검색어 업데이트 함수 -------------- */
@@ -72,13 +72,26 @@ function ProjectList() {
     function searchUser(e: React.KeyboardEvent<HTMLInputElement>) {
         const keyword = input;
         const searchinput = document.querySelector('#searchinput') as HTMLInputElement;
-
-        if (e.key == 'Enter') {
+        if (keyword) {
+            console.log(`keyword 있음`);
+        }
+        if (e.key == 'Enter' && keyword) {
             setEnterPressed(true);
-            setSearchResult(list.filter(prj => prj._doc?.team.includes(keyword)));
-            setInput('');
+            list.map(async prj => {
+                const res = await axiosInstance.get(`/teams/${prj._doc.team}`);
+                if (res.data.data.name.includes(keyword) == true) {
+                    setSearchResult([...searchResult, prj]);
+                }
+            }),
+                setInput('');
             searchinput.blur();
-        } else return;
+        } else {
+            // 빈칸 입력 시, 전체 프로젝트 리스트 띄워줌
+            setEnterPressed(true);
+            setSearchResult([]);
+
+            return;
+        }
     }
     /* ---------------------------------------------------------------- */
 
