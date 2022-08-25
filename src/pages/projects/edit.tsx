@@ -33,6 +33,7 @@ const ProjectEdit: NextPage = () => {
     function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const currentValue = e.target.value;
         setInput(currentValue);
+        setEnterPressed(false);
     }
     function searchStacks(e: React.KeyboardEvent<HTMLInputElement>) {
         const keyword = input;
