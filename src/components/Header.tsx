@@ -2,11 +2,9 @@ import React from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
-import { FiLogOut } from 'react-icons/fi';
 import Link from 'next/link';
 import { loginRecoilState } from '../recoil/loginuser';
 import { useRecoilState } from 'recoil';
-import { axiosInstance } from '../hooks/queries';
 
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
@@ -14,9 +12,8 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     function closeMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
-            const wrapper = document.getElementById('wrapper');
             const sidebar = document.getElementById('sidebar');
-            //wrapper?.classList.remove('z-[110]');
+
             sidebg?.classList.replace('visible', 'invisible');
             sidebg?.classList.remove('backdrop-blur-sm');
             sidebg?.classList.replace('bg-black/20', 'bg-black/0');
@@ -58,23 +55,14 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
     function openMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
-            const wrapper = document.getElementById('wrapper');
             const sidebar = document.getElementById('sidebar');
-            //wrapper?.classList.add('z-[110]');
+
             sidebg?.classList.replace('invisible', 'visible');
             sidebg?.classList.add('backdrop-blur-sm');
             sidebg?.classList.replace('bg-black/0', 'bg-black/20');
             sidebar?.classList.replace('-left-[100vw]', 'left-0');
         }
     }
-
-    // async function handleLogOut() {
-    //     await axiosInstance.get('/auth/logout');
-    //     setLoginUserData({
-    //         isLogin: false,
-    //         user: null,
-    //     });
-    // }
 
     return (
         <>
@@ -108,7 +96,6 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                     <Link href={`${loginUserData.isLogin ? (loginUserData.user?.type == 'user' ? '/mypage' : '/myCompany') : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
-                    {/* {loginUserData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null} */}
                 </div>
             </header>
         </>
