@@ -65,6 +65,8 @@ function ProjectList() {
     function onInputChange(e: React.ChangeEvent<HTMLInputElement>) {
         const currentValue = e.target.value;
         setInput(currentValue);
+        setEnterPressed(false);
+        setSearchResult([]);
     }
     /* ------------------------------------------------------------- */
 
@@ -85,12 +87,6 @@ function ProjectList() {
             }),
                 setInput('');
             searchinput.blur();
-        } else {
-            // 빈칸 입력 시, 전체 프로젝트 리스트 띄워줌
-            setEnterPressed(true);
-            setSearchResult([]);
-
-            return;
         }
     }
     /* ---------------------------------------------------------------- */
