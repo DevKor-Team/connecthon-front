@@ -9,15 +9,15 @@ import { useRecoilState } from 'recoil';
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 
-    useEffect(() => {
-        const sidebg = document.getElementById('sidebg');
+    // useEffect(() => {
+    //     const sidebg = document.getElementById('sidebg');
 
-        window.addEventListener('click', e => {
-            if (e.target === sidebg) {
-                closeMenu();
-            }
-        });
-    }, []);
+    //     window.addEventListener('click', e => {
+    //         if (e.target === sidebg) {
+    //             closeMenu();
+    //         }
+    //     });
+    // }, []);
 
     function closeMenu() {
         if (typeof window !== 'undefined') {
@@ -32,8 +32,8 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     }
     return (
         <div className="fixed inset-0 z-[110] w-[100vw] invisible md:hidden" id="wrapper">
-            <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg">
-                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white px-4 pt-2 shadow-lg" id="sidebar">
+            <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg" onClick={closeMenu}>
+                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white px-4 pt-2 shadow-lg" id="sidebar" onClick={e => e.stopPropagation()}>
                     <MdOutlineClose className="absolute top-5 right-4" size={20} onClick={closeMenu} />
                     <div className="font-impact border-b border-slate-200 py-2 mb-7 text-xl">KU HACKATHON</div>
                     <ul className="font-bold space-y-8">
