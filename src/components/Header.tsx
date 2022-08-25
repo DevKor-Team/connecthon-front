@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
@@ -8,6 +8,16 @@ import { useRecoilState } from 'recoil';
 
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
+
+    useEffect(() => {
+        const sidebg = document.getElementById('sidebg');
+
+        window.addEventListener('click', e => {
+            if (e.target === sidebg) {
+                closeMenu();
+            }
+        });
+    }, []);
 
     function closeMenu() {
         if (typeof window !== 'undefined') {
