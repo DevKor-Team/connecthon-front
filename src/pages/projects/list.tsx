@@ -77,7 +77,7 @@ function ProjectList() {
         if (e.key == 'Enter' && keyword) {
             setEnterPressed(true);
             list.map(async prj => {
-                const res = await axiosInstance.get(`/teams/${prj._doc.team}`);
+                const res = await axiosInstance.get(`/api/teams/${prj._doc.team}`);
                 if (res.data.data.name.includes(keyword) == true) {
                     setSearchResult([...searchResult, prj]);
                 }
