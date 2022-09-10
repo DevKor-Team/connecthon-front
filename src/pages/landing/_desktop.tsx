@@ -10,7 +10,7 @@ const DeskTopLanding = () => {
     useEffect(() => {
         async function fetchCompanies() {
             try {
-                await axiosInstance.get('/companies').then(res => setCompanyList(res.data.data));
+                await axiosInstance.get('/api/companies').then(res => setCompanyList(res.data.data));
             } catch (e) {
                 console.log(e);
             }

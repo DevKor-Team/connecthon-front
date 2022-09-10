@@ -1,0 +1,208 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+    res.status(200).json({
+        data: [
+            {
+                id: '6301a49c35b0e05a7e912480',
+                alias: 'poomang',
+                logo: '/companylogo/poomang.svg',
+                name: 'poomang',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e91248c',
+                alias: 'visualcamp',
+                logo: '/companylogo/visualcamp.svg',
+                name: 'VisualCamp',
+                profile: {
+                    link: {
+                        instagram: 'https://visual.camp/',
+                    },
+                    career: [' 우수한 학습능력', ' 차별화된 창의력', ' 스타트업 DNA 소지자'],
+                    major: 'AI 개발자',
+                    university: '마케팅 인턴',
+                    introduction: '시선추적기술의 글로벌 탑티어 테크 스타트업. 글로벌 No.1 시선추적회사를 향해 달려갑니다.',
+                    _id: '6304267035b0e05a7e944f63',
+                },
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e912495',
+                alias: 'nerdfrenz',
+                logo: '/companylogo/nerdfrenz.svg',
+                name: 'nerdfrenz',
+                profile: {
+                    link: {
+                        instagram: 'undefined',
+                    },
+                    career: [' '],
+                    major: '마케팅',
+                    university: '프론트 개발',
+                    introduction: '종합 스포츠 커뮤니케이션 플랫폼 뚜잇DDOIT',
+                    _id: '63061e7835b0e05a7e97b623',
+                },
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e912487',
+                alias: 'corca',
+                logo: '/companylogo/corca.svg',
+                name: 'corca',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e912499',
+                alias: 'brickmate',
+                logo: '/companylogo/brickmate.svg',
+                name: 'brickmate',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e912482',
+                alias: 'jobshopper',
+                logo: '/companylogo/jobshopper.svg',
+                name: 'jobshopper',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e91249b',
+                alias: 'carpenstreet',
+                logo: '/companylogo/carpenstreet.svg',
+                name: 'carpenstreet',
+                profile: {
+                    link: {
+                        instagram: 'undefined',
+                    },
+                    career: [''],
+                    major: '',
+                    university: '',
+                    introduction: '',
+                    _id: '6301a8c935b0e05a7e9148bc',
+                },
+                level: 1,
+            },
+            {
+                id: '6301a49c35b0e05a7e912485',
+                alias: 'wear',
+                logo: '/companylogo/wear.svg',
+                name: 'WEAR (we-ar.kr)',
+                profile: {
+                    link: {
+                        instagram: 'https://www.instagram.com/studio.we.ar/',
+                    },
+                    career: [' 창의력', ' 문제해결력', '수평적인 소통력 '],
+                    major: '프론트, 백엔드 개발자',
+                    university: '기획자・디자이너(인턴포함)',
+                    introduction: 'AR, 블록체인 그리고 NFT를 통한 더 효율적인 커뮤니케이션을 지향합니다',
+                    _id: '6301d7e935b0e05a7e92f6ac',
+                },
+                level: 1,
+            },
+            {
+                id: '6301a49c35b0e05a7e91249f',
+                alias: 'angelswing',
+                logo: '/companylogo/angelswing.svg',
+                name: 'angelswing',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124a1',
+                alias: 'softsquared',
+                logo: '/companylogo/softsquared.svg',
+                name: 'softsquared',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124a3',
+                alias: 'quadminers',
+                logo: '/companylogo/quadminers.svg',
+                name: 'quadminers',
+                level: 1,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124af',
+                alias: 'playkeyboard',
+                logo: '/companylogo/playkeyboard.svg',
+                name: '플레이키보드',
+                profile: {
+                    link: {
+                        instagram: 'https://career.programmers.co.kr/companies/852',
+                    },
+                    career: ['의사소통', '전문성/학습 추구', '협력적 태도'],
+                    major: 'iOS',
+                    university: 'Android',
+                    introduction: '모바일 키보드 입력을 더 편리하고 즐겁게 변화시킴으로써 우리의 ‘행복한 일상’을 만듭니다.',
+                    _id: '63173b4835b0e05a7e9d07bc',
+                },
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e912497',
+                alias: 'pplink',
+                logo: '/companylogo/pplink.svg',
+                name: 'pplink',
+                level: 1,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124b1',
+                alias: 'woot',
+                logo: '/companylogo/woot.svg',
+                name: 'woot',
+                profile: {
+                    link: {
+                        instagram: 'undefined',
+                    },
+                    career: [' '],
+                    major: '',
+                    university: '',
+                    introduction: '성격 유형 플레이그라운드 타입스, 지역기반 관심 모임 매칭앱 우트를 만들고 있습니다. ',
+                    _id: '6301d6c135b0e05a7e92f3b6',
+                },
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124b3',
+                alias: 'scatterlab',
+                logo: '/companylogo/scatterlab.svg',
+                name: 'scatterlab',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124b9',
+                alias: 'arooo',
+                logo: '/companylogo/arooo.svg',
+                name: 'arooo',
+                profile: {
+                    link: {
+                        instagram: 'https://instagram.com/arooo.co.kr',
+                    },
+                    career: [
+                        '주체성 : 자신의 일을 설정하고 해결하며 팀의 동력이 되실 분',
+                        '추진력 : 안 되는 이유가 아닌 계획, 실행, 검증에 집중하실 분',
+                        ' 효율성 : 팀의 시간과 에너지를 중요하게 생각하는 분',
+                    ],
+                    major: '서버 개발자',
+                    university: 'UX디자이너',
+                    introduction: '여성을 위한 지식 플랫폼',
+                    _id: '630ca54d35b0e05a7e9bfbc0',
+                },
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124bf',
+                alias: 'aws',
+                logo: '/companylogo/aws.svg',
+                name: 'aws',
+                level: 0,
+            },
+            {
+                id: '6301a49c35b0e05a7e9124c5',
+                alias: 'rxc',
+                logo: '/companylogo/rxc.svg',
+                name: 'rxc',
+                level: 0,
+            },
+        ],
+    });
+}
