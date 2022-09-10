@@ -59,19 +59,19 @@ const TeamProject = () => {
     //또한, 팀 아이디를 가지고 "팀의 이름"과 "팀원들의 id"배열을 가져온다
     useEffect(() => {
         if (teamId) {
-            axiosInstance.get(`/project/${teamId}`).then(res => {
+            axiosInstance.get(`/api/project/${teamId}`).then(res => {
                 setProjectState(res.data.data);
-                setProjectNumLiked(res.data.data.likes.length || 0);
+                setProjectNumLiked(res.data.data?.likes.length || 0);
             });
 
-            axiosInstance.get(`/teams/${teamId}`).then(res => {
+            axiosInstance.get(`/api/teams/${teamId}`).then(res => {
                 setTeamName(res.data.data.name);
-                setUserIdArr(res.data.data.users);
+                setUserIdArr(res.data.data?.users);
             });
-            axiosInstance.get(`/project/like/${teamId}/${loginUserState.user?.id}`).then(res => {
-                setOnLiked(res.data.like);
+            axiosInstance.get(`/api/project/like/${teamId}/${loginUserState.user?.id}`).then(res => {
+                setOnLiked(res.data?.like);
             });
-            projectState.stack?.slice(0, -1).map(x => {
+            projectState?.stack?.slice(0, -1).map(x => {
                 tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
             });
             setUsedStack(tools);
@@ -79,11 +79,11 @@ const TeamProject = () => {
     }, [teamId]);
 
     useEffect(() => {
-        projectState.stack?.slice(0, -1).map(x => {
+        projectState?.stack?.slice(0, -1).map(x => {
             tools.push(TechStackMapping.filter(stack => stack.nameKo.includes(x))[0]);
         });
         setUsedStack(tools);
-    }, [projectState.stack]);
+    }, [projectState?.stack]);
 
     //위에서 받아온 "팀원들의 id"배열을 가지고 팀원 개개인의 정보를 가져온다
     //해당 개개인의 정보들은 teamUsers 배열에 다시 차곡차곡 넣어준다

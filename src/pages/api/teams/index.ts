@@ -27,7 +27,7 @@ export const TeamListData = [
         name: '오뉴월 병아리',
         users: ['62fb9e2dbd976e2245d4469e', '62fbac6ebd976e2245d44928', '62fb984abd976e2245d444b4', '62fe5ba8c9c904b725f25e1c', '6300e8549f84cefc8ea1f4b7'],
         description: '오뉴월 병아리 하루 볕이 새롭다',
-        image: 'https://connecthon-image-s3.s3.ap-northeast-2.amazonaws.com/cb307c10-20c2-11ed-b4bb-073b35be3535',
+        image: '/projectlogo/oneworl-image.png',
     },
     {
         id: '62fe7584c9c904b725f26962',
@@ -70,7 +70,7 @@ export const TeamListData = [
         name: '새벽노을',
         users: ['6300e81d9f84cefc8ea1f3a6', '62fc730afda0c93b99131932', '62fba014bd976e2245d4471b', '62fbc474bd976e2245d44a48', '62fc5b5ebd976e2245d60d9c'],
         description: '이웃과의 소통을 Re-do, Do-re ',
-        image: 'https://connecthon-image-s3.s3.ap-northeast-2.amazonaws.com/fe245a90-20dd-11ed-b4bb-073b35be3535',
+        image: '/projectlogo/dore-image.png',
     },
     {
         id: '62fe7585c9c904b725f269a1',
@@ -83,7 +83,7 @@ export const TeamListData = [
         name: 'E렇게 N너지가 넘치조',
         users: ['62fcc05073e68b5cf470377b', '62fc929473e68b5cf4703043', '62ff4380c9c904b725f36054', '62ff96ee9f84cefc8ea0a7ed'],
         description: 'E렇게 N너지가 넘쳐흐르는 EN Overflow',
-        image: 'https://connecthon-image-s3.s3.ap-northeast-2.amazonaws.com/dc55b370-20ef-11ed-9bc9-3be45efb6b3c',
+        image: '/projectlogo/enoverflow-image.png',
     },
     {
         id: '62fe7585c9c904b725f269a5',
@@ -108,14 +108,14 @@ export const TeamListData = [
         name: 'PARTY LAB',
         users: ['62fc8353fda0c93b99131959', '62fbb73fbd976e2245d449a6', '62fcd6e8da5029f6dd96f413', '62fc879a4b018a5e5c5dd69d'],
         description: '🐾 소중한 반려동물을 위한 수의사/행동전문가와의 Q&A, 유료 화상 상담 서비스 ',
-        image: 'https://connecthon-image-s3.s3.ap-northeast-2.amazonaws.com/b70af220-21f7-11ed-b942-450c904d646c',
+        image: '/projectlogo/peteran-image.png',
     },
     {
         id: '62fe7585c9c904b725f269b9',
         name: '복음자리딸기잼',
         users: ['62fbd257bd976e2245d44bed', '62ff5bbbc9c904b725f3611e', '62fe42e35b5b9934943a1ef8', '62fb98f1bd976e2245d444ea', '62fc6e03fda0c93b991318ed'],
         description: '',
-        image: 'https://connecthon-image-s3.s3.ap-northeast-2.amazonaws.com/165577d0-2100-11ed-b942-450c904d646c',
+        image: '/projectlogo/strawberryjam-image.png',
     },
     {
         id: '62fe7585c9c904b725f269b7',
@@ -134,7 +134,7 @@ export const TeamListData = [
         name: '토요코인노래방',
         users: ['6300e88e9f84cefc8ea1f5fa', '62ff0a0bc9c904b725f2d1af', '62fc27dfbd976e2245d60c1c', '63019b7335b0e05a7e90dce4', '62fe3c575b5b9934943a1121'],
         description: '팀 소개 테스트중',
-        image: 'https://connecthon-image-s3.s3.ap-northeast-2.amazonaws.com/7d37a490-20ed-11ed-b4bb-073b35be3535',
+        image: '/projectlogo/toyokoinn-image.png',
     },
 ];
 
