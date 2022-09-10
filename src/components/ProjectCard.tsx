@@ -10,7 +10,7 @@ function ProjectCard({ teamId, likes }: { teamId: string; likes: number }) {
     const router = useRouter();
 
     useEffect(() => {
-        axiosInstance.get(`teams/${teamId}`).then(res => {
+        axiosInstance.get(`api/teams/${teamId}`).then(res => {
             setName(res.data.data.name);
             setImg(res.data.data.image);
         });

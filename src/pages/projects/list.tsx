@@ -1,14 +1,11 @@
 import { axiosInstance } from '../../hooks/queries';
 import Head from 'next/head';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { FiSearch } from 'react-icons/fi';
 import React, { useEffect, useState } from 'react';
 import ProjectCard from '../../components/ProjectCard';
-import { RiTeamFill } from 'react-icons/ri';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
-import { readJsonConfigFile } from 'typescript';
 
 interface ProjectData {
     id: string;
@@ -56,7 +53,7 @@ function ProjectList() {
     }, []);
 
     useEffect(() => {
-        axiosInstance.get('/project').then(res => {
+        axiosInstance.get('/api/project').then(res => {
             setList(res.data.data);
         });
     }, [loginUserData]);
