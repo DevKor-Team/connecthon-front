@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Participant from '../../interfaces/participant';
 import { axiosInstance } from '../../hooks/queries';
-import { FiEdit } from 'react-icons/fi';
 import { FiMail, FiInstagram, FiGithub, FiHome } from 'react-icons/fi';
 import { useRecoilState } from 'recoil';
 import { loginRecoilState } from '../../recoil/loginuser';
@@ -21,7 +20,7 @@ function IndividualParticipant() {
 
     useEffect(() => {
         try {
-            axiosInstance.get(`/users/${id}`).then(res => setIndividual(res.data.data));
+            axiosInstance.get(`/api/users/${id}`).then(res => setIndividual(res.data.data));
         } catch (e) {
             console.log(e);
         }
