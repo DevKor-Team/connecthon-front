@@ -60,7 +60,8 @@ const TeamProject = () => {
     useEffect(() => {
         if (teamId) {
             axiosInstance.get(`/api/project/${teamId}`).then(res => {
-                setProjectState(res.data.data);
+                setProjectState({ content: res.data.data?.content, stack: res.data.data?.stack });
+                console.log(projectState);
                 setProjectNumLiked(res.data.data?.likes.length || 0);
             });
 
@@ -92,7 +93,7 @@ const TeamProject = () => {
             if (userIdArr) {
                 const newTeamUsers: User[] = await Promise.all(
                     userIdArr.map(async userId => {
-                        const res = await axiosInstance(`users/${userId}`);
+                        const res = await axiosInstance(`api/users/${userId}`);
                         return {
                             ...res.data.data,
                             name: res.data.data.name.first + (res.data.data.name.last || ''),
