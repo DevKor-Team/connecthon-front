@@ -7,7 +7,7 @@ function Enterprise() {
     const router = useRouter();
     const { id } = router.query;
     const [company, setCompany] = useState<Company>();
-    const [careers, setCareers] = useState<string[]>([]);
+    const [careers, setCareers] = useState<string[] | undefined>([]);
 
     function handleLinkClick() {
         if (company?.profile?.link?.instagram) {
@@ -20,10 +20,17 @@ function Enterprise() {
     useEffect(() => {
         async function fetchCompany() {
             try {
-                await axiosInstance.get(`/companies/${id}`).then(res => {
-                    setCompany(res.data.data);
-                    setCareers(res.data.data.profile.career);
-                });
+                await axiosInstance.get(`/api/companies`).then(
+                    res => {
+                        const resArray: Company[] = res.data;
+                        setCompany(resArray.find(elem => elem.id === id));
+                        setCareers(resArray.find(elem => elem.id === id)?.profile?.career);
+                    },
+                    //     {
+                    //     setCompany(res.data.data);
+                    //     setCareers(res.data.data.profile.career);
+                    // }
+                );
             } catch (e) {
                 console.log(e);
             }
