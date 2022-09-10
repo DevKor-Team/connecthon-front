@@ -22,9 +22,9 @@ function Enterprise() {
             try {
                 await axiosInstance.get(`/api/companies`).then(
                     res => {
-                        const resArray: Company[] = res.data;
-                        setCompany(resArray.find(elem => elem.id === id));
-                        setCareers(resArray.find(elem => elem.id === id)?.profile?.career);
+                        const resArray: Company[] = res.data.data;
+                        setCompany(resArray && resArray.find(elem => elem.id === id));
+                        setCareers(resArray && resArray.find(elem => elem.id === id)?.profile?.career);
                     },
                     //     {
                     //     setCompany(res.data.data);
@@ -81,9 +81,11 @@ function Enterprise() {
                         <div className="flex flex-col xl:w-full">
                             <h4 className="font-bold text-lg sm:text-xl mb-2 break-words">🎈저희는 이러한 분들과 함께 하고 싶어요!</h4>
                             <div className="flex flex-col space-y-3 items-start h-auto xl:w-full">
-                                {careers.map(crr => (
-                                    <span className="border-2 rounded-md w-full md:w-[31.25rem] h-[2.5rem] p-1.5 xl:w-full">{crr}</span>
-                                ))}
+                                {careers ? (
+                                    careers.map(crr => <span className="border-2 rounded-md w-full md:w-[31.25rem] h-[2.5rem] p-1.5 xl:w-full">{crr}</span>)
+                                ) : (
+                                    <span className="border-2 rounded-md w-full md:w-[31.25rem] h-[2.5rem] p-1.5 xl:w-full">-</span>
+                                )}
                             </div>
                         </div>
                     </section>
