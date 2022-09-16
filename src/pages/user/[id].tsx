@@ -180,7 +180,7 @@ function IndividualParticipant() {
 
 export default IndividualParticipant;
 
-export async function getServerSideProps({ query: { id } }) {
+export async function getServerSideProps({ query: { id } }: { query: { id: string } }) {
     return {
         props: {
             id,

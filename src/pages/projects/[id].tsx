@@ -185,3 +185,11 @@ const TeamProject = () => {
 };
 
 export default TeamProject;
+
+export async function getServerSideProps({ query: { id } }: { query: { id: string } }) {
+    return {
+        props: {
+            id,
+        },
+    };
+}
