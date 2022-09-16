@@ -19,10 +19,6 @@ function IndividualParticipant() {
     const [loginUserState, setLoginUserState] = useRecoilState(loginRecoilState);
 
     useEffect(() => {
-        console.log(router.isReady);
-    }, []);
-
-    useEffect(() => {
         try {
             axiosInstance.get(`/api/users/${id}`).then(res => setIndividual(res.data.data));
         } catch (e) {
