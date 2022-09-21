@@ -1,22 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsPerson } from 'react-icons/bs';
 import { FiMenu } from 'react-icons/fi';
 import { MdOutlineClose } from 'react-icons/md';
-import { FiLogOut } from 'react-icons/fi';
 import Link from 'next/link';
 import { loginRecoilState } from '../recoil/loginuser';
 import { useRecoilState } from 'recoil';
-import { axiosInstance } from '../hooks/queries';
 
 function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     const [loginUserData, setLoginUserData] = useRecoilState(loginRecoilState);
 
+    // useEffect(() => {
+    //     const sidebg = document.getElementById('sidebg');
+
+    //     window.addEventListener('click', e => {
+    //         if (e.target === sidebg) {
+    //             closeMenu();
+    //         }
+    //     });
+    // }, []);
+
     function closeMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
-            const wrapper = document.getElementById('wrapper');
             const sidebar = document.getElementById('sidebar');
-            //wrapper?.classList.remove('z-[110]');
+
             sidebg?.classList.replace('visible', 'invisible');
             sidebg?.classList.remove('backdrop-blur-sm');
             sidebg?.classList.replace('bg-black/20', 'bg-black/0');
@@ -25,8 +32,8 @@ function SideMenu({ theme }: { theme?: 'dark' | 'light' }) {
     }
     return (
         <div className="fixed inset-0 z-[110] w-[100vw] invisible md:hidden" id="wrapper">
-            <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg">
-                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white px-4 pt-2 shadow-lg" id="sidebar">
+            <div className="fixed invisible bg-black/0 w-[100vw] inset-0 transition-all duration-400" id="sidebg" onClick={closeMenu}>
+                <div className="fixed -left-[100vw] transition-[left] duration-500 w-80 h-full bg-white px-4 pt-2 shadow-lg" id="sidebar" onClick={e => e.stopPropagation()}>
                     <MdOutlineClose className="absolute top-5 right-4" size={20} onClick={closeMenu} />
                     <div className="font-impact border-b border-slate-200 py-2 mb-7 text-xl">KU HACKATHON</div>
                     <ul className="font-bold space-y-8">
@@ -58,23 +65,14 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
     function openMenu() {
         if (typeof window !== 'undefined') {
             const sidebg = document.getElementById('sidebg');
-            const wrapper = document.getElementById('wrapper');
             const sidebar = document.getElementById('sidebar');
-            //wrapper?.classList.add('z-[110]');
+
             sidebg?.classList.replace('invisible', 'visible');
             sidebg?.classList.add('backdrop-blur-sm');
             sidebg?.classList.replace('bg-black/0', 'bg-black/20');
             sidebar?.classList.replace('-left-[100vw]', 'left-0');
         }
     }
-
-    // async function handleLogOut() {
-    //     await axiosInstance.get('/auth/logout');
-    //     setLoginUserData({
-    //         isLogin: false,
-    //         user: null,
-    //     });
-    // }
 
     return (
         <>
@@ -108,7 +106,6 @@ function Header({ theme }: { theme?: 'dark' | 'light' }) {
                     <Link href={`${loginUserData.isLogin ? (loginUserData.user?.type == 'user' ? '/mypage' : '/myCompany') : '/login'}`}>
                         <BsPerson size={22} fill={`${theme == 'dark' ? 'white' : 'black'}`} />
                     </Link>
-                    {/* {loginUserData.isLogin ? <FiLogOut size={20} stroke={`${theme == 'dark' ? 'white' : 'black'}`} onClick={handleLogOut} /> : null} */}
                 </div>
             </header>
         </>

@@ -59,7 +59,7 @@ function Participants() {
     useEffect(() => {
         const fetchUsers = () => {
             try {
-                axiosInstance.get('/users').then(response => setUsers(response.data.data));
+                axiosInstance.get('/api/users').then(response => setUsers(response.data.data));
             } catch (err) {
                 console.dir(err);
             }

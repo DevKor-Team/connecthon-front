@@ -54,7 +54,7 @@ function PersonCard({ id, position, imgurl, firstname, lastname, team }: PersonT
                 </div>
             </div>
             <div className="flex justify-center">
-                <Link href={`${loginUserData.isLogin ? `/user/${id}` : '/login'}`}>
+                <Link href={`/user/${id}`}>
                     <div className="rounded-3xl bg-ourBlack text-white py-2 lg:py-2.5 px-5 md:px-8 text-xs lg:text-sm font-medium text-center mb-2 cursor-pointer">VIEW MORE</div>
                 </Link>
             </div>
